@@ -1,0 +1,93 @@
+#contact_text{
+    text-align: center;
+    margin-top: 15%;
+    height: 150px;
+    font-size: 30px;
+    font-family: 'Playfair Display', serif;
+}
+
+.location{
+    margin-left: -23px;
+}
+
+.form{
+   
+    margin-left: 5%;
+    margin-right: 20%;
+    float: left;
+    margin-bottom: 100px;
+    
+}
+
+.address{
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    line-height: 200%;
+}
+
+.form_item{
+    margin: 4%;
+    width: 400px;
+    height: 40px;
+    background-color:whitesmoke;
+    border-style: none;
+   
+}
+
+.form_item:hover{
+    background-color: black;
+    -webkit-transition: color,background-color 0.6s linear;
+}
+
+.form_item:focus{
+    background-color: black;
+    color: white;
+}
+
+
+.message{
+    
+    height:120px;
+    vertical-align:text-top;
+    vertical-align: top;
+}
+
+::-webkit-input-placeholder { 
+    color:black;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    transition: opacity 250ms ease-in-out;
+}
+
+:focus::-webkit-input-placeholder {
+  opacity: 0.5;
+}
+
+:hover::-webkit-input-placeholder{
+    color: white;
+}
+
+#submit{
+    width: 30%;
+    height: 42px;
+    line-height: 42px;
+    color: white;
+    background-color: lightgrey;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 30px;
+    border-style: none;
+    font-family: 'Raleway', sans-serif;
+    display: block;
+    text-align: center;
+    margin-left: 4%;
+    margin-top: 6%;
+    margin-bottom: 20px;
+}
+
+
+#submit:hover{
+    background-color: black;
+    -webkit-transition: color,background-color 0.6s linear;
+}

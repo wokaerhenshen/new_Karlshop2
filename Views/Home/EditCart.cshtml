@@ -1,0 +1,44 @@
+﻿@model new_Karlshop.Data.AccountGood
+
+@{
+    ViewData["Title"] = "EditCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditCart</h2>
+
+<h4>AccountGood</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditCart">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Account_ID" class="control-label"></label>
+                <input asp-for="Account_ID" class="form-control" readonly ="readonly"/>
+                <span asp-validation-for="Account_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Goods_ID" class="control-label"></label>
+                <input asp-for="Goods_ID" class="form-control" readonly ="readonly"/>
+                <span asp-validation-for="Goods_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ShowCart">Back to Cart</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

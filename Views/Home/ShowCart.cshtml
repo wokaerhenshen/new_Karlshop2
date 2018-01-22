@@ -1,0 +1,98 @@
+﻿@model IEnumerable<new_Karlshop.Models.CartVM>
+
+@{
+    ViewData["Title"] = "ShowCartnew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Goods_Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Shop_Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Goods_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Shop_Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditCart", new { controller = "Home", accountID = item.Account_ID, goodID = item.Goods_ID }) |
+                @Html.ActionLink("Delete", "DeleteCart", new { controller = "Home", accountID = item.Account_ID, goodID = item.Goods_ID })
+            </td>
+        </tr>
+}
+    </tbody>
+
+    <tr class="lead">
+        @{
+            var totalPieces = ViewBag.totalPieces;
+            var totalPrice = ViewBag.totalPrice;
+            <td>
+                Total Quantity
+            </td>
+                <td></td>
+                
+                <td >
+                    @Html.Raw(totalPieces)
+                </td>
+                <td></td>
+                <td></td>
+        }
+    </tr>
+
+    <tr class="lead">
+        @{
+            <td>
+                Total Price
+            </td>
+            <td></td>
+
+                <td>
+                    @Html.Raw(totalPrice)
+                </td>
+                <td></td>
+                <td></td>
+        }
+    </tr>
+
+   
+
+</table>
+
+@*<a href="~/Home/Index">
+    <input type="button" value="Check out" class="btn btn-primary" style="width:120px;" />
+</a>*@
+
+@{ 
+    if (Model.ToList().Count == 0)
+    {
+        @Html.Raw("You have not selected any items my dear!")
+    }
+    else
+    {
+        @Html.ActionLink("Check Out", "ConfirmOrder", new { controller = "Home", accountID = Model.FirstOrDefault().Account_ID })
+    }
+}
+
+

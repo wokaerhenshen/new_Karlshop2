@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "WriteReview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+<link href="~/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+<script src="~/js/star-rating.js" type="text/javascript"></script>
+
+<p id="star_warning"></p>
+<input id="input-2b" type="number" class="rating" min="0" max="5" step="0.5" data-size="xl"
+       data-symbol="" data-default-caption="{rating} hearts" data-star-captions="{}">
+
+
+
+
+
+<div>
+    <h3>WriteReview</h3>
+    <p id="warning"></p>
+    <textarea id="comment_text" class="form-control" rows="3"></textarea> 
+    <br />
+    <p class="text-right" ><button type="button" id ="comment_sub" class="btn btn-primary">Submit</button></p>
+</div>
+
+<script src="http://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#comment_sub").click(function () {
+            if (!$('#comment_text').val()) {
+                $('#warning').html("<div class='alert alert-warning' role='alert'>You can not submit empty comment!</div>");
+               // alert("empty input");
+            }
+
+            else if ($('#input-2b').val() == 0){
+                $('#star_warning').html("<div class='alert alert-warning' role='alert'>You must rate the product!!</div>");
+
+            }
+
+            else {
+                //将警告区域的信息清除
+               // $(".rating-kv").rating();
+                $('#warning').html("");
+                $('#star_warning').html("");
+                var content = $('#comment_text').val();
+                //var star_rate = parseDouble($('#input-2b').val());
+                var star_rate = $('#input-2b').val();
+                var mydate = new Date();
+                var milliTime = mydate.getTime();
+                var accountID = "@ViewBag.AccountID";
+                var goodID = "@ViewBag.GoodID";
+                var orderID = "@ViewBag.OrderID";
+
+                //alert(content);
+                $('#content').append(mydate.toLocaleDateString() + "：<br>" + content + "<hr>");
+
+                //清空文本域
+                $('#comment_text').val("");
+
+                var article_id = $('#article_id').text();
+
+                //使用ajax来向后台传递数据
+                $.ajax({
+                    type: "post",
+                    url: "/Home/WriteReview",
+                    data: { AccountID: accountID, GoodID: goodID, OrderID: orderID, comments: content, millidate: milliTime, star: star_rate },
+                    datatype: "json", //回调函数接收数据的格式
+                    //函数调用成功后
+                    success: function (msg) {
+                        //什么也不用做
+
+                        console.log("data pass success");
+                        console.log(star_rate);
+                        console.log(mydate);
+                        window.location.href = "/Home/GoodsEdit/" + goodID
+                    },
+                    //函数调用失败后，
+                    error: function (msg) {
+                        //弹窗，告知用户写入失败
+                        //alert("评论内容写入失败");
+                        alert("fail");
+                    }
+                });
+                 }
+        });
+    });
+</script>
+

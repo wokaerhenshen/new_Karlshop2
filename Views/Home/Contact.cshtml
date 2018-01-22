@@ -1,17 +1,32 @@
 ﻿@{
     ViewData["Title"] = "Contact";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
-
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="~/css/style-contacts.css">
+<div class="content">
+    <p id="contact_text">
+        Shoot us a note with your questions and advice,
+        and we will be in touch soon!
+    </p>
+    <div class="form">
+        <form method="post" action="EmailSender" onSubmit="alert('thank you for your submit');">
+            <input type="text" name="fullname" placeholder="Full Name" class="form_item">
+            <br>
+            <input type="text" name="emailaddress" placeholder="Email Address" class="form_item">
+            <br>
+            <input type="text" name="phonenumber" placeholder="Phone Number" class="form_item">
+            <br>
+            <input type="text" name="message" placeholder="Enter Your Message" class="form_item message">
+            <br>
+            <input type="submit" id="submit" value="SUBMIT" />
+        </form>
+    </div>
+    <div class="address">
+        
+        555 Seymour St<br>
+        Vancouver, BC V6B 3H6<br>
+        p. 778-861-9422<br>
+        e. karlxu0410@gmail.com<br>
+    </div>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.6274800194483!2d-123.11742178431054!3d49.28345557933146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54867178c92a69b9%3A0x6b40938af55472d6!2s555+Seymour+St%2C+Vancouver%2C+BC+V6B!5e0!3m2!1sen!2sca!4v1507095571512" width="300" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+</div>

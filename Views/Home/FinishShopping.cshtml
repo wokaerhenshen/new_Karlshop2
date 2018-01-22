@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "FinishShopping";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Thanks for shopping at Karl's Shop!</h1>
+
+<h2>Your order has been placed.</h2>
+
+@Html.ActionLink("View My Bought Items", "Bought", new { controller = "Home" })
+

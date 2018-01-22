@@ -13,6 +13,10 @@ using Microsoft.Extensions.Options;
 using new_Karlshop.Models;
 using new_Karlshop.Models.AccountViewModels;
 using new_Karlshop.Services;
+using new_Karlshop.Data;
+using new_Karlshop.Repository;
+using Microsoft.AspNetCore.Http;
+
 
 namespace new_Karlshop.Controllers
 {
@@ -24,17 +28,35 @@ namespace new_Karlshop.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public ApplicationDbContext _context;
+        CategoryRepo cr;
+        GoodsRepo gr;
+        AccountRepo ar;
+        AccountGoodsRepo ag;
+
+        const string secure_code = "wokaerhenshen";
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            IHttpContextAccessor httpContextAccessor,
+            ApplicationDbContext context)
+
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            this._httpContextAccessor = httpContextAccessor;
+            this._context = context;
+            this.cr = new CategoryRepo(context);
+            this.gr = new GoodsRepo(context);
+            this.ar = new AccountRepo(context);
+            this.ag = new AccountGoodsRepo(context);
         }
 
         [TempData]
@@ -48,6 +70,8 @@ namespace new_Karlshop.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.menuActive = "Login";
+            ViewBag.loginUser = "";
             return View();
         }
 
@@ -56,9 +80,14 @@ namespace new_Karlshop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
+            ViewBag.loginUser = "";
+            ViewBag.userType = "";
+            ViewBag.ErrorMessage = "";
+            ViewBag.WrongPassword = "";
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
@@ -226,6 +255,15 @@ namespace new_Karlshop.Controllers
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    //this code is written by myself to add user to Account table.
+                    _context.Accounts.Add(new Account
+                    {
+                        Id = user.Id,
+                        
+                        
+                    });
+                    _context.SaveChanges();
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
@@ -240,6 +278,65 @@ namespace new_Karlshop.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        public ActionResult SecureConfirm()
+        {
+            ViewBag.ErrorMessage = "";
+            return View();
+        }
+
+        [HttpPost]
+        //I think I will do a little changes here
+        public ActionResult SecureConfirm(string secureCodes)
+        {
+
+            string secureCode = Request.Form["code"];
+
+            if (secureCode == secure_code)
+            {
+                return RedirectToAction("SuperRegister", "Account");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Wrong secure code, please input again";
+                return View();
+            }
+
+        }
+
+        public ActionResult SuperRegister()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SuperRegister(Account account)
+        {
+
+            ViewBag.loginUser = "";
+            ViewBag.userType = "";
+            ViewBag.ErrorMessage = "";
+
+            if (ar.FindAccount(account.ApplicationUser.UserName))
+            {
+                ViewBag.ErrorMessage = "This user name: " + account.ApplicationUser.UserName + " already exists, use another username plz.";
+                return View();
+            }
+
+            //account.accountId = ar.GetAccountMaxID() + 1;
+            //account.type = "admin";
+            //ar.AddOneAccount(account);
+            //SetAspCookie(account.accountId.ToString(), account.type);
+
+
+            return RedirectToAction("ShowGoods", "Home");
+        }
+
+
+
+
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<new_Karlshop.Data.Goods>
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Results:</h3>
+
+<table class="table table-responsive">
+    <tr>
+        <th>
+            <input type="button" value="ID" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            @Html.ActionLink("Goods Name↑↓", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @class = "btn btn-default btn-sm" })
+        </th>
+        <th>
+            <input type="button" value="Cat_ID" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Goods_SN" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Shop Price" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Market Price" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Quantity" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Weight" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Free Post" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            @Html.ActionLink("Update Date↑↓", "Index", new { sortOrder = ViewBag.DateSortParm }, new { @class = "btn btn-default btn-sm" })
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td align="center">
+                @Html.DisplayFor(modelItem => item.goods_id)
+            </td>
+            <td>
+                @Html.ActionLink(item.goods_name, "GoodsEdit", new { controller = "Home", id = item.goods_id })
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelItem => item.cat_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_sn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shop_price, "MyDecimalTemplate")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.market_price, "MyDecimalTemplate")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.is_free_post)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.last_update)
+            </td>
+        </tr>
+    }
+</table>
+

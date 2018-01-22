@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using new_Karlshop.Models;
 using new_Karlshop.Models.ManageViewModels;
 using new_Karlshop.Services;
+using new_Karlshop.Data;
 
 namespace new_Karlshop.Controllers
 {
@@ -25,6 +26,8 @@ namespace new_Karlshop.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
+        ApplicationDbContext _context;
+
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
@@ -33,13 +36,15 @@ namespace new_Karlshop.Controllers
           SignInManager<ApplicationUser> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
-          UrlEncoder urlEncoder)
+          UrlEncoder urlEncoder,
+          ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _context = context;
         }
 
         [TempData]

@@ -1,0 +1,114 @@
+﻿@model IEnumerable<new_Karlshop.Data.Goods>
+
+@{
+    ViewData["Title"] = "SortIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container body-content">
+    @{
+        var menus = ViewBag.MyViewBagList;
+
+        foreach (var menu1 in menus)
+        {
+            <div class="btn-group">
+                @{
+                    //var p1 = "Home/SortIndex/" + menu1.mainMenu.menuPath;
+                    var p1 = menu1.mainMenu.menuPath;
+                    string p1name = menu1.mainMenu.menuName;
+
+                    //<a class="btn btn-primary" href=@Html.Raw(p1) role="button" style="width:120px;">@Html.Raw(menu1.mainMenu.menuName)</a>
+
+                    @Html.ActionLink(p1name, "SortIndex", new { controller = "Home", id = p1 }, new { @class = "btn btn-primary", @style = "width:120px;" })
+
+                }
+
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    @{
+                        foreach (var name in menu1.MenuItem)
+                        {
+                            var pp = name.menuPath;
+                            string pname = name.menuName;
+
+                            //<li><a href=@Html.Raw(pp)>@Html.Raw(name.menuName)</a></li>
+
+                            <li>
+                                @Html.ActionLink(pname, "SortIndex", new { controller = "Home", id = pp }, new { @class = "btn btn-default", @style = "width:120px;" })
+                            </li>
+
+                        }
+                    }
+                </ul>
+            </div>
+                        }
+    }
+</div>
+<p></p>
+<table class="table table-responsive">
+    <tr>
+        <th>@Html.ActionLink("ID ↑↓", "SortIndex", new { sortOrder = ViewBag.IdSortParm }, new { @class = "btn btn-default btn-sm" })</th>
+        <th>@Html.ActionLink("Goods Name ↑↓", "SortIndex", new { sortOrder = ViewBag.NameSortParm }, new { @class = "btn btn-default btn-sm" })</th>
+        <th>
+            <input type="button" value="Cat_ID" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Goods_SN" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Shop Price" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Market Price" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Quantity" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Weight" class="btn btn-default btn-sm" />
+        </th>
+        <th>
+            <input type="button" value="Free Post" class="btn btn-default btn-sm" />
+        </th>
+        <th>@Html.ActionLink("Update Date", "SortIndex", new { sortOrder = ViewBag.DateSortParm }, new { @class = "btn btn-default btn-sm" })</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_id)
+            </td>
+            <td>
+                @Html.ActionLink(item.goods_name, "GoodsEdit", new { controller = "Home", id = item.goods_id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cat_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_sn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shop_price, "MyDecimalTemplate")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.market_price, "MyDecimalTemplate")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.is_free_post)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.last_update)
+            </td>
+        </tr>
+    }
+</table>
+

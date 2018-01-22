@@ -1,0 +1,103 @@
+﻿@model IEnumerable<new_Karlshop.Data.Goods>
+
+@{
+    ViewData["Title"] = "ShowGoods";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container body-content">
+    @{
+        var menus = ViewBag.MyViewBagList;
+
+        foreach (var menu1 in menus)
+        {
+            <div class="btn-group">
+                @{
+                    //var p1 = "Home/SortIndex/" + menu1.mainMenu.menuPath;
+                    var p1 = menu1.mainMenu.menuPath;
+                    string p1name = menu1.mainMenu.menuName;
+
+                    //<a class="btn btn-primary" href=@Html.Raw(p1) role="button" style="width:120px;">@Html.Raw(menu1.mainMenu.menuName)</a>
+
+                    @Html.ActionLink(p1name, "ShowGoods", new { controller = "Home", id = p1 }, new { @class = "btn btn-primary", @style = "width:120px;" })
+
+                }
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    @{
+                        foreach (var name in menu1.MenuItem)
+                        {
+                            var pp = name.menuPath;
+                            string pname = name.menuName;
+
+                            //<li><a href=@Html.Raw(pp)>@Html.Raw(name.menuName)</a></li>
+
+                            <li>
+                                @Html.ActionLink(pname, "ShowGoods", new { controller = "Home", id = pp }, new { @class = "btn btn-default", @style = "width:120px;" })
+                            </li>
+
+                        }
+                    }
+                </ul>
+            </div>
+        }
+    }
+    <hr />
+    <div class="row">
+        @{  var num = 0;
+                    var test = ViewBag.goods;
+                    //foreach (var item in Model)
+                    foreach (var item in test)
+                    {
+                        var goods_id = item.goods_id;
+                        var market_price = item.market_price;
+                        var shop_price = item.shop_price;
+                        var ori_img = item.ori_img;
+                        var goods_name = item.goods_name;
+
+                        num++;
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="thumbnail">
+                        @{
+                            var pathName = ViewBag.imgPath + "/images/" + @Html.Raw(ori_img);
+
+                            <img class="myImg" src="@Html.Raw(pathName)" alt="picture" style="height:240px;">
+                        }
+                        <div class="caption">
+                            <h3 class="caption_h3" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@Html.Raw(goods_name)</h3>
+                            @*<p class="pull-right">@Html.Raw(goods_id)</p>
+                                <p>Goods Number: </p>*@
+                            <p class="pull-right"><s>$@Html.Raw(market_price)</s></p>
+                            <p>Market Price: </p>
+
+                            <p class="pull-right">$@Html.Raw(shop_price)</p>
+                            <p>Discount Price: </p>
+
+                            <p>
+                                @{
+
+                                    @Html.ActionLink("Details", "GoodsEdit", new { controller = "Home", id = item.goods_id }, new { @class = "btn btn-primary", @style = "width:110px;" })
+                                }
+                                @{
+                                    @Html.ActionLink("Add to Cart", "ShowCart", new { controller = "Home", id = item.goods_id }, new { @class = "btn btn-success", @style = "width:110px;" })
+
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                                    if (num % 4 == 0)
+                                    {
+                                        <div class="clearfix"></div>
+                                        <br />
+                                        }
+                                    }
+        }
+    </div>
+</div>
+
+
+
