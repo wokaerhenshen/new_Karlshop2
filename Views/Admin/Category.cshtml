@@ -1,0 +1,69 @@
+﻿@model IEnumerable<new_Karlshop.Data.Category>
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<p></p>
+<div class="panel panel-primary">
+
+    <!-- Default panel contents -->
+
+    <div class="panel-heading"><h5>Show Category</h5></div>
+
+    <!-- Table -->
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.cat_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.parent_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cat_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.intro)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td  align="center" class="col-xs-12 col-md-1">
+                    @Html.DisplayFor(modelItem => item.cat_id)
+                </td>
+                <td  align="center" class="col-xs-12 col-sm-1">
+                    @Html.DisplayFor(modelItem => item.parent_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cat_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.intro)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "CategoryEdit", new { controller = "Admin", id = item.cat_id }) |
+                    @Html.ActionLink("Delete", "CategoryDelete", new { controller = "Admin", id = item.cat_id })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<hr />
+<p>
+    <a href="~/Home/Index">
+        <input type="button" value="Continue Shopping" class="btn btn-primary" />
+    </a>
+
+    @Html.ActionLink("Create a new category", "CategoryCreate", "Admin", new { area = "" }, new { @class = "btn btn-primary" })
+</p>
+
+
+
+

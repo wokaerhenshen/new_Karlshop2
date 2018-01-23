@@ -4,10 +4,65 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+
+    @using (Html.BeginForm("Search", "Home", FormMethod.Post))
+    {
+        <div class="col-lg-3  col-lg-3 col-xs-2 hidden-xs navbar-form navbar-left clearfix">
+            <div class="input-group">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search for...">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+
 @if (SignInManager.IsSignedIn(User))
 {
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
+
+
+@if (User.IsInRole("Admin"))
+{
+
+    <li class="dropdown hidden-xs">
+        @{
+
+            @*  No login do not show , or show dialog ...
+                <a class="dropdown-toggle" role="button" data-toggle="modal" data-target="#myModal"><strong><span class="glyphicon glyphicon-list"></span> Admin</strong><span class="caret"></span></a>*@
+        if (ViewBag.menuActive != "Admin")
+        {
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong><span class="glyphicon glyphicon-list"></span> Admin</strong><span class="caret"></span></a>
+        }
+        else
+        {
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:white;"><strong><span class="glyphicon glyphicon-pencil"></span> Admin</strong><span class="caret"></span></a>
+        }
+
+        }
+        <ul class="dropdown-menu">
+            <li><a href="~/Admin/Category">Category</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="~/Admin/Goods">Goods</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="~/Admin/Account">Account</a></li>
+            <li role="separator" class="divider"></li>
+            <li>
+                <a asp-area="" asp-controller="UserRole" asp-action="Index">
+                    User-Roles
+                </a>
+            </li>
+        </ul>
+    </li>
+            }
+
+    
             <li>
                 <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">My Account</a>
             </li>

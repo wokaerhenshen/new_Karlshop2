@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using new_Karlshop.Data;
 using new_Karlshop.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace new_Karlshop.Controllers
 {
+
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

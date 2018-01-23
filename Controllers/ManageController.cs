@@ -110,6 +110,44 @@ namespace new_Karlshop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> UserDetail()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            Account account = _context.Accounts.Where(i => i.Id == User.getUserId()).FirstOrDefault();
+            return View(account);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserDetail(Account model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            _context.Accounts.Where(i => i.Id == User.getUserId()).FirstOrDefault().firstName = model.firstName;
+            _context.Accounts.Where(i => i.Id == User.getUserId()).FirstOrDefault().lastName = model.lastName;
+            _context.Accounts.Where(i => i.Id == User.getUserId()).FirstOrDefault().phone = model.phone;
+            _context.Accounts.Where(i => i.Id == User.getUserId()).FirstOrDefault().address = model.address;
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Manage");
+        }
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)

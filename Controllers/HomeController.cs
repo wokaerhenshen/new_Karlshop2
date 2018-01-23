@@ -9,6 +9,7 @@ using new_Karlshop.Data;
 using Microsoft.AspNetCore.Http;
 using new_Karlshop.Repository;
 using Microsoft.AspNetCore.Authorization;
+using new_Karlshop.Services;
 
 namespace new_Karlshop.Controllers
 {
@@ -41,6 +42,7 @@ namespace new_Karlshop.Controllers
 
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+
 
             ViewBag.MyViewBagList = cr.GetMenuList();
             ViewBag.menuActive = "Home";
@@ -156,6 +158,18 @@ namespace new_Karlshop.Controllers
 
             ViewBag.imgPath = "";
 
+            // I think I need to firgure out how to do the delete operation in the future.
+            //foreach ( var good in gr.getAll().ToList())
+            //{
+            //    if (good.goods_quantity == 0)
+            //    {
+            //        _context.Goodses.Remove(good);
+            //        _context.SaveChanges();
+            //    }
+            //}
+
+
+
             if (id == 0)
             {   // ALL button
                 ViewBag.goods = gr.getAll().ToList();
@@ -200,10 +214,11 @@ namespace new_Karlshop.Controllers
         {
         
             List<AccountGood> accountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault()).ToList();
+            ViewBag.menuActive = "Cart";
 
             if (id != 0)
             {
-                ViewBag.menuActive = "Cart";
+                
                 AccountGood item = accountGoods.Where(ag => ag.Goods_ID == id && ag.Type == "cart").FirstOrDefault();
                 if (item != null)
                 {
@@ -215,7 +230,7 @@ namespace new_Karlshop.Controllers
                 {
                     AccountGood temp = new AccountGood()
                     {
-                        Order_ID = ag.GetMaxOrderID(),
+                        Order_ID = ag.GenerateOrderId(),
                         Account_ID = _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault(),
                         Goods_ID = id,
                         Quantity = 1,
@@ -229,7 +244,7 @@ namespace new_Karlshop.Controllers
             }
 
             //why I have to define this again?
-            List<AccountGood> NewaccountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart").ToList();
+            List<AccountGood> NewaccountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == User.getUserId() && ag.Type == "cart").ToList();
 
             var totalPieces = 0m;
             var totalPrice = 0m;
@@ -248,7 +263,7 @@ namespace new_Karlshop.Controllers
 
             CartRepo cart = new CartRepo(_context);
 
-            return View(cart.GetCartAll(_context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault()));
+            return View(cart.GetCartAll(User.getUserId()));
 
         }
 
@@ -269,9 +284,15 @@ namespace new_Karlshop.Controllers
             ar.QuickEditAccount(account);
             List<AccountGood> CartaccountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart").ToList();
 
+
+            
             foreach (var item in CartaccountGoods)
             {
                 item.Type = "bought";
+                _context.SaveChanges();
+                Goods good = _context.Goodses.Where(i => i.goods_id == item.Goods_ID).FirstOrDefault();
+                good.goods_quantity -= item.Quantity;
+                good.sold_quantity += item.Quantity;
                 _context.SaveChanges();
             }
 
@@ -297,7 +318,9 @@ namespace new_Karlshop.Controllers
             //    return RedirectToAction("Login", "Account");
             //}
 
-             List<AccountGood> NewaccountGoods = _context.AccountGoods.
+            ViewBag.menuActive = "Bought";
+
+            List<AccountGood> NewaccountGoods = _context.AccountGoods.
                                                 Where(ag => ag.Account_ID == _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault() && ag.Type == "bought").ToList();
 
             CartRepo cart = new CartRepo(_context);

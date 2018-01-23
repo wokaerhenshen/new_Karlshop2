@@ -12,26 +12,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace new_Karlshop.Data
 {
 
-    public class Account
-    {
 
-        [Key]
-        public string Id { get; set; }
-
-        [Display(Name = "First Name")]
-        public string firstName { get; set; }
-        [Display(Name = "Last Name")]
-        public string lastName { get; set; }
-
-        [Display(Name = "Phone")]
-        public string phone { get; set; }
-
-        [Display(Name = "Address")]
-        public string address { get; set; }
-
-        public virtual ApplicationUser ApplicationUser { get; set; }
-        public virtual ICollection<AccountGood> AccountGood { get; set; }
-    }
 
     public class AccountGood
     {

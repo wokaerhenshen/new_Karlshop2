@@ -27,11 +27,11 @@ namespace new_Karlshop.Repository
 
         public AccountGood GetOneGoodByBothID(string accountID, int goodsID)
         {
-            AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == goodsID && a.Account_ID == accountID).FirstOrDefault();
+            AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == goodsID && a.Account_ID == accountID && a.Type == "cart").FirstOrDefault();
             return ag;
         }
 
-        public int GetMaxOrderID()
+        public int GenerateOrderId()
         {
             if (_context.AccountGoods.Count() == 0)
             {
@@ -47,7 +47,7 @@ namespace new_Karlshop.Repository
 
         public void DeleteOneGoodByBothID(string accountID, int goodsID)
         {
-            AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == goodsID && a.Account_ID == accountID).FirstOrDefault();
+            AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == goodsID && a.Account_ID == accountID && a.Type == "cart").FirstOrDefault();
             _context.AccountGoods.Remove(ag);
             _context.SaveChanges();
 
@@ -55,7 +55,7 @@ namespace new_Karlshop.Repository
 
         public void UpdateOneGoodByBothID(AccountGood accountGood)
         {
-            AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == accountGood.Goods_ID && a.Account_ID ==accountGood.Account_ID).FirstOrDefault();
+            AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == accountGood.Goods_ID && a.Account_ID ==accountGood.Account_ID && a.Type == "cart").FirstOrDefault();
             ag.Quantity = accountGood.Quantity;
             _context.SaveChanges();
 
