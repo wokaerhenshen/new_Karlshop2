@@ -38,6 +38,12 @@ namespace new_Karlshop.Repository
             return _context.Goodses.Select(id => id.goods_id).Max();
         }
 
+        public List<string> GetAllImagePath_Phone()
+        {
+            List<string> phone_img_paths = _context.Goodses.Where(id => id.Category.parent_id == 1).Select(img => img.ori_img).ToList();
+            return phone_img_paths;
+        }
+
         public void AddOneGoods(Goods goods)
         {
             _context.Goodses.Add(goods);

@@ -36,6 +36,7 @@ namespace new_Karlshop.Controllers
 
         public IActionResult Welcome()
         {
+            ViewBag.all_img_phone = gr.GetAllImagePath_Phone();
             return View();
         }
 
