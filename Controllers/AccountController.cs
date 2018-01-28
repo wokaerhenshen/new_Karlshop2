@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace new_Karlshop.Controllers
 {
-    [Authorize]
+   
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
@@ -31,6 +31,8 @@ namespace new_Karlshop.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public ApplicationDbContext _context;
+        private IServiceProvider _serviceProvider;
+
         CategoryRepo cr;
         GoodsRepo gr;
         AccountRepo ar;
@@ -44,7 +46,9 @@ namespace new_Karlshop.Controllers
             IEmailSender emailSender,
             ILogger<AccountController> logger,
             IHttpContextAccessor httpContextAccessor,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IServiceProvider serviceProvider
+            )
 
         {
             _userManager = userManager;
@@ -53,6 +57,7 @@ namespace new_Karlshop.Controllers
             _logger = logger;
             this._httpContextAccessor = httpContextAccessor;
             this._context = context;
+            _serviceProvider = serviceProvider;
             this.cr = new CategoryRepo(context);
             this.gr = new GoodsRepo(context);
             this.ar = new AccountRepo(context);
@@ -254,7 +259,7 @@ namespace new_Karlshop.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                   
                     //this code is written by myself to add user to Account table.
                     _context.Accounts.Add(new Account
                     {
@@ -310,26 +315,52 @@ namespace new_Karlshop.Controllers
         }
 
         [HttpPost]
-        public ActionResult SuperRegister(Account account)
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SuperRegister(RegisterViewModel model, string returnUrl = null)
         {
 
-            ViewBag.loginUser = "";
-            ViewBag.userType = "";
-            ViewBag.ErrorMessage = "";
-
-            if (ar.FindAccount(account.ApplicationUser.UserName))
+            
+            if (ModelState.IsValid)
             {
-                ViewBag.ErrorMessage = "This user name: " + account.ApplicationUser.UserName + " already exists, use another username plz.";
-                return View();
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User created a new account with password.");
+
+                    //this code is written by myself to add user to Account table.
+                    _context.Accounts.Add(new Account
+                    {
+                        Id = user.Id,
+
+
+                    });
+                    _context.SaveChanges();
+
+
+
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    _logger.LogInformation("User created a new account with password.");
+                    //this code is written by myself to make this user to be the admin
+                    UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider);
+                    if (ModelState.IsValid) {
+                        await userRoleRepo.AddUserRole(model.Email, "Admin");
+                    }
+
+
+                    return RedirectToLocal(returnUrl);
+                }
+                AddErrors(result);
             }
 
-            //account.accountId = ar.GetAccountMaxID() + 1;
-            //account.type = "admin";
-            //ar.AddOneAccount(account);
-            //SetAspCookie(account.accountId.ToString(), account.type);
-
-
-            return RedirectToAction("ShowGoods", "Home");
+            // If we got this far, something failed, redisplay form
+            return View(model);
+            //return RedirectToAction("ShowGoods", "Home");
         }
 
 

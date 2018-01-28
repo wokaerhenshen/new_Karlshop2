@@ -42,6 +42,9 @@ namespace new_Karlshop.Data
         [Display(Name = "Goods Description")]
         public string goods_desc { get; set; }
 
+        [Display(Name = "Goods Biref Description")]
+        public string goods_brief { get; set; }
+
         [Display(Name = "Image Path")]
         public string ori_img { get; set; }
 

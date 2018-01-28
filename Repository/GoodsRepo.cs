@@ -38,11 +38,33 @@ namespace new_Karlshop.Repository
             return _context.Goodses.Select(id => id.goods_id).Max();
         }
 
-        public List<string> GetAllImagePath_Phone()
+
+        //This occurs in the very first test of passing all images to the font end by using viewbag
+        //public List<string> GetAllImagePath_Phone()
+        //{
+        //    List<string> phone_img_paths = _context.Goodses.Where(id => id.Category.parent_id == 1).Select(img => img.ori_img).ToList();
+        //    return phone_img_paths;
+        //}
+
+        public List<Goods> GetAllData_Phone()
         {
-            List<string> phone_img_paths = _context.Goodses.Where(id => id.Category.parent_id == 1).Select(img => img.ori_img).ToList();
-            return phone_img_paths;
+            List<Goods> phone_all_data = _context.Goodses.Where(id => id.Category.parent_id == 1).Select(all=> all).ToList();
+            return phone_all_data;
         }
+
+        public List<Goods> GetAllData_Laptop()
+        {
+            List<Goods> Laptop_all_data = _context.Goodses.Where(id => id.Category.parent_id == 2).Select(all => all).ToList();
+            return Laptop_all_data;
+        }
+
+        public List<Goods> GetAllData_Tv()
+        {
+            List<Goods> Tv_all_data = _context.Goodses.Where(id => id.Category.parent_id == 3).Select(all => all).ToList();
+            return Tv_all_data;
+        }
+
+
 
         public void AddOneGoods(Goods goods)
         {

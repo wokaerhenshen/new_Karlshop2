@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace new_Karlshop.Controllers
 {
-    [Authorize]
+    
     public class RoleController : Controller
     {
         ApplicationDbContext _context;

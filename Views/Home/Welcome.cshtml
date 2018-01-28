@@ -66,6 +66,8 @@
                     }
                     @{
                         var img = @ViewBag.all_img_phone;
+                        var laptop = @ViewBag.all_data_laptop;
+                        var tv = @ViewBag.all_data_tv;
                     }
                     
                     <div class="item active">
@@ -73,52 +75,52 @@
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="~/images/@Html.Raw(img[0])" alt="" style="height:120px;"></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(img[0].ori_img)" alt="" style="height:120px;"></a>
                                         
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(img[0].goods_name)</h4>
+                                        <p>@Html.Raw(img[0].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="~/images/@Html.Raw(img[1])" alt="" style="height:120px;"></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(img[1].ori_img)" alt="" style="height:120px;"></a>
                                         
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(img[1].goods_name)</h4>
+                                        <p>@Html.Raw(img[1].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="~/images/@Html.Raw(img[2])" alt="" style="height:120px;"></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(img[2].ori_img)" alt="" style="height:120px;"></a>
                                         
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(img[2].goods_name)</h4>
+                                        <p>@Html.Raw(img[2].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="~/images/@Html.Raw(img[3])" alt="" style="height:120px;"></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(img[3].ori_img)" alt="" style="height:120px;"></a>
                                         
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(img[3].goods_name)</h4>
+                                        <p>@Html.Raw(img[3].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -129,52 +131,52 @@
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="~/images/@Html.Raw(img[4])" alt="" style="height:120px;"></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(img[4].ori_img)" alt="" style="height:120px;"></a>
                                         
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(img[4].goods_name)</h4>
+                                        <p>@Html.Raw(img[4].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="~/images/@Html.Raw(img[5])" alt="" style="height:120px;"></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(img[5].ori_img)" alt="" style="height:120px;"></a>
                                       
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(img[5].goods_name)</h4>
+                                        <p>@Html.Raw(img[5].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="~/images/@Html.Raw(img[6])" alt="" style="height:120px;"></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(img[6].ori_img)" alt="" style="height:120px;"></a>
                                         
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(img[6].goods_name)</h4>
+                                        <p>@Html.Raw(img[6].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="~/images/@Html.Raw(img[7])" alt="" style="height:120px;"></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(img[7].ori_img)" alt="" style="height:120px;"></a>
                                        
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(img[7].goods_name)</h4>
+                                        <p>@Html.Raw(img[7].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -241,48 +243,48 @@
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(laptop[0].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(laptop[0].goods_name)</h4>
+                                        <p>@Html.Raw(laptop[0].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                       <a href="#"><img src="~/images/@Html.Raw(laptop[1].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(laptop[1].goods_name)</h4>
+                                        <p>@Html.Raw(laptop[1].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                       <a href="#"><img src="~/images/@Html.Raw(laptop[2].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(laptop[2].goods_name)</h4>
+                                        <p>@Html.Raw(laptop[2].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                       <a href="#"><img src="~/images/@Html.Raw(laptop[3].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(laptop[3].goods_name)</h4>
+                                        <p>@Html.Raw(laptop[3].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -293,105 +295,53 @@
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                       <a href="#"><img src="~/images/@Html.Raw(laptop[4].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(laptop[4].goods_name)</h4>
+                                        <p>@Html.Raw(laptop[4].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                       <a href="#"><img src="~/images/@Html.Raw(laptop[5].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(laptop[5].goods_name)</h4>
+                                        <p>@Html.Raw(laptop[5].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                       <a href="#"><img src="~/images/@Html.Raw(laptop[6].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(laptop[6].goods_name)</h4>
+                                        <p>@Html.Raw(laptop[6].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                       <a href="#"><img src="~/images/@Html.Raw(laptop[7].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(laptop[7].goods_name)</h4>
+                                        <p>@Html.Raw(laptop[7].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </div><!-- /Slide2 -->
-                    <div class="item">
-                        <ul class="thumbnails">
-                            <li class="col-sm-3">
-                                <div class="fff">
-                                    <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
-                                    </div>
-                                    <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-sm-3">
-                                <div class="fff">
-                                    <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
-                                    </div>
-                                    <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-sm-3">
-                                <div class="fff">
-                                    <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
-                                    </div>
-                                    <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-sm-3">
-                                <div class="fff">
-                                    <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
-                                    </div>
-                                    <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div><!-- /Slide3 -->
                 </div>
 
 
@@ -419,48 +369,48 @@
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                       <a href="#"><img src="~/images/@Html.Raw(tv[0].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(tv[1].goods_name)</h4>
+                                        <p>@Html.Raw(tv[1].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(tv[1].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(tv[2].goods_name)</h4>
+                                        <p>@Html.Raw(tv[2].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(tv[2].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(tv[3].goods_name)</h4>
+                                        <p>@Html.Raw(tv[3].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(tv[3].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(tv[4].goods_name)</h4>
+                                        <p>@Html.Raw(tv[4].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -471,105 +421,53 @@
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(tv[4].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(tv[5].goods_name)</h4>
+                                        <p>@Html.Raw(tv[5].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(tv[5].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(tv[6].goods_name)</h4>
+                                        <p>@Html.Raw(tv[6].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(tv[6].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(tv[7].goods_name)</h4>
+                                        <p>@Html.Raw(tv[7].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                             <li class="col-sm-3">
                                 <div class="fff">
                                     <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
+                                        <a href="#"><img src="~/images/@Html.Raw(tv[7].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
+                                        <h4>@Html.Raw(img[0].goods_name)</h4>
+                                        <p>@Html.Raw(img[0].goods_desc)</p>
+                                        <a class="btn btn-mini" href="#">Detail</a>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </div><!-- /Slide2 -->
-                    <div class="item">
-                        <ul class="thumbnails">
-                            <li class="col-sm-3">
-                                <div class="fff">
-                                    <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
-                                    </div>
-                                    <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-sm-3">
-                                <div class="fff">
-                                    <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
-                                    </div>
-                                    <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-sm-3">
-                                <div class="fff">
-                                    <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
-                                    </div>
-                                    <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-sm-3">
-                                <div class="fff">
-                                    <div class="thumbnail">
-                                        <a href="#"><img src="http://placehold.it/360x240" alt=""></a>
-                                    </div>
-                                    <div class="caption">
-                                        <h4>Praesent commodo</h4>
-                                        <p>Nullam Condimentum Nibh Etiam Sem</p>
-                                        <a class="btn btn-mini" href="#">» Read More</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div><!-- /Slide3 -->
                 </div>
 
 

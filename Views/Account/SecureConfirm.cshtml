@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "SecureConfirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SecureConfirm</h2>
+
+@Html.Raw(ViewBag.ErrorMessage)
+<form asp-controller="Account" asp-action="SecureConfirm" method="post">
+    <!-- Input and Submit elements -->
+    <p>Secure Code：<input id="Code" name="code" type="text" /></p>
+    <p><input id="subLogin" name="subLogin" type="submit" value="Submit" /></p><!--提交按钮-->
+</form>
