@@ -64,6 +64,13 @@ namespace new_Karlshop.Repository
             return Tv_all_data;
         }
 
+        public List<Goods> GetPopularItem()
+        {
+            List<Goods> all_goods = _context.Goodses.Select(all => all).ToList();
+            
+            return Tv_all_data;
+        }
+
 
 
         public void AddOneGoods(Goods goods)

@@ -209,6 +209,8 @@ namespace new_Karlshop.Migrations
 
                     b.Property<int>("cat_id");
 
+                    b.Property<string>("goods_brief");
+
                     b.Property<string>("goods_desc");
 
                     b.Property<string>("goods_name");

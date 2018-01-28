@@ -11,8 +11,8 @@ using System;
 namespace new_Karlshop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180121222754_addCustomUserContent")]
-    partial class addCustomUserContent
+    [Migration("20180128045654_mydb")]
+    partial class mydb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -209,6 +209,8 @@ namespace new_Karlshop.Migrations
                     b.Property<int>("goods_id");
 
                     b.Property<int>("cat_id");
+
+                    b.Property<string>("goods_brief");
 
                     b.Property<string>("goods_desc");
 

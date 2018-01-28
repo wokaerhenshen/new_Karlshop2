@@ -40,6 +40,7 @@ namespace new_Karlshop.Controllers
             ViewBag.all_data_laptop = gr.GetAllData_Laptop();
             ViewBag.all_data_tv = gr.GetAllData_Tv();
             return View();
+
         }
 
 

@@ -21,6 +21,7 @@ namespace new_Karlshop.Controllers
         }
 
         // GET: Role
+        // noew each time I do changes to the database I need to call this again, maybe I will change this later.
         public ActionResult Index()
         {
             RoleRepo roleRepo = new RoleRepo(_context);

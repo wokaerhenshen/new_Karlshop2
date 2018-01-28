@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace new_Karlshop.Migrations
 {
-    public partial class addCustomUserContent : Migration
+    public partial class mydb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -195,6 +195,7 @@ namespace new_Karlshop.Migrations
                 {
                     goods_id = table.Column<int>(nullable: false),
                     cat_id = table.Column<int>(nullable: false),
+                    goods_brief = table.Column<string>(nullable: true),
                     goods_desc = table.Column<string>(nullable: true),
                     goods_name = table.Column<string>(nullable: true),
                     goods_quantity = table.Column<int>(nullable: false),
