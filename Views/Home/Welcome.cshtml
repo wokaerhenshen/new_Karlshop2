@@ -22,6 +22,7 @@
 
 
 
+
 </head>
 <body>
 
@@ -55,6 +56,14 @@
 
     <img src="~/images/wechat.png" style="margin-top:20px; position:fixed; width:25px; "/>
 
+    <style>
+
+
+        .carousel-control.right.no-shadow, .carousel-control.left.no-shadow {
+            background-image: none;
+        }
+    </style>
+
     <div class="container">
         <div class="col-xs-10">
             <div class="carousel slide carousel2" id="secondCarousel" >
@@ -80,8 +89,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(img[0].goods_name)</h4>
-                                        <p>@Html.Raw(img[0].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(img[0].goods_brief)</p>
+                                        <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(img[0].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -93,8 +102,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(img[1].goods_name)</h4>
-                                        <p>@Html.Raw(img[1].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(img[1].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(img[1].goods_id)" style="display:block;text-align:center;margin-bottom:10px;">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -106,8 +115,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(img[2].goods_name)</h4>
-                                        <p>@Html.Raw(img[2].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(img[2].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(img[2].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -119,8 +128,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(img[3].goods_name)</h4>
-                                        <p>@Html.Raw(img[3].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(img[3].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(img[3].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -136,8 +145,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(img[4].goods_name)</h4>
-                                        <p>@Html.Raw(img[4].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(img[4].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(img[4].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -149,8 +158,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(img[5].goods_name)</h4>
-                                        <p>@Html.Raw(img[5].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(img[5].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(img[5].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -162,8 +171,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(img[6].goods_name)</h4>
-                                        <p>@Html.Raw(img[6].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(img[6].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(img[6].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -175,8 +184,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(img[7].goods_name)</h4>
-                                        <p>@Html.Raw(img[7].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(img[7].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(img[7].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -189,9 +198,14 @@
 
 
 
-                <a class="prev" href="#secondCarousel" 
-                   data-slide="prev" ><span class="glyphicon glyphicon-chevron-right"></a>
-                <a class="carousel-control right" href="#secondCarousel"
+                <a class="left carousel-control no-shadow" href="#secondCarousel"  data-slide="prev">
+
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+
+                    <span class="sr-only">Previous</span>
+                </a>
+
+                <a class="carousel-control right no-shadow" href="#secondCarousel"
                    data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 
@@ -210,23 +224,19 @@
             </div>
                 <div class="tab-content">
                     <div class="tab-pane active" ></div>
-                        <h5>Most Popular Products</h5>
+                        <h5 class="">Most Popular Products</h5>
                             <ul class="list-group">
                                 @{
+                                    var popular = @ViewBag.popular_items;
+                                   
+                                    foreach ( var item in popular)
+                                    {
+                                        <li class="list-group-item">
+                                            <h6><a href="Home/GoodsEdit/@Html.Raw(item.goods_id)">@Html.Raw(item.goods_name) </a><span class="badge alert-info pull-right">@Html.Raw(item.sold_quantity)</span></h6>
+                                        </li>
 
+                                    }
                                 }
-                                <li class="list-group-item">
-                                    <h4>karl <span class="badge pull-right">99</span></h4>
-                                </li>
-                                <li class="list-group-item">
-                                    <h4>karl <span class="badge pull-right">99</span></h4>
-                                </li>
-                                <li class="list-group-item">
-                                    <h4>karl <span class="badge pull-right">99</span></h4>
-                                </li>
-                                <li class="list-group-item">
-                                    <h4>karl <span class="badge pull-right">99</span></h4>
-                                </li>
                             </ul>
                 </div>
         </div>
@@ -250,8 +260,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(laptop[0].goods_name)</h4>
-                                        <p>@Html.Raw(laptop[0].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(laptop[0].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(laptop[0].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -262,8 +272,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(laptop[1].goods_name)</h4>
-                                        <p>@Html.Raw(laptop[1].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(laptop[1].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(laptop[1].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -274,8 +284,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(laptop[2].goods_name)</h4>
-                                        <p>@Html.Raw(laptop[2].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(laptop[2].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(laptop[2].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -286,8 +296,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(laptop[3].goods_name)</h4>
-                                        <p>@Html.Raw(laptop[3].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(laptop[3].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(laptop[3].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -302,8 +312,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(laptop[4].goods_name)</h4>
-                                        <p>@Html.Raw(laptop[4].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(laptop[4].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(laptop[4].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -314,8 +324,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(laptop[5].goods_name)</h4>
-                                        <p>@Html.Raw(laptop[5].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(laptop[5].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(laptop[5].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -326,8 +336,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(laptop[6].goods_name)</h4>
-                                        <p>@Html.Raw(laptop[6].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(laptop[6].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(laptop[6].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -338,8 +348,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(laptop[7].goods_name)</h4>
-                                        <p>HP 15.6 Touchscreen Laptop</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">HP 15.6 Touchscreen Laptop</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(laptop[7].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -349,9 +359,9 @@
 
 
 
-                <a class="carousel-control left" href="#thirdCarousel"
+                <a class="carousel-control left no-shadow" href="#thirdCarousel"
                    data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                <a class="carousel-control right" href="#thirdCarousel"
+                <a class="carousel-control right no-shadow" href="#thirdCarousel"
                    data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
                 <!-- /.control-box -->
 
@@ -376,8 +386,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(tv[1].goods_name)</h4>
-                                        <p>@Html.Raw(tv[1].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(tv[0].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(tv[0].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -388,8 +398,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(tv[2].goods_name)</h4>
-                                        <p>@Html.Raw(tv[2].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(tv[1].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(tv[1].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -400,8 +410,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(tv[3].goods_name)</h4>
-                                        <p>@Html.Raw(tv[3].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(tv[2].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(tv[2].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -412,8 +422,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(tv[4].goods_name)</h4>
-                                        <p>@Html.Raw(tv[4].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(tv[3].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(tv[3].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -428,8 +438,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(tv[5].goods_name)</h4>
-                                        <p>@Html.Raw(tv[5].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(tv[4].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(tv[4].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -440,8 +450,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(tv[6].goods_name)</h4>
-                                        <p>@Html.Raw(tv[6].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(tv[5].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(tv[5].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -452,8 +462,8 @@
                                     </div>
                                     <div class="caption">
                                         <h4>@Html.Raw(tv[7].goods_name)</h4>
-                                        <p>@Html.Raw(tv[7].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <p style="height:50px">@Html.Raw(tv[6].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(tv[6].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -463,9 +473,9 @@
                                         <a href="#"><img src="~/images/@Html.Raw(tv[7].ori_img)" alt="" style="height:120px;"></a>
                                     </div>
                                     <div class="caption">
-                                        <h4>@Html.Raw(img[0].goods_name)</h4>
-                                        <p>@Html.Raw(img[0].goods_brief)</p>
-                                        <a class="btn btn-mini" href="#">Detail</a>
+                                        <h4>@Html.Raw(tv[7].goods_name)</h4>
+                                        <p style="height:50px">@Html.Raw(tv[7].goods_brief)</p>
+                                       <a class="btn btn-info" href="Home/GoodsEdit/@Html.Raw(tv[7].goods_id)" style="display:block;text-align:center">Detail</a>
                                     </div>
                                 </div>
                             </li>
@@ -474,12 +484,11 @@
                 </div>
 
 
-                <nav>
-                    <ul class="control-box pager">
-                        <li><a data-slide="prev" href="#forthCarousel" class=""><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-                        <li><a data-slide="next" href="#forthCarousel" class=""><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-                    </ul>
-                </nav>
+                <a class="carousel-control left no-shadow" href="#forthCarousel"
+                   data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a class="carousel-control right no-shadow" href="#forthCarousel"
+                   data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                <!-- /.control-box -->
                 <!-- /.control-box -->
 
             </div><!-- /#myCarousel -->

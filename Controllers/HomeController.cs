@@ -39,6 +39,8 @@ namespace new_Karlshop.Controllers
             ViewBag.all_img_phone = gr.GetAllData_Phone();
             ViewBag.all_data_laptop = gr.GetAllData_Laptop();
             ViewBag.all_data_tv = gr.GetAllData_Tv();
+            ViewBag.popular_items = gr.GetPopularItem();
+
             return View();
 
         }

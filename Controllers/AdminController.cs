@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using new_Karlshop.Data;
 using new_Karlshop.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace new_Karlshop.Controllers
 {
@@ -15,16 +17,18 @@ namespace new_Karlshop.Controllers
     public class AdminController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-
+        private readonly IHostingEnvironment _hostingEnvironment;
         public ApplicationDbContext _context;
         CategoryRepo cr;
         GoodsRepo gr;
         AccountRepo ar;
         AccountGoodsRepo ag;
 
-        public AdminController(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context)
+        public AdminController(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context,
+            IHostingEnvironment hostingEnvironment)
         {
             this._httpContextAccessor = httpContextAccessor;
+            _hostingEnvironment = hostingEnvironment;
             this._context = context;
             this.cr = new CategoryRepo(context);
             this.gr = new GoodsRepo(context);
@@ -191,6 +195,34 @@ namespace new_Karlshop.Controllers
             gr.AddOneGoods(goods);
 
             return RedirectToAction("Goods", "Admin");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FileSave()
+        {
+            var date = Request;
+            var files = Request.Form.Files;
+            long size = files.Sum(f => f.Length);
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            string contentRootPath = _hostingEnvironment.ContentRootPath;
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > 0)
+                {
+
+                    string fileExt = Path.GetExtension(formFile.FileName); //文件扩展名，不含“.”
+                    long fileSize = formFile.Length; //获得文件大小，以字节为单位
+                    string newFileName = System.Guid.NewGuid().ToString() + "." + fileExt; //随机生成新的文件名
+                    var filePath = webRootPath + "/upload/" + newFileName;
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+
+                        await formFile.CopyToAsync(stream);
+                    }
+                }
+            }
+
+            return Ok(new { count = files.Count, size });
         }
 
         private string GetAspCookie()

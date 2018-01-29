@@ -67,8 +67,9 @@ namespace new_Karlshop.Repository
         public List<Goods> GetPopularItem()
         {
             List<Goods> all_goods = _context.Goodses.Select(all => all).ToList();
-            
-            return Tv_all_data;
+            List<Goods> popular_goods = all_goods.OrderByDescending(sq => sq.sold_quantity).Take(5).ToList();
+    
+            return popular_goods;
         }
 
 

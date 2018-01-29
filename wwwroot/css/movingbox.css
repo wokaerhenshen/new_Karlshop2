@@ -34,6 +34,11 @@ ul.thumbnails {
     width: 100%;
 }
 
+.carousel-control{
+    color:none;
+}
+
+
 /* Mobile Only */
 @media (max-width: 767px) {
     .page-header, .control-box {
