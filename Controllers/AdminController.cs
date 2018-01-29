@@ -210,10 +210,13 @@ namespace new_Karlshop.Controllers
                 if (formFile.Length > 0)
                 {
 
+                    //I will ask abou this :
+                    //感谢分享，请问在第二种方法 ajax上传中，为何要随机生成一个新的文件名呢，用原来的不好吗？
                     string fileExt = Path.GetExtension(formFile.FileName); //文件扩展名，不含“.”
                     long fileSize = formFile.Length; //获得文件大小，以字节为单位
+                    string fileName = formFile.FileName;
                     string newFileName = System.Guid.NewGuid().ToString() + "." + fileExt; //随机生成新的文件名
-                    var filePath = webRootPath + "/upload/" + newFileName;
+                    var filePath = webRootPath + "\\images\\" + fileName;
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
 
@@ -222,7 +225,8 @@ namespace new_Karlshop.Controllers
                 }
             }
 
-            return Ok(new { count = files.Count, size });
+            //why not it return this msg?
+            return Ok(new { message = "upload success!!!" });
         }
 
         private string GetAspCookie()

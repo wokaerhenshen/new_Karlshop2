@@ -59,9 +59,9 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.goods_desc, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.goods_desc, htmlAttributes: new { @class = "control-label col-md-2"  })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.goods_desc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.goods_desc, new { htmlAttributes = new { @class = "form-control"  } })
                 @Html.ValidationMessageFor(model => model.goods_desc, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -69,7 +69,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ori_img, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ori_img, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ori_img, new { htmlAttributes = new { @class = "form-control", placeholder = "You need to upload the image first and image path will auto generate" , id = "my_img_path" } } )
                 @Html.ValidationMessageFor(model => model.ori_img, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -107,15 +107,28 @@
     <input type="submit" value="提交" />
 </form>*@
 
-<div>
-    <form id="uploadForm">
-        AJAX上传多文件： <input type="file" name="file" multiple />
-        <input type="button" value="上传" onclick="doUpload()" />
-    </form>
-</div>
+
+@*I made a huge mistake here, which add a razor html form, I want to make it good looking, 
+    but the result is that the file can't be uploaded anymore.*@
+    <div class="form-group">
+        <form id="uploadForm">
+            Upload Image： <input type="file" name="file" id="my_upload_img" multiple/>
+            <br />
+            <input type="button" value="Upload" onclick="doUpload()" />
+        </form>
+    </div>
+
+
+
+
 
 <script>
     function doUpload() {
+        //my_img_path
+        // how can I get the multiple value of input which type is file?
+        var a = document.getElementById("my_upload_img").value.substring(12);
+        //alert(a);
+        document.getElementById("my_img_path").value = a;
         var formData = new FormData($("#uploadForm")[0]);
         $.ajax({
             url: '@Url.Action("FileSave")',
@@ -126,20 +139,19 @@
             contentType: false,
             processData: false,
             success: function (returndata) {
-                alert(returndata);
+                
+                alert("upload success");
             },
             error: function (returndata) {
-                alert(returndata);
+                alert("upload failed");
             }
         });
         }
 </script>
 
-
+<br />
 <div>
     @Html.ActionLink("Back to List", "Goods")
 </div>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
