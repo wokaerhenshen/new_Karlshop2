@@ -229,6 +229,15 @@ namespace new_Karlshop.Controllers
             return Ok(new { message = "upload success!!!" });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CustomerOrders()
+        {
+            return View();
+        }
+
+
+
+
         private string GetAspCookie()
         {
             CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,

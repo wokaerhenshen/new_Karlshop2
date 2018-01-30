@@ -7,9 +7,11 @@ using new_Karlshop.Data;
 using new_Karlshop.Repository;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using new_Karlshop.Models.AccountViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace new_Karlshop.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserRoleController : Controller
     {
         private ApplicationDbContext _context;
