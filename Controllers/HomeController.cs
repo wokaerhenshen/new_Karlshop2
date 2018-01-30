@@ -264,6 +264,13 @@ namespace new_Karlshop.Controllers
             ViewBag.totalPieces = totalPieces;
             ViewBag.totalPrice = totalPrice;
 
+            CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
+                                             Response);
+            cookieHelper.Set("totalPieces", totalPieces.ToString(), 1);
+            cookieHelper.Set("totalPrice", totalPrice.ToString(), 1);
+
+
+
             // ViewBag.test = _context.AccountGoods.Where(ag => ag.Account_ID == Int32.Parse(cookieHelper.GetValue("KarlShop"))).FirstOrDefault().Account.address;
             //   return View(ag.GetCartByAccountID(Int32.Parse(cookieHelper.GetValue("KarlShop"))));
 
@@ -291,7 +298,34 @@ namespace new_Karlshop.Controllers
             List<AccountGood> CartaccountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart").ToList();
 
 
-            
+
+            Order newOrder = new Order()
+            {
+                Order_id = ar.generateNewOrderID(),
+                Account_ID = _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault(),
+                order_time = DateTime.Now,
+                total_price = Convert.ToDecimal(cookieHelper.Get("totalPrice")),
+                total_number = Convert.ToInt32(cookieHelper.Get("totalPieces"))
+
+            };
+            _context.Orders.Add(newOrder);
+            _context.SaveChanges();
+            foreach (var item in CartaccountGoods)
+            {
+                OrderGoods temp = new OrderGoods()
+                {
+                    Order_id = newOrder.Order_id,
+                    goods_id = item.Goods_ID,
+                    Quantity = item.Quantity
+
+                };
+                _context.OrderGoods.Add(temp);
+                _context.SaveChanges();
+
+            }
+
+
+
             foreach (var item in CartaccountGoods)
             {
                 item.Type = "bought";

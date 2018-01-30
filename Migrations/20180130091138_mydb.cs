@@ -223,6 +223,27 @@ namespace new_Karlshop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Order_id = table.Column<int>(nullable: false),
+                    Account_ID = table.Column<string>(nullable: true),
+                    order_time = table.Column<DateTime>(nullable: false),
+                    total_number = table.Column<int>(nullable: false),
+                    total_price = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Order_id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Accounts_Account_ID",
+                        column: x => x.Account_ID,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AccountGoods",
                 columns: table => new
                 {
@@ -244,6 +265,32 @@ namespace new_Karlshop.Migrations
                     table.ForeignKey(
                         name: "FK_AccountGoods_Goodses_Goods_ID",
                         column: x => x.Goods_ID,
+                        principalTable: "Goodses",
+                        principalColumn: "goods_id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderGoods",
+                columns: table => new
+                {
+                    Order_id = table.Column<int>(nullable: false),
+                    goods_id = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderGoods", x => new { x.Order_id, x.goods_id });
+                    table.UniqueConstraint("AK_OrderGoods_goods_id_Order_id", x => new { x.goods_id, x.Order_id });
+                    table.ForeignKey(
+                        name: "FK_OrderGoods_Orders_Order_id",
+                        column: x => x.Order_id,
+                        principalTable: "Orders",
+                        principalColumn: "Order_id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderGoods_Goodses_goods_id",
+                        column: x => x.goods_id,
                         principalTable: "Goodses",
                         principalColumn: "goods_id",
                         onDelete: ReferentialAction.Restrict);
@@ -326,6 +373,11 @@ namespace new_Karlshop.Migrations
                 name: "IX_Goodses_cat_id",
                 table: "Goodses",
                 column: "cat_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_Account_ID",
+                table: "Orders",
+                column: "Account_ID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -349,22 +401,28 @@ namespace new_Karlshop.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "OrderGoods");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AccountGoods");
 
             migrationBuilder.DropTable(
-                name: "Accounts");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Goodses");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Accounts");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

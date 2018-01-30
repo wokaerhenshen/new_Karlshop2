@@ -67,7 +67,7 @@ namespace new_Karlshop.Data
         
         //define the parent of goods.
         public virtual Category Category { get; set; }
-
+        public virtual ICollection<OrderGoods> OrderGoods { get; set; }
         public virtual ICollection<AccountGood> AccountGood { get; set; }
     }
 }

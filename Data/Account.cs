@@ -28,5 +28,6 @@ namespace new_Karlshop.Data
 
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual ICollection<AccountGood> AccountGood { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

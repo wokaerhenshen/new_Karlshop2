@@ -20,6 +20,18 @@ namespace new_Karlshop.Repository
             return _context.Accounts;
         }
 
+        public int generateNewOrderID()
+        {
+            if (_context.OrderGoods.Count() == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return _context.OrderGoods.Select(o => o.Order_id).Max() + 1;
+            }
+        }
+
         public Boolean FindAccount(string username)
         {
             Account exist = new Account();

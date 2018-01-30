@@ -23,6 +23,7 @@ namespace new_Karlshop.Controllers
         GoodsRepo gr;
         AccountRepo ar;
         AccountGoodsRepo ag;
+        OrderRepo og;
 
         public AdminController(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context,
             IHostingEnvironment hostingEnvironment)
@@ -34,6 +35,7 @@ namespace new_Karlshop.Controllers
             this.gr = new GoodsRepo(context);
             this.ar = new AccountRepo(context);
             this.ag = new AccountGoodsRepo(context);
+            this.og = new OrderRepo(context);
         }
 
         public ActionResult Index()
@@ -229,10 +231,18 @@ namespace new_Karlshop.Controllers
             return Ok(new { message = "upload success!!!" });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CustomerOrders()
+        [HttpGet]
+        public ActionResult CustomerOrders()
         {
-            return View();
+            
+            return View(og.GetAll());
+        }
+
+        //So I have two options, the first one is to add stuff in database, the second one is to create viewmodel.
+        [HttpGet]
+        public ActionResult OrderDetails(int id)
+        {
+            return View(og.GetGoodsInOneOrder(id));
         }
 
 

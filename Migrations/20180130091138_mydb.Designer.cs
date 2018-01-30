@@ -11,7 +11,7 @@ using System;
 namespace new_Karlshop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180128045654_mydb")]
+    [Migration("20180130091138_mydb")]
     partial class mydb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -247,6 +247,40 @@ namespace new_Karlshop.Migrations
                     b.ToTable("Goodses");
                 });
 
+            modelBuilder.Entity("new_Karlshop.Data.Order", b =>
+                {
+                    b.Property<int>("Order_id");
+
+                    b.Property<string>("Account_ID");
+
+                    b.Property<DateTime>("order_time");
+
+                    b.Property<int>("total_number");
+
+                    b.Property<decimal>("total_price");
+
+                    b.HasKey("Order_id");
+
+                    b.HasIndex("Account_ID");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("new_Karlshop.Data.OrderGoods", b =>
+                {
+                    b.Property<int>("Order_id");
+
+                    b.Property<int>("goods_id");
+
+                    b.Property<int>("Quantity");
+
+                    b.HasKey("Order_id", "goods_id");
+
+                    b.HasAlternateKey("goods_id", "Order_id");
+
+                    b.ToTable("OrderGoods");
+                });
+
             modelBuilder.Entity("new_Karlshop.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -376,6 +410,27 @@ namespace new_Karlshop.Migrations
                     b.HasOne("new_Karlshop.Data.Category", "Category")
                         .WithMany("Goods")
                         .HasForeignKey("cat_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("new_Karlshop.Data.Order", b =>
+                {
+                    b.HasOne("new_Karlshop.Data.Account", "Account")
+                        .WithMany("Order")
+                        .HasForeignKey("Account_ID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("new_Karlshop.Data.OrderGoods", b =>
+                {
+                    b.HasOne("new_Karlshop.Data.Order", "Order")
+                        .WithMany("OrderGoods")
+                        .HasForeignKey("Order_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("new_Karlshop.Data.Goods", "Goods")
+                        .WithMany("OrderGoods")
+                        .HasForeignKey("goods_id")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
