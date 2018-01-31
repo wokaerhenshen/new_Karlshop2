@@ -44,7 +44,7 @@ namespace new_Karlshop.Services
 				= new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
 
 				System.Net.NetworkCredential credentials
-				= new System.Net.NetworkCredential("wokaerhenshen", "xuwenjie360");
+				= new System.Net.NetworkCredential("myaccount", "mypwd");
 
 				smtpClient.Credentials = credentials;
 				smtpClient.Send(mailMsg);
