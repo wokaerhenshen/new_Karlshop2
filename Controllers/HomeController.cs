@@ -34,6 +34,7 @@ namespace new_Karlshop.Controllers
             this.ag = new AccountGoodsRepo(context);
         }
 
+        [Authorize]
         public IActionResult Welcome()
         {
             ViewBag.all_img_phone = gr.GetAllData_Phone();

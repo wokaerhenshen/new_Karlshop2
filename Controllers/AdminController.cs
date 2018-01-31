@@ -12,7 +12,7 @@ using System.IO;
 
 namespace new_Karlshop.Controllers
 {
-
+    //How can I do the validation if input is not model?
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
@@ -75,6 +75,7 @@ namespace new_Karlshop.Controllers
         [HttpPost]
         public ActionResult AccountEdit(Account account)
         {
+            if(ModelState.IsValid)
             ar.EditOneAccount(account);
             return RedirectToAction("Account", "Admin");
         }

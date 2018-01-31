@@ -16,7 +16,7 @@ using new_Karlshop.Services;
 using new_Karlshop.Data;
 using new_Karlshop.Repository;
 using Microsoft.AspNetCore.Http;
-
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
 namespace new_Karlshop.Controllers
 {
@@ -85,6 +85,7 @@ namespace new_Karlshop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
+            System.Threading.Thread.Sleep(2000); // Add two second delay
             ViewBag.loginUser = "";
             ViewBag.userType = "";
             ViewBag.ErrorMessage = "";
@@ -95,7 +96,7 @@ namespace new_Karlshop.Controllers
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -246,6 +247,7 @@ namespace new_Karlshop.Controllers
             return View();
         }
 
+        [ValidateRecaptcha]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -481,6 +483,7 @@ namespace new_Karlshop.Controllers
             return View();
         }
 
+       
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -492,6 +495,7 @@ namespace new_Karlshop.Controllers
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
+                    //哇，好贱哦，还不让别人知道这用户没注册的咯。
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
                 }
 
@@ -499,8 +503,8 @@ namespace new_Karlshop.Controllers
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                await _emailSender.SendEmailAsync(model.Email, "Password Reset",
+                   EmailSender.ResetPwdHtml(callbackUrl));
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 
@@ -527,6 +531,7 @@ namespace new_Karlshop.Controllers
             return View(model);
         }
 
+        [ValidateRecaptcha]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

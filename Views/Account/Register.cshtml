@@ -2,7 +2,9 @@
 @{
     ViewData["Title"] = "Register";
 }
-
+<head>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
 <h2>@ViewData["Title"]</h2>
 
 <div class="row">
@@ -27,11 +29,25 @@
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-default">Register</button>
+            <br />
+            <script src="~/js/jquery.js"></script>
+            <script src="~/js/jquery.validate.js"></script>
+            <script src="~/js/jquery.validate.unobtrusive.js"></script>
+            <br />
+            <recaptcha />
+            <span class="text-danger" id="recaptchaErrorMessage"></span>
+
         </form>
+        @section Scripts {
+            <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
+        }
+
+        <br />
         <a href="SecureConfirm">Super Register</a>
+        <br />
     </div>
 </div>
 
-@section Scripts {
+@*@section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-}
+}*@
