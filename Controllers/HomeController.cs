@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using new_Karlshop.Repository;
 using Microsoft.AspNetCore.Authorization;
 using new_Karlshop.Services;
+using new_Karlshop.Models.ManageViewModels;
 
 namespace new_Karlshop.Controllers
 {
@@ -285,8 +286,8 @@ namespace new_Karlshop.Controllers
         [Authorize]
         public IActionResult ConfirmOrder(string accountID)
         {
-            Account account = ar.GetOneAccountByNum(accountID);
-            return View(account);
+            UserDetailVM userDetail = ar.getOneUserDetailByNum(accountID).FirstOrDefault();
+            return View(userDetail);
         }
 
         [HttpPost]

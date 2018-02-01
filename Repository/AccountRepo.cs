@@ -1,4 +1,5 @@
 ﻿using new_Karlshop.Data;
+using new_Karlshop.Models.ManageViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +72,20 @@ namespace new_Karlshop.Repository
         public Account GetOneAccountByNum(string id)
         {
             return _context.Accounts.Where(a => a.Id == id).FirstOrDefault();
+        }
+
+        public IEnumerable<UserDetailVM> getOneUserDetailByNum(string id)
+        {
+            IEnumerable<UserDetailVM> query = from ac in _context.Accounts
+                                 where (ac.Id == id)
+                                 select new UserDetailVM
+                                 {
+                                     firstName = ac.firstName,
+                                     lastName = ac.lastName,
+                                     phone = ac.phone,
+                                     address = ac.address
+                                 };
+            return query;
         }
 
         public void AddOneAccount(Account account)
