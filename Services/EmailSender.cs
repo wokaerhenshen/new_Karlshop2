@@ -43,6 +43,7 @@ namespace new_Karlshop.Services
 				SmtpClient smtpClient
 				= new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
 
+				//need to cahnge this when use in case
 				System.Net.NetworkCredential credentials
 				= new System.Net.NetworkCredential("xxxxxx", "xxxxxxxx");
 

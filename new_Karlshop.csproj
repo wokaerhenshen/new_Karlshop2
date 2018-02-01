@@ -4,9 +4,6 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-new_Karlshop-A2B74E29-CBB3-44A1-ABAD-E29DE540A663</UserSecretsId>
   </PropertyGroup>
-  <ItemGroup>
-    <None Update="app.db" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />

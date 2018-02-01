@@ -36,6 +36,9 @@ namespace new_Karlshop.Data
                     null, MediaTypeNames.Text.Html));
 
             // Init SmtpClient and send
+            //need to change the account and password when user in case
+            //账号是 wokaerhenshen
+            //密码是 徐文杰410 好像是好吧。
             SmtpClient smtpClient
             = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
             System.Net.NetworkCredential credentials
