@@ -80,6 +80,7 @@ namespace new_Karlshop.Repository
                                  where (ac.Id == id)
                                  select new UserDetailVM
                                  {
+                                     id = ac.Id,
                                      firstName = ac.firstName,
                                      lastName = ac.lastName,
                                      phone = ac.phone,
@@ -114,6 +115,16 @@ namespace new_Karlshop.Repository
       
             result.phone = account.phone;
             result.address = account.address;
+            _context.SaveChanges();
+        }
+
+        public void QuickEditAccountFromUserDetail(UserDetailVM userDetail)
+        {
+            Account account = _context.Accounts.Where(a => a.Id == userDetail.id).FirstOrDefault();
+            account.firstName = userDetail.firstName;
+            account.lastName = userDetail.lastName;
+            account.phone = userDetail.phone;
+            account.address = userDetail.address;
             _context.SaveChanges();
         }
 

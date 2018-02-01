@@ -8,7 +8,9 @@ namespace new_Karlshop.Models.ManageViewModels
 {
     public class UserDetailVM
     {
-        
+        [Required]
+        [Display(Name = "ID")]
+        public string id { get; set; }
 
         [Required]
         [Display(Name = "First Name")]

@@ -14,6 +14,7 @@ using new_Karlshop.Models;
 using new_Karlshop.Models.ManageViewModels;
 using new_Karlshop.Services;
 using new_Karlshop.Data;
+using new_Karlshop.Repository;
 
 namespace new_Karlshop.Controllers
 {
@@ -27,6 +28,7 @@ namespace new_Karlshop.Controllers
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
         ApplicationDbContext _context;
+        AccountRepo ar;
 
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
@@ -45,6 +47,7 @@ namespace new_Karlshop.Controllers
             _logger = logger;
             _urlEncoder = urlEncoder;
             _context = context;
+            this.ar = new AccountRepo(context);
         }
 
         [TempData]
@@ -119,17 +122,24 @@ namespace new_Karlshop.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            Account account = _context.Accounts.Where(i => i.Id == User.getUserId()).FirstOrDefault();
-            return View(account);
+            // The reason I change the account view to the userdetailVM is that by doing this I can set the 
+            // columns of the account must be input, or workers do not know where to do the shipment 
+            // but the time when the account is created is before this stuff, which means that the 
+            // columns in the account table is not requied when they are created.
+            //so I need the viewmodel to do this.
+            //Account account = _context.Accounts.Where(i => i.Id == User.getUserId()).FirstOrDefault();
+            //return View(account);
+            UserDetailVM userDetail = ar.getOneUserDetailByNum(User.getUserId()).FirstOrDefault();
+            return View(userDetail);
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> UserDetail(Account model)
+        public async Task<IActionResult> UserDetail(UserDetailVM userDetail)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(userDetail);
             }
 
             var user = await _userManager.GetUserAsync(User);
@@ -137,11 +147,7 @@ namespace new_Karlshop.Controllers
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-            _context.Accounts.Where(i => i.Id == User.getUserId()).FirstOrDefault().firstName = model.firstName;
-            _context.Accounts.Where(i => i.Id == User.getUserId()).FirstOrDefault().lastName = model.lastName;
-            _context.Accounts.Where(i => i.Id == User.getUserId()).FirstOrDefault().phone = model.phone;
-            _context.Accounts.Where(i => i.Id == User.getUserId()).FirstOrDefault().address = model.address;
-            _context.SaveChanges();
+            ar.QuickEditAccountFromUserDetail(userDetail);
 
             return RedirectToAction("Index", "Manage");
         }

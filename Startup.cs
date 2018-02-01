@@ -36,6 +36,21 @@ namespace new_Karlshop
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            // Call this before AddMvc()
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                    });
+            });
+
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
@@ -82,7 +97,7 @@ namespace new_Karlshop
             }
 
             app.UseStaticFiles();
-
+            app.UseCors("AllowAll");
             app.UseAuthentication();
 
             app.UseMvc(routes =>

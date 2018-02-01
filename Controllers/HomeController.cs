@@ -291,54 +291,62 @@ namespace new_Karlshop.Controllers
         }
 
         [HttpPost]
-        public IActionResult ConfirmOrder(Account account)
+        public IActionResult ConfirmOrder(UserDetailVM userDetail)
         {
-            CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
+            if (ModelState.IsValid)
+            {
+                CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
                          Response);
 
-            ar.QuickEditAccount(account);
-            List<AccountGood> CartaccountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart").ToList();
+                ar.QuickEditAccountFromUserDetail(userDetail);
+                //  ar.QuickEditAccount(account);
+
+                List<AccountGood> CartaccountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart").ToList();
 
 
 
-            Order newOrder = new Order()
-            {
-                Order_id = ar.generateNewOrderID(),
-                Account_ID = _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault(),
-                order_time = DateTime.Now,
-                total_price = Convert.ToDecimal(cookieHelper.Get("totalPrice")),
-                total_number = Convert.ToInt32(cookieHelper.Get("totalPieces"))
-
-            };
-            _context.Orders.Add(newOrder);
-            _context.SaveChanges();
-            foreach (var item in CartaccountGoods)
-            {
-                OrderGoods temp = new OrderGoods()
+                Order newOrder = new Order()
                 {
-                    Order_id = newOrder.Order_id,
-                    goods_id = item.Goods_ID,
-                    Quantity = item.Quantity
+                    Order_id = ar.generateNewOrderID(),
+                    Account_ID = _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault(),
+                    order_time = DateTime.Now,
+                    total_price = Convert.ToDecimal(cookieHelper.Get("totalPrice")),
+                    total_number = Convert.ToInt32(cookieHelper.Get("totalPieces"))
 
                 };
-                _context.OrderGoods.Add(temp);
+                _context.Orders.Add(newOrder);
                 _context.SaveChanges();
+                foreach (var item in CartaccountGoods)
+                {
+                    OrderGoods temp = new OrderGoods()
+                    {
+                        Order_id = newOrder.Order_id,
+                        goods_id = item.Goods_ID,
+                        Quantity = item.Quantity
 
+                    };
+                    _context.OrderGoods.Add(temp);
+                    _context.SaveChanges();
+
+                }
+
+
+
+                foreach (var item in CartaccountGoods)
+                {
+                    item.Type = "bought";
+                    _context.SaveChanges();
+                    Goods good = _context.Goodses.Where(i => i.goods_id == item.Goods_ID).FirstOrDefault();
+                    good.goods_quantity -= item.Quantity;
+                    good.sold_quantity += item.Quantity;
+                    _context.SaveChanges();
+                }
+
+                return RedirectToAction("FinishShopping", "Home");
             }
 
-
-
-            foreach (var item in CartaccountGoods)
-            {
-                item.Type = "bought";
-                _context.SaveChanges();
-                Goods good = _context.Goodses.Where(i => i.goods_id == item.Goods_ID).FirstOrDefault();
-                good.goods_quantity -= item.Quantity;
-                good.sold_quantity += item.Quantity;
-                _context.SaveChanges();
-            }
-
-            return RedirectToAction("FinishShopping", "Home");
+            return View(userDetail);
+                
         }
 
         public IActionResult FinishShopping()
