@@ -11,6 +11,7 @@ using new_Karlshop.Repository;
 using Microsoft.AspNetCore.Authorization;
 using new_Karlshop.Services;
 using new_Karlshop.Models.ManageViewModels;
+using Braintree;
 
 namespace new_Karlshop.Controllers
 {
@@ -20,19 +21,23 @@ namespace new_Karlshop.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public ApplicationDbContext _context;
+        //public HttpContext _http;
         CategoryRepo cr;
         GoodsRepo gr;
         AccountRepo ar;
         AccountGoodsRepo ag;
 
-        public HomeController(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context)
+        public HomeController(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context )
         {
+            
             this._httpContextAccessor = httpContextAccessor;
             this._context = context;
+           // this._http = http;
             this.cr = new CategoryRepo(context);
             this.gr = new GoodsRepo(context);
             this.ar = new AccountRepo(context);
             this.ag = new AccountGoodsRepo(context);
+
         }
 
         [Authorize]
@@ -348,6 +353,15 @@ namespace new_Karlshop.Controllers
             return View(userDetail);
                 
         }
+
+        public IActionResult PayPalTest()
+        {
+            // BraintreeGateway gateway = new BraintreeGateway("access_token$sandbox$ym2fhwysk723gtg4$2e18ce46a546af041a2f90f2d46eb441");
+           // string token = ClientTokenHandler.ProcessRequest(_http);
+           // ViewBag.token = token;
+            return View();
+        }
+
 
         public IActionResult FinishShopping()
         {

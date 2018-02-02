@@ -14,7 +14,7 @@ namespace new_Karlshop.Data
 
         [Key]
         public string Id { get; set; }
-
+ 
         [Display(Name = "First Name")]
         public string firstName { get; set; }
         [Display(Name = "Last Name")]

@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "PayPalTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <!-- Load the required components. -->
+    <script src="https://js.braintreegateway.com/web/3.25.0/js/client.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.25.0/js/paypal-checkout.min.js"></script>
+
+    <script>
+        paypal.Button.render({
+            braintree: braintree,
+            // Other configuration
+        }, '#id-of-element-where-paypal-button-will-render');
+    </script>
+</head>
+
+<body>
+    
+    <div id="paypal-button"></div>
+
+    <script>
+        console.log(@ViewBag.token)
+        paypal.Button.render({
+        braintree: braintree,
+        client: {
+               // production: 'CLIENT_TOKEN_FROM_SERVER',
+                sandbox: @ViewBag.token
+        },
+        env: 'sandbox', // Or 'sandbox',
+
+      commit: true, // Show a 'Pay Now' button
+
+      style: {
+        color: 'gold',
+        size: 'small'
+      },
+
+      payment: function(data, actions) {
+        /*
+         * Set up the payment here
+         */
+          return actions.braintree.create({
+              flow: 'checkout', // Required
+              amount: 10.00, // Required
+              currency: 'USD', // Required
+              enableShippingAddress: true,
+              shippingAddressEditable: false,
+              shippingAddressOverride: {
+                  recipientName: 'Scruff McGruff',
+                  line1: '1234 Main St.',
+                  line2: 'Unit 1',
+                  city: 'Chicago',
+                  countryCode: 'US',
+                  postalCode: '60652',
+                  state: 'IL',
+                  phone: '123.456.7890'
+              }
+          });
+      },
+
+      onAuthorize: function(data, actions) {
+        /*
+         * Execute the payment here
+         */
+      },
+
+      onCancel: function(data, actions) {
+        /*
+         * Buyer cancelled the payment
+         */
+      },
+
+      onError: function(err) {
+        /*
+         * An error occurred during the transaction
+         */
+      }
+    }, '#paypal-button');
+    </script>
+</body>
