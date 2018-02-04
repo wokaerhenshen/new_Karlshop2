@@ -21,6 +21,11 @@ namespace new_Karlshop.Repository
             return _context.Orders;
         }
 
+        public IEnumerable<IPN> GetAllTransaction()
+        {
+            return _context.IPNs; 
+        }
+
         public IEnumerable<OrderGoods> GetGoodsInOneOrder(int id) {
             return _context.OrderGoods.Where(og => og.Order_id == id);
         }

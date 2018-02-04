@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
@@ -62,11 +63,28 @@ namespace new_Karlshop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "IPNs",
+                columns: table => new
+                {
+                    transactionID = table.Column<string>(nullable: false),
+                    amount = table.Column<string>(nullable: true),
+                    buyerEmail = table.Column<string>(nullable: true),
+                    firstName = table.Column<string>(nullable: true),
+                    lastName = table.Column<string>(nullable: true),
+                    paymentStatus = table.Column<string>(nullable: true),
+                    txTime = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IPNs", x => x.transactionID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     RoleId = table.Column<string>(nullable: false)
@@ -108,7 +126,7 @@ namespace new_Karlshop.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
@@ -299,8 +317,7 @@ namespace new_Karlshop.Migrations
                 name: "Comments",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    ID = table.Column<int>(nullable: false),
                     AccountGoodAccount_ID = table.Column<string>(nullable: true),
                     AccountGoodGoods_ID = table.Column<int>(nullable: true),
                     AccountGoodOrder_ID = table.Column<int>(nullable: true),
@@ -333,7 +350,8 @@ namespace new_Karlshop.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -359,7 +377,8 @@ namespace new_Karlshop.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_AccountGoodAccount_ID_AccountGoodGoods_ID_AccountGoodOrder_ID",
@@ -396,6 +415,9 @@ namespace new_Karlshop.Migrations
 
             migrationBuilder.DropTable(
                 name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "IPNs");
 
             migrationBuilder.DropTable(
                 name: "OrderGoods");

@@ -246,6 +246,11 @@ namespace new_Karlshop.Controllers
             return View(og.GetGoodsInOneOrder(id));
         }
 
+        public ActionResult Transactions()
+        {
+            return View(og.GetAllTransaction());
+        }
+
 
 
 

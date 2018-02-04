@@ -291,11 +291,15 @@ namespace new_Karlshop.Controllers
         [Authorize]
         public IActionResult ConfirmOrder(string accountID)
         {
+            CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
+         Response);
             UserDetailVM userDetail = ar.getOneUserDetailByNum(accountID).FirstOrDefault();
+            ViewBag.price = Convert.ToDecimal(cookieHelper.Get("totalPrice"));
             return View(userDetail);
         }
 
         [HttpPost]
+        //I will give a seperate page to the payment.
         public IActionResult ConfirmOrder(UserDetailVM userDetail)
         {
             if (ModelState.IsValid)
@@ -304,55 +308,89 @@ namespace new_Karlshop.Controllers
                          Response);
 
                 ar.QuickEditAccountFromUserDetail(userDetail);
+                
                 //  ar.QuickEditAccount(account);
 
-                List<AccountGood> CartaccountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart").ToList();
-
-
-
-                Order newOrder = new Order()
-                {
-                    Order_id = ar.generateNewOrderID(),
-                    Account_ID = _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault(),
-                    order_time = DateTime.Now,
-                    total_price = Convert.ToDecimal(cookieHelper.Get("totalPrice")),
-                    total_number = Convert.ToInt32(cookieHelper.Get("totalPieces"))
-
-                };
-                _context.Orders.Add(newOrder);
-                _context.SaveChanges();
-                foreach (var item in CartaccountGoods)
-                {
-                    OrderGoods temp = new OrderGoods()
-                    {
-                        Order_id = newOrder.Order_id,
-                        goods_id = item.Goods_ID,
-                        Quantity = item.Quantity
-
-                    };
-                    _context.OrderGoods.Add(temp);
-                    _context.SaveChanges();
-
-                }
-
-
-
-                foreach (var item in CartaccountGoods)
-                {
-                    item.Type = "bought";
-                    _context.SaveChanges();
-                    Goods good = _context.Goodses.Where(i => i.goods_id == item.Goods_ID).FirstOrDefault();
-                    good.goods_quantity -= item.Quantity;
-                    good.sold_quantity += item.Quantity;
-                    _context.SaveChanges();
-                }
-
-                return RedirectToAction("FinishShopping", "Home");
+                return RedirectToAction("ConfirmOrder", "Home",User.getUserId());
             }
 
             return View(userDetail);
                 
         }
+
+        [HttpPost]
+        public void PaySuccess(string msg, string id,string create_time, string state, string email, string firstName, string lastName ,string  amount)
+        {
+            IPN iPN = new IPN()
+            {
+                transactionID = id,
+                txTime = create_time,
+                paymentStatus = state,
+                buyerEmail = email,
+                firstName = firstName,
+                lastName = lastName,
+                amount = amount
+            };
+            _context.IPNs.Add(iPN);
+            _context.SaveChanges();
+
+
+
+            List<AccountGood> CartaccountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart").ToList();
+
+            CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
+                         Response);
+
+            Order newOrder = new Order()
+            {
+                Order_id = ar.generateNewOrderID(),
+                Account_ID = _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault(),
+                order_time = DateTime.Now,
+                total_price = Convert.ToDecimal(cookieHelper.Get("totalPrice")),
+                total_number = Convert.ToInt32(cookieHelper.Get("totalPieces"))
+
+            };
+            _context.Orders.Add(newOrder);
+            _context.SaveChanges();
+            foreach (var item in CartaccountGoods)
+            {
+                OrderGoods temp = new OrderGoods()
+                {
+                    Order_id = newOrder.Order_id,
+                    goods_id = item.Goods_ID,
+                    Quantity = item.Quantity
+
+                };
+                _context.OrderGoods.Add(temp);
+                _context.SaveChanges();
+
+            }
+
+
+
+
+
+            foreach (var item in CartaccountGoods)
+            {
+                item.Type = "bought";
+                _context.SaveChanges();
+                Goods good = _context.Goodses.Where(i => i.goods_id == item.Goods_ID).FirstOrDefault();
+                good.goods_quantity -= item.Quantity;
+                good.sold_quantity += item.Quantity;
+                _context.SaveChanges();
+            }
+
+            cookieHelper.Remove("totalPrice");
+            cookieHelper.Remove("totalPieces");
+
+        }
+
+        public IActionResult CancelPayment()
+        {
+            return View();
+        }
+
+
 
         public IActionResult PayPalTest()
         {

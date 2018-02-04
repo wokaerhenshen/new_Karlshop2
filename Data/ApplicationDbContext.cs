@@ -62,6 +62,7 @@ namespace new_Karlshop.Data
     public class Comments
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
         public virtual AccountGood AccountGood { get; set; }
         public string content { get; set; }
@@ -166,5 +167,6 @@ namespace new_Karlshop.Data
         public DbSet<Comments> Comments { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderGoods> OrderGoods { get; set; }
+        public DbSet<IPN> IPNs { get; set; }
     }
 }

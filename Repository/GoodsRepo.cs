@@ -105,10 +105,24 @@ namespace new_Karlshop.Repository
             _context.SaveChanges();
         }
 
+        public int GenerateCommentId()
+        {
+            if (_context.Comments.Count() == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return _context.Comments.Select(c => c.ID).Max() + 1;
+            }
+
+        }
+
         public void CreateOneComment(string AccountID, int GoodID, int OrderID, string comment, DateTime date,double star)
         {
             Comments comments = new Comments
             {
+                ID = GenerateCommentId(),
                 AccountGood = _context.AccountGoods.Where(a => a.Account_ID == AccountID && a.Goods_ID == GoodID && a.Order_ID == OrderID).FirstOrDefault(),
                 content = comment,
                 create_time = date,

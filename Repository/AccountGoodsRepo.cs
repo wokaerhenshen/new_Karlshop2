@@ -45,6 +45,9 @@ namespace new_Karlshop.Repository
         }
 
 
+
+
+
         public void DeleteOneGoodByBothID(string accountID, int goodsID)
         {
             AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == goodsID && a.Account_ID == accountID && a.Type == "cart").FirstOrDefault();

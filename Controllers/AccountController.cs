@@ -351,7 +351,7 @@ namespace new_Karlshop.Controllers
                     //this code is written by myself to make this user to be the admin
                     UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider);
                     if (ModelState.IsValid) {
-                        await userRoleRepo.AddUserRole(model.Email, "Admin");
+                        await userRoleRepo.AddUserRole(model.Email, _context.Roles.FirstOrDefault().ToString());
                     }
 
 
