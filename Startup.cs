@@ -81,6 +81,7 @@ namespace new_Karlshop
 
 
             services.AddMvc();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,13 +99,18 @@ namespace new_Karlshop
 
             app.UseStaticFiles();
             app.UseCors("AllowAll");
+            app.UseSignalR(routes => {
+                routes.MapHub<Chat>("chat");
+            });
             app.UseAuthentication();
+
+
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Welcome}/{id?}");
             });
         }
     }

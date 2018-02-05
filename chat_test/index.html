@@ -1,0 +1,55 @@
+<h2>Chat</h2>
+
+<!-- This script goes at the top of the file. -->
+<script src="signalr-client.js"></script>
+
+<!-- The html inputs go in the middle -->
+Enter your chat name: <input type="text" id="chatID" /><br /><br />
+
+<div id="chat">
+    <form id="frm-send-message" action="#">
+        <label for="message">Message:</label>
+        <input type="text" id="message" />
+        <input type="submit" id="send" value="Send" />
+    </form>
+    <div class="clear">
+    </div>
+    <ul id="messages"></ul>
+</div>
+
+<!-- This script references the form above so place this script after.  -->
+<!-- To enable debugging, it would be better to place this script in a separate JS file. -->
+<script>
+    // This sets up our connection to the server when the script is loaded.
+    let transportType = signalR.TransportType.WebSockets;
+
+    // This connection works 'as-is' in an ASP.NET application but it needs to be
+    // adjusted if run in a separate JavaScript client application.
+    let http = new signalR.HttpConnection(`http://newkarlshoptestedition.azurewebsites.net/chat`,
+                          { transport: transportType });
+    let connection = new signalR.HubConnection(http);
+    connection.start();
+
+    // Receives message back from server.
+    connection.on('respond', (chatName, message) => {
+        appendLine(chatName, message);
+    });
+
+    // This listens for the client user to submit a new message to the server.
+    document.getElementById('frm-send-message').addEventListener('submit', event => {
+        let message = document.getElementById('message').value;
+        document.getElementById('message').value = '';
+
+        let chatName = document.getElementById('chatID').value;
+
+        connection.invoke('Send', chatName, message);
+        event.preventDefault();
+    });
+
+    // Adds message from server into list.
+    function appendLine(chatName, line, color) {
+        let li = document.createElement('li');
+        li.innerText = chatName + ": " + line;
+        document.getElementById('messages').appendChild(li);
+    };
+</script>

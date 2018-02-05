@@ -40,7 +40,7 @@ namespace new_Karlshop.Controllers
 
         }
 
-        [Authorize]
+     
         public IActionResult Welcome()
         {
             ViewBag.all_img_phone = gr.GetAllData_Phone();
@@ -50,6 +50,11 @@ namespace new_Karlshop.Controllers
 
             return View();
 
+        }
+
+        public IActionResult Chat()
+        {
+            return View();
         }
 
 
