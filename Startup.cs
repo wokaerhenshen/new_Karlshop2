@@ -31,10 +31,23 @@ namespace new_Karlshop
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(config => {
-                config.SignIn.RequireConfirmedEmail = true;
+                config.SignIn.RequireConfirmedEmail = false;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            // It says that this method should be called each time I add an authentication.
+
+            // this google api can't be enabled until you have a high-level azure account 
+            // if you want to deploy it to azure, it works fine in localhost though, and
+            // what you need to have is a database with API manager stuff, you can go to the 
+            //link https://docs.microsoft.com/en-us/azure/api-management/get-started-create-service-instance
+            //to get more information
+            //services.AddAuthentication().AddGoogle(googleOptions =>
+            //{
+            //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+            //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            //});
 
             // Call this before AddMvc()
             services.AddCors(options =>

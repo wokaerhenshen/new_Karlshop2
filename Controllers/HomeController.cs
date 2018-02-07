@@ -296,10 +296,9 @@ namespace new_Karlshop.Controllers
         [Authorize]
         public IActionResult ConfirmOrder(string accountID)
         {
-            CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
-         Response);
+
             UserDetailVM userDetail = ar.getOneUserDetailByNum(accountID).FirstOrDefault();
-            ViewBag.price = Convert.ToDecimal(cookieHelper.Get("totalPrice"));
+
             return View(userDetail);
         }
 
@@ -316,12 +315,22 @@ namespace new_Karlshop.Controllers
                 
                 //  ar.QuickEditAccount(account);
 
-                return RedirectToAction("ConfirmOrder", "Home",User.getUserId());
+                return RedirectToAction("Purchase", "Home");
             }
 
             return View(userDetail);
                 
         }
+
+        public IActionResult Purchase()
+        {
+            CookieHelper cookieHelper = new CookieHelper(_httpContextAccessor, Request,
+            Response);
+            ViewBag.price = Convert.ToDecimal(cookieHelper.Get("totalPrice"));
+            return View();
+        }
+
+
 
         [HttpPost]
         public void PaySuccess(string msg, string id,string create_time, string state, string email, string firstName, string lastName ,string  amount)

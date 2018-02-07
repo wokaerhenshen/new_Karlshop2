@@ -110,7 +110,7 @@ namespace new_Karlshop.Controllers
         {
 
             ViewBag.menuActive = "Admin";
-            return View(cr.GetCatNameByCatID(id));
+            return View(cr.GetOneCategoryByID(id));
         }
 
         // POST: Cart Edit update

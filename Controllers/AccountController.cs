@@ -85,7 +85,9 @@ namespace new_Karlshop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
-            System.Threading.Thread.Sleep(2000); // Add two second delay
+            // Add two second delay
+            //System.Threading.Thread.Sleep(2000); 
+
             ViewBag.loginUser = "";
             ViewBag.userType = "";
             ViewBag.ErrorMessage = "";
@@ -442,11 +444,21 @@ namespace new_Karlshop.Controllers
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
+                _context.Accounts.Add(new Account
+                {
+                    Id = user.Id
+
+
+                });
+                _context.SaveChanges();
                 if (result.Succeeded)
                 {
                     result = await _userManager.AddLoginAsync(user, info);
+                    
                     if (result.Succeeded)
                     {
+                        
+
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
                         return RedirectToLocal(returnUrl);

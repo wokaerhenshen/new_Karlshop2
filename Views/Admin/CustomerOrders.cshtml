@@ -13,12 +13,8 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Order_id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Account_ID)
-                </th>
+
+
                 <th>
                     @Html.DisplayNameFor(model => model.order_time)
                 </th>
@@ -34,12 +30,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Order_id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Account_ID)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.order_time)
             </td>
@@ -50,9 +41,8 @@
                 @Html.DisplayFor(modelItem => item.total_number)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "OrderDetails", new {  id = item.Order_id }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                
+                @Html.ActionLink("Details", "OrderDetails", new {  id = item.Order_id }) 
             </td>
         </tr>
 }

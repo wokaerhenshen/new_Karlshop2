@@ -2,18 +2,18 @@
 
 @{
     ViewData["Title"] = "UserDetail";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData.AddActivePage(ManageNavPages.UserDetail);
 }
 
-<h2>UserDetail</h2>
 
-<h4>UserDetailVM</h4>
+
+<h4>UserDetail</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="UserDetail">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group" hidden="hidden">
                 <label asp-for="id" class="control-label"></label>
                 <input asp-for="id" class="form-control" readonly="readonly"/>
                 <span asp-validation-for="id" class="text-danger"></span>

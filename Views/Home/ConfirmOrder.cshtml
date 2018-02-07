@@ -1,5 +1,6 @@
 ﻿@model new_Karlshop.Models.ManageViewModels.UserDetailVM
 
+
 @{
     ViewData["Title"] = "ConfirmOrder";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,9 +12,9 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="ConfirmOrder">
+        <form asp-action="ConfirmOrder" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group" hidden="hidden">
                 <label asp-for="id" class="control-label"></label>
                 <input asp-for="id" class="form-control" readonly="readonly"/>
                 <span asp-validation-for="id" class="text-danger"></span>
@@ -42,81 +43,7 @@
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
-        <div id="paypal-button"></div>
 
-        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-        <script src="http://code.jquery.com/jquery-3.2.1.js"
-                integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-                crossorigin="anonymous"></script>
-        <script>
-    paypal.Button.render({
-
-        env: 'sandbox', // Or 'sandbox'
-
-        client: {
-            sandbox:    'AWSRpQrOoCT_WsPkLAoZz4_jLCkxQYnqDecih0-d7I4etgCu8AvNGO3W3vDymU6i7juqVivpPGIAOMGM',
-            production: 'AWSRpQrOoCT_WsPkLAoZz4_jLCkxQYnqDecih0-d7I4etgCu8AvNGO3W3vDymU6i7juqVivpPGIAOMGM'
-        },
-
-        commit: true, // Show a 'Pay Now' button
-
-        payment: function(data, actions) {
-            return actions.payment.create({
-                payment: {
-                    transactions: [
-                        {
-                            amount: { total: '@ViewBag.price', currency: 'CAD' }
-                        }
-                    ]
-                }
-            });
-        },
-
-        onAuthorize: function(data, actions) {
-            return actions.payment.execute().then(function (payment) {
-
-
-                var id = payment.id
-                var create_time = payment.create_time
-                var state = payment.state
-                var email = payment.payer.payer_info.email
-                var firstName = payment.payer.payer_info.first_name
-                var lastName = payment.payer.payer_info.last_name
-                var amount = payment.transactions[0].amount.total
-
-
-               // alert("success")
-                // The payment is complete!
-                // You can now show a confirmation message to the customer
-                $.ajax({
-                    type: "post",
-                    url: "/Home/PaySuccess",
-                    data: { msg: 'success', id: id, create_time: create_time, state: state, email: email, firstName: firstName, lastName: lastName, amount: amount },
-                    datatype: "json", //回调函数接收数据的格式
-                    //函数调用成功后
-                    success: function (msg) {
-                        //什么也不用做
-
-                        console.log("data pass success");
-                        window.location.href = "/Home/FinishShopping" 
-                    },
-                    //函数调用失败后，
-                    error: function (msg) {
-                        //弹窗，告知用户写入失败
-                        //alert("评论内容写入失败");
-                        alert("fail");
-                    }
-                });
-            });
-            },
-
-            onCancel: function (data, actions) {
-                window.location.href = "/Home/CancelPayment" 
-                // Show a cancel page or return to cart
-          }
-
-    }, '#paypal-button');
-        </script>
 
 
 
@@ -126,6 +53,6 @@
 
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="ShowCart">Back to Cart</a>
 </div>
 
