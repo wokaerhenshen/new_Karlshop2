@@ -48,6 +48,8 @@ namespace new_Karlshop.Controllers
             ViewBag.all_data_tv = gr.GetAllData_Tv();
             ViewBag.popular_items = gr.GetPopularItem();
 
+            ViewBag.MyViewBagList = cr.GetMenuList();
+
             return View();
 
         }

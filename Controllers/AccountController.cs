@@ -83,7 +83,7 @@ namespace new_Karlshop.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = "~/Home/ShowGoods")
         {
             // Add two second delay
             //System.Threading.Thread.Sleep(2000); 
