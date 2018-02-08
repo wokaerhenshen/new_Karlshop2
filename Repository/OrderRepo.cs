@@ -1,4 +1,5 @@
 ﻿using new_Karlshop.Data;
+using new_Karlshop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,20 @@ namespace new_Karlshop.Repository
             return _context.OrderGoods.Where(og => og.Order_id == id);
         }
 
+        public IEnumerable<OrderDetailVM> GetOrderVM_InOneOrder(int id)
+        {
+            IEnumerable<OrderDetailVM> qeury = from og in _context.OrderGoods
+                                               where (og.Order_id == id)
+                                               select new OrderDetailVM {
+                                                   goodsName = og.Goods.goods_name,
+                                                   quantity = og.Quantity
+
+                                               };
+            return qeury;
+
+        }
+
 
     }
 }
+

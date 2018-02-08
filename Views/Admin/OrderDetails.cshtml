@@ -1,4 +1,4 @@
-﻿@model IEnumerable<new_Karlshop.Data.OrderGoods>
+﻿@model IEnumerable<new_Karlshop.Models.OrderDetailVM>
 
 @{
     ViewData["Title"] = "OrderDetails";
@@ -7,20 +7,14 @@
 
 <h2>OrderDetails</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Order_id)
+                    @Html.DisplayNameFor(model => model.goodsName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.goods_id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Quantity)
+                    @Html.DisplayNameFor(model => model.quantity)
                 </th>
             <th></th>
         </tr>
@@ -29,19 +23,12 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Order_id)
+                @Html.DisplayFor(modelItem => item.goodsName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.goods_id)
+                @Html.DisplayFor(modelItem => item.quantity)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+
         </tr>
 }
     </tbody>

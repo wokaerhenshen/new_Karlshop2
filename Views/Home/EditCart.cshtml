@@ -13,12 +13,12 @@
     <div class="col-md-4">
         <form asp-action="EditCart">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group" hidden="hidden">
                 <label asp-for="Account_ID" class="control-label"></label>
                 <input asp-for="Account_ID" class="form-control" readonly ="readonly"/>
                 <span asp-validation-for="Account_ID" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden="hidden">
                 <label asp-for="Goods_ID" class="control-label"></label>
                 <input asp-for="Goods_ID" class="form-control" readonly ="readonly"/>
                 <span asp-validation-for="Goods_ID" class="text-danger"></span>

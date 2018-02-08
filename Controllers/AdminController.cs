@@ -243,7 +243,7 @@ namespace new_Karlshop.Controllers
         [HttpGet]
         public ActionResult OrderDetails(int id)
         {
-            return View(og.GetGoodsInOneOrder(id));
+            return View(og.GetOrderVM_InOneOrder(id));
         }
 
         public ActionResult Transactions()

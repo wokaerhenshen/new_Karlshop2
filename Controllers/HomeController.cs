@@ -515,6 +515,11 @@ namespace new_Karlshop.Controllers
             return View();
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult EmailSender()
         {
