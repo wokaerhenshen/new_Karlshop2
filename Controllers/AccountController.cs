@@ -341,7 +341,11 @@ namespace new_Karlshop.Controllers
 
                     });
                     _context.SaveChanges();
-
+                    UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider);
+                    if (ModelState.IsValid)
+                    {
+                        await userRoleRepo.AddUserRole(model.Email, _context.Roles.FirstOrDefault().ToString());
+                    }
 
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -351,10 +355,7 @@ namespace new_Karlshop.Controllers
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
                     //this code is written by myself to make this user to be the admin
-                    UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider);
-                    if (ModelState.IsValid) {
-                        await userRoleRepo.AddUserRole(model.Email, _context.Roles.FirstOrDefault().ToString());
-                    }
+
 
 
                     return RedirectToLocal(returnUrl);
