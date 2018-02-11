@@ -12,6 +12,9 @@ using new_Karlshop.Data;
 using new_Karlshop.Models;
 using new_Karlshop.Services;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace new_Karlshop
 {
@@ -90,6 +93,23 @@ namespace new_Karlshop
                 SiteKey = Configuration["Recaptcha:SiteKey"],
                 SecretKey = Configuration["Recaptcha:SecretKey"]
             });
+
+            // Add this before services.AddMvc()
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.AddAuthentication()
+            .AddJwtBearer(cfg => {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = Configuration["TokenInformation:Issuer"],
+                    ValidAudience = Configuration["TokenInformation:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenInformation:Key"])),
+                    ClockSkew = TimeSpan.Zero // remove delay of token when expire
+    };
+            });
+
+
 
 
 
