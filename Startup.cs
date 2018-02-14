@@ -31,7 +31,7 @@ namespace new_Karlshop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(config => {
                 config.SignIn.RequireConfirmedEmail = false;
@@ -130,7 +130,18 @@ namespace new_Karlshop
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
+            // Place this code before app.UseMvc() inside Configure().
+            // Set up so Angular routing can take over when item not found.
+            app.Use(async (context, next) => {
+                await next();
+                if (context.Response.StatusCode == 404)
+                {
+                    context.Request.Path = "/dist/index.html";
+                    await next();
+                }
+            }).UseDefaultFiles().UseStaticFiles();
+
             app.UseCors("AllowAll");
             app.UseSignalR(routes => {
                 routes.MapHub<Chat>("chat");

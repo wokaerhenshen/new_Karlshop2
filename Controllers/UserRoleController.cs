@@ -34,7 +34,7 @@ namespace new_Karlshop.Controllers
         // Show all roles for a specific user.
         public async Task<IActionResult> Detail(string userName)
         {
-            UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider);
+            UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider,_context);
             var roles = await userRoleRepo.GetUserRoles(userName);
             ViewBag.UserName = userName;
             return View(roles);
@@ -91,7 +91,7 @@ namespace new_Karlshop.Controllers
         [HttpPost]
         public async Task<IActionResult> Assign(UserRoleVM userRoleVM)
         {
-            UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider);
+            UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider,_context);
 
             if (ModelState.IsValid)
             {

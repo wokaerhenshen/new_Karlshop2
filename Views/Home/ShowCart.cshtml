@@ -91,7 +91,7 @@
     }
     else
     {
-        @Html.ActionLink("Check Out", "ConfirmOrder", new { controller = "Home", accountID = Model.FirstOrDefault().Account_ID })
+        @Html.ActionLink("Check Out", "ConfirmOrder", new { controller = "Home", accountID = Model.FirstOrDefault().Account_ID }, new { @class = "btn btn-success", @style = "width:120px;" })
     }
 }
 

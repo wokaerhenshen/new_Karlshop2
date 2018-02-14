@@ -253,7 +253,7 @@ namespace new_Karlshop.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = "~/Home/ShowGoods")
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
@@ -341,7 +341,7 @@ namespace new_Karlshop.Controllers
 
                     });
                     _context.SaveChanges();
-                    UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider);
+                    UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider,_context);
                     if (ModelState.IsValid)
                     {
                         await userRoleRepo.AddUserRole(model.Email, _context.Roles.FirstOrDefault().ToString());

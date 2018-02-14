@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using new_Karlshop.Data;
 using new_Karlshop.Models;
 using new_Karlshop.Models.AccountViewModels;
 using System;
@@ -12,10 +13,12 @@ namespace new_Karlshop.Repository
     public class UserRoleRepo
     {
         IServiceProvider serviceProvider;
+        ApplicationDbContext _context;
 
-        public UserRoleRepo(IServiceProvider serviceProvider)
+        public UserRoleRepo(IServiceProvider serviceProvider, ApplicationDbContext context)
         {
             this.serviceProvider = serviceProvider;
+            this._context = context;
         }
 
         // Assign a role to a user.
@@ -26,7 +29,13 @@ namespace new_Karlshop.Repository
             var user = await UserManager.FindByEmailAsync(email);
             if (user != null)
             {
-                await UserManager.AddToRoleAsync(user, roleName);
+                //await UserManager.AddToRoleAsync(user, roleName);
+                _context.UserRoles.Add(new IdentityUserRole<string>()
+                {
+                    UserId = user.Id,
+                    RoleId = roleName
+                });
+                _context.SaveChanges();
             }
             return true;
         }
@@ -39,7 +48,9 @@ namespace new_Karlshop.Repository
             var user = await UserManager.FindByEmailAsync(email);
             if (user != null)
             {
-                await UserManager.RemoveFromRoleAsync(user, roleName);
+                _context.UserRoles.Remove(_context.UserRoles.Where(i => i.UserId == user.Id && i.RoleId == roleName).FirstOrDefault());
+                _context.SaveChanges();
+                //await UserManager.RemoveFromRoleAsync(user, roleName);
             }
             return true;
         }

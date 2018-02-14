@@ -22,7 +22,7 @@ namespace new_Karlshop.Services
 				mailMsg.To.Add(new MailAddress(email, "To Name"));
 
 				// From
-				mailMsg.From = new MailAddress("emailaddress@home.com", "[Karl Shop]");
+				mailMsg.From = new MailAddress("karlshop@home.com", "[Karl Shop]");
 
 				// Subject and multipart/alternative Body
 				mailMsg.Subject = subject;

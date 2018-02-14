@@ -215,6 +215,37 @@ namespace new_Karlshop.Controllers
             return View(GoodsRepo.GetGoodsByCatID(gr.getAll(), id));
         }
 
+        //this method seems like only can be a void method if I pass value to it by jquery and ajax
+        [HttpPost]
+        public void WishList(int id)
+        {
+            List<AccountGood> accountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == User.getUserId()).ToList();
+            AccountGood item = accountGoods.Where(ag => ag.Goods_ID == id && ag.Type == "wishlist").FirstOrDefault();
+            if (item == null)
+            {
+                AccountGood temp = new AccountGood()
+                {
+                    Order_ID = ag.GenerateOrderId(),
+                    Account_ID = _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault(),
+                    Goods_ID = id,
+                    Quantity = 1,
+                    Type = "wishlist"
+
+                };
+                _context.AccountGoods.Add(temp);
+                _context.SaveChanges();
+            }
+
+          
+        }
+        
+
+        public ActionResult WishList()
+        {
+            List<AccountGood> accountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == User.getUserId() && ag.Type == "wishlist").ToList();
+            return View(accountGoods);
+        }
+
 
         public ActionResult GoodsEdit(int id)
         {
@@ -226,6 +257,7 @@ namespace new_Karlshop.Controllers
             ViewBag.myComments = gr.GetCommentsByGoodID(id).ToList();
             ViewBag.commentExist = gr.GetCommentsByGoodID(id).ToList().FirstOrDefault();
             ViewBag.maxGoodID = gr.GetMaxID();
+            ViewBag.id = id;
             return View(gr.GetOneGoods(gr.getAll(), id));
         }
 
