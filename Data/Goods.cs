@@ -18,6 +18,9 @@ namespace new_Karlshop.Data
         [Display(Name = "Cat_ID")]
         public int cat_id { get; set; }
 
+        [Display(Name = "Seller")]
+        public string seller { get; set; }
+
         [Display(Name = "Goods_SN")]
         public string goods_sn { get; set; }
 

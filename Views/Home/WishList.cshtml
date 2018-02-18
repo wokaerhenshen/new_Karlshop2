@@ -1,4 +1,4 @@
-﻿@model IEnumerable<new_Karlshop.Data.AccountGood>
+﻿@model IEnumerable<new_Karlshop.Models.WishlistVM>
 
 @{
     ViewData["Title"] = "WishList";
@@ -7,26 +7,18 @@
 
 <h2>WishList</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Account_ID)
+                    @Html.DisplayNameFor(model => model.goodsName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Goods_ID)
+                    @Html.DisplayNameFor(model => model.goodsDescript)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Order_ID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Quantity)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Type)
+                    @Html.DisplayNameFor(model => model.goodsPrice)
                 </th>
             <th></th>
         </tr>
@@ -35,24 +27,18 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Account_ID)
+                @Html.DisplayFor(modelItem => item.goodsName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Goods_ID)
+                @Html.DisplayFor(modelItem => item.goodsDescript)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Order_ID)
+                @Html.DisplayFor(modelItem => item.goodsPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Add to Cart", "ToCart", new { controller = "Home", AccountID = item.AccountID, id = item.goodsID }) |
+                @Html.ActionLink("Details", "GoodsEdit", new { controller = "Home", id= item.goodsID }) |
+                @Html.ActionLink("Delete", "DeleteWishList", new { controller = "Home", accountID = item.AccountID, goodID = item.goodsID })
             </td>
         </tr>
 }

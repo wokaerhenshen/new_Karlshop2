@@ -44,11 +44,16 @@ namespace new_Karlshop.Repository
 
         }
 
+        public void DeleteOneGoodinWishByBothID(string accountID, int goodsID)
+        {
+            AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == goodsID && a.Account_ID == accountID && a.Type == "wishlist").FirstOrDefault();
+            _context.AccountGoods.Remove(ag);
+            _context.SaveChanges();
+
+        }
 
 
-
-
-        public void DeleteOneGoodByBothID(string accountID, int goodsID)
+        public void DeleteOneGoodinCartByBothID(string accountID, int goodsID)
         {
             AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == goodsID && a.Account_ID == accountID && a.Type == "cart").FirstOrDefault();
             _context.AccountGoods.Remove(ag);
@@ -64,6 +69,16 @@ namespace new_Karlshop.Repository
 
         }
 
+        public void WishToCart(string  AccountID,int id)
+        {
+            AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == id && a.Account_ID == AccountID && a.Type == "wishlist").FirstOrDefault();
+            ag.Type = "cart";
+            _context.SaveChanges();
+        }
 
+        public void AddtoViewedItem(string accountID, int id)
+        {
+
+        }
     }
 }

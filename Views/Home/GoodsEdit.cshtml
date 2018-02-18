@@ -282,7 +282,7 @@
 <script type="text/javascript">
 	$('#wishlist').click(function () {
         console.log("i'm here")
-        layer.alert('内容')
+        
 		var id =  @ViewBag.id
 			$.ajax({
 				type: 'post',
@@ -290,14 +290,23 @@
 				data: { id: id },
 				datatype: "json",
                 success: function (msg) {
+                    if (msg == true) {
+                        layer.alert('Succeed!', { icon: 6 })
+
+                    }
+                    else {
+
+                        layer.alert('Already Exists!', { icon: 6 })
+                    }
                    // layer.msg('内容')
 					//alert('success')
-                    window.location.href = "/Home/WishList"
+                    
+                   // window.location.href = "/Home/WishList"
 				},
 				error: function (msg) {
 					//弹窗，告知用户写入失败
 					//alert("评论内容写入失败");
-					alert("fail");
+					alert("Already Exists");
 				}
 
 			});

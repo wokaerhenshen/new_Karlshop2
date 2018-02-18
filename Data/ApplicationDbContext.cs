@@ -24,6 +24,7 @@ namespace new_Karlshop.Data
         public int Order_ID { get; set; }
         public int Quantity { get; set; }
         public string Type { get; set; }
+        public bool Viewed { get; set; }
         public virtual Account Account { get; set; }
         public virtual Goods Goods { get; set; }
         public virtual ICollection<Comments> Comments { get; set; }

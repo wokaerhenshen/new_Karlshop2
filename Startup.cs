@@ -46,11 +46,11 @@ namespace new_Karlshop
             // what you need to have is a database with API manager stuff, you can go to the 
             //link https://docs.microsoft.com/en-us/azure/api-management/get-started-create-service-instance
             //to get more information
-            //services.AddAuthentication().AddGoogle(googleOptions =>
-            //{
-            //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-            //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            //});
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["GoogleLogin:Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["GoogleLogin:Authentication:Google:ClientSecret"];
+            });
 
             // Call this before AddMvc()
             services.AddCors(options =>
@@ -109,10 +109,6 @@ namespace new_Karlshop
     };
             });
 
-
-
-
-
             services.AddMvc();
             services.AddSignalR();
         }
@@ -133,7 +129,8 @@ namespace new_Karlshop
             //app.UseStaticFiles();
             // Place this code before app.UseMvc() inside Configure().
             // Set up so Angular routing can take over when item not found.
-            app.Use(async (context, next) => {
+            app.Use(async (context, next) =>
+            {
                 await next();
                 if (context.Response.StatusCode == 404)
                 {
@@ -142,14 +139,12 @@ namespace new_Karlshop
                 }
             }).UseDefaultFiles().UseStaticFiles();
 
-            app.UseCors("AllowAll");
+
             app.UseSignalR(routes => {
                 routes.MapHub<Chat>("chat");
             });
             app.UseAuthentication();
-
-
-
+            app.UseCors("AllowAll");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

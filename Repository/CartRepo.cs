@@ -35,6 +35,23 @@ namespace new_Karlshop.Repository
             return query;
         }
 
+        public IEnumerable<WishlistVM> GetWishAll(string id)
+        {
+            IEnumerable<WishlistVM>  query = from ag in db.AccountGoods
+                    where (ag.Account_ID == id && ag.Type == "wishlist")
+                    select new WishlistVM
+                    {
+                        AccountID = ag.Account_ID,
+                        goodsID = ag.Goods_ID,
+                        goodsName = ag.Goods.goods_name,
+                        goodsDescript = ag.Goods.goods_brief,
+                        goodsPrice = ag.Goods.shop_price
+                    };
+            return query;
+        }
+            
+
+
         public IEnumerable<BoughtVM> GetBoughtAll(string id)
         {
             IEnumerable<BoughtVM> query = from ag in db.AccountGoods

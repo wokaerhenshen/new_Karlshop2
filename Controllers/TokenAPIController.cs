@@ -16,32 +16,48 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using new_Karlshop.Repository;
+using new_Karlshop.Data;
+using new_Karlshop.Services;
 
 namespace new_Karlshop.Controllers
 {
     //[Produces("application/json")]
-   // [Route("api/TokenAPI")]
+    // [Route("api/TokenAPI")]
     //public class TokenAPIController : Controller
     //{
     //}
-
+    [Produces("application/json")]
+    [Route("api/TokenAPI")]
     [Route("[controller]/[action]")]
     public class TokenAPI : Controller
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
+        public ApplicationDbContext _context;
 
         // Constructor.
         public TokenAPI(
                 UserManager<ApplicationUser> userManager,
                 SignInManager<ApplicationUser> signInManager,
-                IConfiguration configuration
+                IConfiguration configuration,
+                ApplicationDbContext context
             )
         {
+            this._context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public List<string> GetUsers()
+        {
+            List<string> userEmail = new List<string>();
+            userEmail = _context.Users.Select(e => e.Email).ToList();
+
+            return userEmail;
         }
 
         // Generates a fake collection for demonstration purposes. 
@@ -59,6 +75,15 @@ namespace new_Karlshop.Controllers
                 Password = "password"
             });
             return logins;
+        }
+
+        [HttpGet]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize]
+        public IEnumerable<WishlistVM> Wishlist()
+        {
+            CartRepo cart = new CartRepo(_context);
+            return cart.GetWishAll(User.getUserId());
         }
 
         // This Action method does not require authentication.
@@ -89,7 +114,7 @@ namespace new_Karlshop.Controllers
             {
                 var appUser = _userManager.Users.SingleOrDefault(r =>
                                             r.Email == model.Email);
-                return await GenerateJwtToken(model.Email, appUser);
+                return GenerateJwtToken(model.Email, appUser);
             }
             throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
         }
@@ -108,13 +133,13 @@ namespace new_Karlshop.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
-                return await GenerateJwtToken(model.Email, user);
+                return GenerateJwtToken(model.Email, user);
             }
             throw new ApplicationException("UNKNOWN_ERROR");
         }
 
         // Generates a token using settings stored in the appsettings.json file.
-        private async Task<object> GenerateJwtToken(string email,
+        private object GenerateJwtToken(string email,
                                                     IdentityUser user)
         {
             var claims = new List<Claim> {

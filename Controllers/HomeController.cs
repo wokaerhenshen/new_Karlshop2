@@ -217,7 +217,7 @@ namespace new_Karlshop.Controllers
 
         //this method seems like only can be a void method if I pass value to it by jquery and ajax
         [HttpPost]
-        public void WishList(int id)
+        public bool WishList(int id)
         {
             List<AccountGood> accountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == User.getUserId()).ToList();
             AccountGood item = accountGoods.Where(ag => ag.Goods_ID == id && ag.Type == "wishlist").FirstOrDefault();
@@ -234,16 +234,19 @@ namespace new_Karlshop.Controllers
                 };
                 _context.AccountGoods.Add(temp);
                 _context.SaveChanges();
+                return true;
             }
-
+            return false;
           
         }
         
 
         public ActionResult WishList()
         {
-            List<AccountGood> accountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == User.getUserId() && ag.Type == "wishlist").ToList();
-            return View(accountGoods);
+            //List<AccountGood> accountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == User.getUserId() && ag.Type == "wishlist").ToList();
+            CartRepo cart = new CartRepo(_context);
+            
+            return View(cart.GetWishAll(User.getUserId()));
         }
 
 
@@ -258,7 +261,18 @@ namespace new_Karlshop.Controllers
             ViewBag.commentExist = gr.GetCommentsByGoodID(id).ToList().FirstOrDefault();
             ViewBag.maxGoodID = gr.GetMaxID();
             ViewBag.id = id;
+
+            ag.AddtoViewedItem(User.getUserId(), id);
+
+
+
             return View(gr.GetOneGoods(gr.getAll(), id));
+        }
+
+        public ActionResult ToCart(string AccountID , int id)
+        {
+            ag.WishToCart(AccountID,id);
+            return RedirectToAction("WishList", "Home");
         }
 
         [Authorize]
@@ -514,10 +528,17 @@ namespace new_Karlshop.Controllers
             return RedirectToAction("ShowCart", "Home");
         }
 
+        public ActionResult DeleteWishList(string accountID, int goodID)
+        {
+            ag.DeleteOneGoodinWishByBothID(accountID, goodID);
+            return RedirectToAction("WishList", "Home");
+
+        }
+
         public ActionResult DeleteCart(string accountID, int goodID)
         {
 
-            ag.DeleteOneGoodByBothID(accountID, goodID);
+            ag.DeleteOneGoodinCartByBothID(accountID, goodID);
 
             return RedirectToAction("ShowCart", "Home");
         }

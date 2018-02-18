@@ -61,7 +61,7 @@ namespace new_Karlshop.Repository
         {
             // Create roles if none exist.
             // This is a simple way to do it but it would be better to use a seeder.
-            string[] roleNames = { "Admin", "MemberShip", "Customer" };
+            string[] roleNames = { "Admin", "MemberShip", "Customer", "Seller" };
             foreach (var roleName in roleNames)
             {
                 var created = CreateRole(roleName);
