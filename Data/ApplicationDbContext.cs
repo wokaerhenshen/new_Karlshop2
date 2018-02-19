@@ -20,7 +20,6 @@ namespace new_Karlshop.Data
         public string Account_ID { get; set; }
         [Key, Column(Order = 1)]
         public int Goods_ID { get; set; }
-        [Key]
         public int Order_ID { get; set; }
         public int Quantity { get; set; }
         public string Type { get; set; }
@@ -101,7 +100,7 @@ namespace new_Karlshop.Data
 
             //define composite primary key
             builder.Entity<AccountGood>()
-                .HasKey(ag => new { ag.Account_ID, ag.Goods_ID, ag.Order_ID });
+                .HasKey(ag => new { ag.Account_ID, ag.Goods_ID });
 
             //define foreign key, this is a many to many relationship so this cartgood is a
             // connection table.

@@ -26,6 +26,8 @@ namespace new_Karlshop.Controllers
         GoodsRepo gr;
         AccountRepo ar;
         AccountGoodsRepo ag;
+        CartRepo cartRepo;
+        
 
         public HomeController(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context )
         {
@@ -37,19 +39,23 @@ namespace new_Karlshop.Controllers
             this.gr = new GoodsRepo(context);
             this.ar = new AccountRepo(context);
             this.ag = new AccountGoodsRepo(context);
+            this.cartRepo = new CartRepo(context);
+            
 
         }
 
-     
+
+
         public IActionResult Welcome()
         {
             ViewBag.all_img_phone = gr.GetAllData_Phone();
             ViewBag.all_data_laptop = gr.GetAllData_Laptop();
             ViewBag.all_data_tv = gr.GetAllData_Tv();
             ViewBag.popular_items = gr.GetPopularItem();
-
+            ViewBag.ViewedItems = cartRepo.GetViewedAll(User.getUserId()).ToList();
             ViewBag.MyViewBagList = cr.GetMenuList();
-
+            ViewBag.test = "I'm a test";
+           
             return View();
 
         }
@@ -63,6 +69,7 @@ namespace new_Karlshop.Controllers
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
 
+            ViewBag.ViewedItems = cartRepo.GetViewedAll(User.getUserId()).ToList();
 
             ViewBag.MyViewBagList = cr.GetMenuList();
             ViewBag.menuActive = "Home";
@@ -104,6 +111,7 @@ namespace new_Karlshop.Controllers
 
         public ActionResult SortIndex(int id, string sortOrder)
         {
+            ViewBag.ViewedItems = cartRepo.GetViewedAll(User.getUserId()).ToList();
 
             ViewBag.MyViewBagList = cr.GetMenuList();
 
@@ -175,7 +183,7 @@ namespace new_Karlshop.Controllers
         {
             ViewBag.MyViewBagList = cr.GetMenuList();
             ViewBag.menuActive = "Gallery";
-
+            ViewBag.ViewedItems = cartRepo.GetViewedAll(User.getUserId()).ToList();
             ViewBag.imgPath = "";
 
             // I think I need to firgure out how to do the delete operation in the future.
@@ -249,7 +257,7 @@ namespace new_Karlshop.Controllers
             return View(cart.GetWishAll(User.getUserId()));
         }
 
-
+        [Authorize]
         public ActionResult GoodsEdit(int id)
         {
 
@@ -261,7 +269,7 @@ namespace new_Karlshop.Controllers
             ViewBag.commentExist = gr.GetCommentsByGoodID(id).ToList().FirstOrDefault();
             ViewBag.maxGoodID = gr.GetMaxID();
             ViewBag.id = id;
-
+            ViewBag.ViewedItems = cartRepo.GetViewedAll(User.getUserId()).ToList();
             ag.AddtoViewedItem(User.getUserId(), id);
 
 
@@ -269,10 +277,25 @@ namespace new_Karlshop.Controllers
             return View(gr.GetOneGoods(gr.getAll(), id));
         }
 
+        public ActionResult ShowViewed()
+        {
+            // If I use this method the order may not be the correct
+            // 就是说如果不用navigation property的话，最后浏览的物品就不会出现在第一个了。还是要用navigation property.
+            //List<int> accountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == User.getUserId() && ag.Viewed == true).OrderByDescending(ag => ag.Order_ID).Distinct().Select(id => id.Goods_ID).ToList();
+            //List<ViewedVM> myViewedGoods = AccountGoods.
+            cartRepo.GetViewedAll(User.getUserId()).OrderByDescending(o =>o.orderID);
+            return View(cartRepo.GetViewedAll(User.getUserId()));
+        }
+
         public ActionResult ToCart(string AccountID , int id)
         {
             ag.WishToCart(AccountID,id);
             return RedirectToAction("WishList", "Home");
+        }
+
+        public ActionResult recommendedGoods()
+        {
+            return View(ag.recommendedGoods(User.getUserId()));
         }
 
         [Authorize]
@@ -294,13 +317,31 @@ namespace new_Karlshop.Controllers
 
                 else
                 {
+
+                    //AccountGood viewed = new AccountGood()
+                    //{
+                    //    Order_ID = ag.GenerateOrderId(),
+                    //    Account_ID = _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault(),
+                    //    Goods_ID = id,
+                    //    Quantity = 1,
+                    //    Viewed = true
+
+
+                    //};
+                    //_context.AccountGoods.Add(viewed);
+                    //_context.SaveChanges();
+
+
+
+
                     AccountGood temp = new AccountGood()
                     {
                         Order_ID = ag.GenerateOrderId(),
                         Account_ID = _context.Users.Where(name => name.UserName == User.Identity.Name).Select(i => i.Id).FirstOrDefault(),
                         Goods_ID = id,
                         Quantity = 1,
-                        Type = "cart"
+                        Type = "cart",
+                        
 
                     };
                     _context.AccountGoods.Add(temp);
@@ -567,6 +608,7 @@ namespace new_Karlshop.Controllers
         {
             ViewData["Message"] = "Welcome to Contact Me!";
             ViewBag.menuActive = "About";
+            
             return View();
         }
 

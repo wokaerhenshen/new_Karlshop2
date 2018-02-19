@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
@@ -84,7 +83,7 @@ namespace new_Karlshop.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     RoleId = table.Column<string>(nullable: false)
@@ -126,7 +125,7 @@ namespace new_Karlshop.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
@@ -225,6 +224,7 @@ namespace new_Karlshop.Migrations
                     ori_img = table.Column<string>(nullable: true),
                     ori_img1 = table.Column<string>(nullable: true),
                     ori_img2 = table.Column<string>(nullable: true),
+                    seller = table.Column<string>(nullable: true),
                     shop_price = table.Column<decimal>(nullable: false),
                     sold_quantity = table.Column<int>(nullable: false)
                 },
@@ -268,11 +268,12 @@ namespace new_Karlshop.Migrations
                     Goods_ID = table.Column<int>(nullable: false),
                     Order_ID = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    Type = table.Column<string>(nullable: true)
+                    Type = table.Column<string>(nullable: true),
+                    Viewed = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountGoods", x => new { x.Account_ID, x.Goods_ID, x.Order_ID });
+                    table.PrimaryKey("PK_AccountGoods", x => new { x.Account_ID, x.Goods_ID });
                     table.ForeignKey(
                         name: "FK_AccountGoods_Accounts_Account_ID",
                         column: x => x.Account_ID,
@@ -320,7 +321,6 @@ namespace new_Karlshop.Migrations
                     ID = table.Column<int>(nullable: false),
                     AccountGoodAccount_ID = table.Column<string>(nullable: true),
                     AccountGoodGoods_ID = table.Column<int>(nullable: true),
-                    AccountGoodOrder_ID = table.Column<int>(nullable: true),
                     content = table.Column<string>(nullable: true),
                     create_time = table.Column<DateTime>(nullable: false),
                     rate_star = table.Column<double>(nullable: false)
@@ -329,10 +329,10 @@ namespace new_Karlshop.Migrations
                 {
                     table.PrimaryKey("PK_Comments", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Comments_AccountGoods_AccountGoodAccount_ID_AccountGoodGoods_ID_AccountGoodOrder_ID",
-                        columns: x => new { x.AccountGoodAccount_ID, x.AccountGoodGoods_ID, x.AccountGoodOrder_ID },
+                        name: "FK_Comments_AccountGoods_AccountGoodAccount_ID_AccountGoodGoods_ID",
+                        columns: x => new { x.AccountGoodAccount_ID, x.AccountGoodGoods_ID },
                         principalTable: "AccountGoods",
-                        principalColumns: new[] { "Account_ID", "Goods_ID", "Order_ID" },
+                        principalColumns: new[] { "Account_ID", "Goods_ID" },
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -350,8 +350,7 @@ namespace new_Karlshop.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -377,13 +376,12 @@ namespace new_Karlshop.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_AccountGoodAccount_ID_AccountGoodGoods_ID_AccountGoodOrder_ID",
+                name: "IX_Comments_AccountGoodAccount_ID_AccountGoodGoods_ID",
                 table: "Comments",
-                columns: new[] { "AccountGoodAccount_ID", "AccountGoodGoods_ID", "AccountGoodOrder_ID" });
+                columns: new[] { "AccountGoodAccount_ID", "AccountGoodGoods_ID" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Goodses_cat_id",

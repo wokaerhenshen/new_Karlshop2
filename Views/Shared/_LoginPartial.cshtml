@@ -77,6 +77,8 @@
                 <ul class="dropdown-menu">
                     <li><a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Account Detail</a></li>
                     <li role="separator" class="divider"></li>
+                    <li><a href="~/Home/ShowViewed">Viewed</a></li>
+                    <li role="separator" class="divider"></li>
                     <li><a href="~/Home/Wishlist">WishList</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="ShowCart" asp-route-id="0">Cart</a></li>
@@ -96,6 +98,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
+        <li><a>I'm Seller!</a></li>
         <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
         <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
     </ul>

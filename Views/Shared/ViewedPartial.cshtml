@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using new_Karlshop.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var Items = ViewBag.ViewedItems;
+    var counter = 0;
+    <div class="col-xs-10">
+        <h3 class="text-primary" style="text-align:center">Viewed Items</h3>
+        <br />
+        @if (Items.Count == 0)
+        {
+            <h4 class="text-danger" style="text-align:center">You didn't start My dear!</h4>
+
+        }
+        <ul class="thumbnails">
+            @foreach (var item in Items)
+            {
+                if (counter > 3)
+                {
+                    break;
+
+                }
+                // @Html.Raw("hello")
+                <li class="col-sm-3">
+                        <div class="fff">
+                            <div class="thumbnail">
+                                <a href="#"><img src="~/images/@Html.Raw(item.goodImg)" alt="" style="height:120px;"></a>
+
+                            </div>
+                            <div class="caption">
+                                <h4>@Html.Raw(item.goodName)</h4>
+                                <p style="height:50px">@Html.Raw(item.goodBreif)</p>
+                                <a class="btn btn-info" href="~/Home/GoodsEdit/1" style="display:block;text-align:center">Detail</a>
+                            </div>
+                        </div>
+                    </li>
+
+                counter++;
+
+
+            }
+
+        </ul>
+        </div>
+
+ }

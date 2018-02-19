@@ -1,0 +1,138 @@
+﻿@model IEnumerable<new_Karlshop.Data.Goods>
+
+@{
+    ViewData["Title"] = "recommendedGoods";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>recommendedGoods</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.goods_id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.cat_id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.seller)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.goods_sn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.goods_name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.shop_price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.market_price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.goods_quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sold_quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.goods_weight)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.goods_desc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.goods_brief)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ori_img)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ori_img1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ori_img2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.is_delete)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.is_free_post)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.last_update)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cat_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.seller)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_sn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shop_price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.market_price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sold_quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goods_brief)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ori_img)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ori_img1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ori_img2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.is_delete)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.is_free_post)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.last_update)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

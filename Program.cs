@@ -30,6 +30,7 @@ namespace new_Karlshop
                     initializer.InitializeData();
                     RoleRepo roleIni = new RoleRepo(context);
                     roleIni.CreateInitialRoles();
+                   
                 }
                 catch (Exception ex)
                 {

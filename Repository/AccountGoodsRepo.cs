@@ -1,4 +1,5 @@
 ﻿using new_Karlshop.Data;
+using new_Karlshop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,13 +73,47 @@ namespace new_Karlshop.Repository
         public void WishToCart(string  AccountID,int id)
         {
             AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == id && a.Account_ID == AccountID && a.Type == "wishlist").FirstOrDefault();
-            ag.Type = "cart";
+            if (_context.AccountGoods.Where(a => a.Goods_ID == id && a.Account_ID == AccountID && a.Type == "cart").FirstOrDefault()== null)
+            {
+                ag.Type = "cart";
+            }
+            else
+            {
+                _context.AccountGoods.Where(a => a.Goods_ID == id && a.Account_ID == AccountID && a.Type == "cart").FirstOrDefault().Quantity++;
+            }
+
             _context.SaveChanges();
         }
 
         public void AddtoViewedItem(string accountID, int id)
         {
-
+            AccountGood ag = _context.AccountGoods.Where(a => a.Account_ID == accountID && a.Goods_ID == id && a.Viewed == true).FirstOrDefault();
+            if (ag == null)
+            {
+                AccountGood temp = new AccountGood()
+                {
+                    Order_ID = GenerateOrderId(),
+                    Account_ID = accountID,
+                    Goods_ID = id,
+                    Viewed = true
+                };
+                _context.AccountGoods.Add(temp);
+                _context.SaveChanges();
+            }
+            else
+            {
+                ag.Order_ID = GenerateOrderId();
+                _context.SaveChanges();
+            }
         }
+
+        public List<Goods> recommendedGoods(string accountID)
+        {
+            CartRepo cartRepo = new CartRepo(_context);
+            ViewedVM RecentViewed= cartRepo.GetViewedAll(accountID).ToList().FirstOrDefault();
+            int category = RecentViewed.cat_id;
+            return _context.Goodses.Where(cat => cat.cat_id == category).Select(All => All).Take(4).ToList();
+        }
+
     }
 }

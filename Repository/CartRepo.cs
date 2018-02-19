@@ -49,6 +49,24 @@ namespace new_Karlshop.Repository
                     };
             return query;
         }
+
+        public IEnumerable<ViewedVM> GetViewedAll(string id)
+        {
+            IEnumerable<ViewedVM> query = (from ag in db.AccountGoods
+                                           where (ag.Account_ID == id && ag.Viewed == true)
+                                           orderby ag.Order_ID descending
+                                           select new ViewedVM
+                                           {
+                                               orderID = ag.Order_ID,
+                                               goodName = ag.Goods.goods_name,
+                                               goodBreif = ag.Goods.goods_brief,
+                                               goodImg = ag.Goods.ori_img,
+                                               cat_id = ag.Goods.cat_id
+
+                                           }).Distinct();
+            return query;               
+
+        }
             
 
 

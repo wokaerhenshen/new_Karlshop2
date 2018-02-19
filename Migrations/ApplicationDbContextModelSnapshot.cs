@@ -17,8 +17,7 @@ namespace new_Karlshop.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -38,8 +37,7 @@ namespace new_Karlshop.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -157,7 +155,9 @@ namespace new_Karlshop.Migrations
 
                     b.Property<string>("Type");
 
-                    b.HasKey("Account_ID", "Goods_ID", "Order_ID");
+                    b.Property<bool>("Viewed");
+
+                    b.HasKey("Account_ID", "Goods_ID");
 
                     b.HasIndex("Goods_ID");
 
@@ -187,8 +187,6 @@ namespace new_Karlshop.Migrations
 
                     b.Property<int?>("AccountGoodGoods_ID");
 
-                    b.Property<int?>("AccountGoodOrder_ID");
-
                     b.Property<string>("content");
 
                     b.Property<DateTime>("create_time");
@@ -197,7 +195,7 @@ namespace new_Karlshop.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AccountGoodAccount_ID", "AccountGoodGoods_ID", "AccountGoodOrder_ID");
+                    b.HasIndex("AccountGoodAccount_ID", "AccountGoodGoods_ID");
 
                     b.ToTable("Comments");
                 });
@@ -233,6 +231,8 @@ namespace new_Karlshop.Migrations
                     b.Property<string>("ori_img1");
 
                     b.Property<string>("ori_img2");
+
+                    b.Property<string>("seller");
 
                     b.Property<decimal>("shop_price");
 
@@ -346,8 +346,7 @@ namespace new_Karlshop.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -422,7 +421,7 @@ namespace new_Karlshop.Migrations
                 {
                     b.HasOne("new_Karlshop.Data.AccountGood", "AccountGood")
                         .WithMany("Comments")
-                        .HasForeignKey("AccountGoodAccount_ID", "AccountGoodGoods_ID", "AccountGoodOrder_ID");
+                        .HasForeignKey("AccountGoodAccount_ID", "AccountGoodGoods_ID");
                 });
 
             modelBuilder.Entity("new_Karlshop.Data.Goods", b =>
