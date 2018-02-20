@@ -52,12 +52,12 @@ namespace new_Karlshop.Repository
 
         public IEnumerable<ViewedVM> GetViewedAll(string id)
         {
-            IEnumerable<ViewedVM> query = (from ag in db.AccountGoods
-                                           where (ag.Account_ID == id && ag.Viewed == true)
-                                           orderby ag.Order_ID descending
+            IEnumerable<ViewedVM> query = (from ag in db.ViewedGoods
+                                           where (ag.Account_ID == id)
+                                           orderby ag.ViewedSequence descending
                                            select new ViewedVM
                                            {
-                                               orderID = ag.Order_ID,
+                                               viewedSequence = ag.ViewedSequence,
                                                goodName = ag.Goods.goods_name,
                                                goodBreif = ag.Goods.goods_brief,
                                                goodImg = ag.Goods.ori_img,

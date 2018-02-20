@@ -11,7 +11,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace new_Karlshop.Data
 {
-
+    public class ViewedGoods
+    {
+        [Key, Column(Order = 0)]
+        public string Account_ID { get; set; }
+        [Key, Column(Order = 1)]
+        public int Goods_ID { get; set; }
+        public int ViewedSequence { get; set; }
+        public virtual Account Account { get; set; }
+        public virtual Goods Goods { get; set; }
+    }
 
 
     public class AccountGood
@@ -20,6 +29,7 @@ namespace new_Karlshop.Data
         public string Account_ID { get; set; }
         [Key, Column(Order = 1)]
         public int Goods_ID { get; set; }
+        [Key]
         public int Order_ID { get; set; }
         public int Quantity { get; set; }
         public string Type { get; set; }
@@ -79,10 +89,6 @@ namespace new_Karlshop.Data
 
         }
 
-
-
-
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
@@ -95,12 +101,28 @@ namespace new_Karlshop.Data
             //    .HasKey(or => new { or.Account_ID, or.Order_id });
             //builder.Entity<Order>()
             //    .HasOne(c => c.Account)
+            builder.Entity<ViewedGoods>()
+                .HasKey(ag => new { ag.Account_ID, ag.Goods_ID });
+
+            //define foreign key, this is a many to many relationship so this cartgood is a
+            // connection table.
+            builder.Entity<ViewedGoods>()
+                .HasOne(c => c.Account)
+                .WithMany(ag => ag.ViewedGoods)
+                .HasForeignKey(fk => new { fk.Account_ID })
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ViewedGoods>()
+                .HasOne(g => g.Goods)
+                .WithMany(cg => cg.ViewedGoods)
+                .HasForeignKey(fk => new { fk.Goods_ID })
+                .OnDelete(DeleteBehavior.Restrict);
 
 
 
             //define composite primary key
             builder.Entity<AccountGood>()
-                .HasKey(ag => new { ag.Account_ID, ag.Goods_ID });
+                .HasKey(ag => new { ag.Account_ID, ag.Goods_ID , ag.Order_ID });
 
             //define foreign key, this is a many to many relationship so this cartgood is a
             // connection table.
@@ -163,6 +185,7 @@ namespace new_Karlshop.Data
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Goods> Goodses { get; set; }
+        public DbSet<ViewedGoods> ViewedGoods { get; set; }
         public DbSet<AccountGood> AccountGoods { get; set; }
         public DbSet<Comments> Comments { get; set; }
         public DbSet<Order> Orders { get; set; }

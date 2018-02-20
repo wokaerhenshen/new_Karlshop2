@@ -269,11 +269,8 @@ namespace new_Karlshop.Controllers
             ViewBag.commentExist = gr.GetCommentsByGoodID(id).ToList().FirstOrDefault();
             ViewBag.maxGoodID = gr.GetMaxID();
             ViewBag.id = id;
-            ViewBag.ViewedItems = cartRepo.GetViewedAll(User.getUserId()).ToList();
             ag.AddtoViewedItem(User.getUserId(), id);
-
-
-
+            ViewBag.ViewedItems = cartRepo.GetViewedAll(User.getUserId()).ToList();
             return View(gr.GetOneGoods(gr.getAll(), id));
         }
 
@@ -283,7 +280,7 @@ namespace new_Karlshop.Controllers
             // 就是说如果不用navigation property的话，最后浏览的物品就不会出现在第一个了。还是要用navigation property.
             //List<int> accountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == User.getUserId() && ag.Viewed == true).OrderByDescending(ag => ag.Order_ID).Distinct().Select(id => id.Goods_ID).ToList();
             //List<ViewedVM> myViewedGoods = AccountGoods.
-            cartRepo.GetViewedAll(User.getUserId()).OrderByDescending(o =>o.orderID);
+            cartRepo.GetViewedAll(User.getUserId()).OrderByDescending(o =>o.viewedSequence);
             return View(cartRepo.GetViewedAll(User.getUserId()));
         }
 

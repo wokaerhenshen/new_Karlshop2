@@ -7,7 +7,7 @@ namespace new_Karlshop.Models
 {
     public class ViewedVM
     {
-        public int orderID { get; set; }
+        public int viewedSequence { get; set; }
         public string goodName { get; set; }
         public string goodBreif { get; set; }
         public string goodImg { get; set; }

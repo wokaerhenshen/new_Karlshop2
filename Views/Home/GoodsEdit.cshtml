@@ -286,7 +286,7 @@
 <script type="text/javascript">
 	$('#wishlist').click(function () {
         console.log("i'm here")
-        
+        console.log(@ViewBag.id)
 		var id =  @ViewBag.id
 			$.ajax({
 				type: 'post',
@@ -300,7 +300,7 @@
                     }
                     else {
 
-                        layer.alert('Already Exists!', { icon: 6 })
+                        layer.alert('Already Exists!', { icon: 7 })
                     }
                    // layer.msg('内容')
 					//alert('success')
@@ -310,7 +310,7 @@
 				error: function (msg) {
 					//弹窗，告知用户写入失败
 					//alert("评论内容写入失败");
-					alert("Already Exists");
+					alert("Fail !!!");
 				}
 
 			});

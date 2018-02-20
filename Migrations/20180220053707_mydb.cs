@@ -273,7 +273,7 @@ namespace new_Karlshop.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountGoods", x => new { x.Account_ID, x.Goods_ID });
+                    table.PrimaryKey("PK_AccountGoods", x => new { x.Account_ID, x.Goods_ID, x.Order_ID });
                     table.ForeignKey(
                         name: "FK_AccountGoods_Accounts_Account_ID",
                         column: x => x.Account_ID,
@@ -282,6 +282,31 @@ namespace new_Karlshop.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AccountGoods_Goodses_Goods_ID",
+                        column: x => x.Goods_ID,
+                        principalTable: "Goodses",
+                        principalColumn: "goods_id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ViewedGoods",
+                columns: table => new
+                {
+                    Account_ID = table.Column<string>(nullable: false),
+                    Goods_ID = table.Column<int>(nullable: false),
+                    ViewedSequence = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ViewedGoods", x => new { x.Account_ID, x.Goods_ID });
+                    table.ForeignKey(
+                        name: "FK_ViewedGoods_Accounts_Account_ID",
+                        column: x => x.Account_ID,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ViewedGoods_Goodses_Goods_ID",
                         column: x => x.Goods_ID,
                         principalTable: "Goodses",
                         principalColumn: "goods_id",
@@ -321,6 +346,7 @@ namespace new_Karlshop.Migrations
                     ID = table.Column<int>(nullable: false),
                     AccountGoodAccount_ID = table.Column<string>(nullable: true),
                     AccountGoodGoods_ID = table.Column<int>(nullable: true),
+                    AccountGoodOrder_ID = table.Column<int>(nullable: true),
                     content = table.Column<string>(nullable: true),
                     create_time = table.Column<DateTime>(nullable: false),
                     rate_star = table.Column<double>(nullable: false)
@@ -329,10 +355,10 @@ namespace new_Karlshop.Migrations
                 {
                     table.PrimaryKey("PK_Comments", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Comments_AccountGoods_AccountGoodAccount_ID_AccountGoodGoods_ID",
-                        columns: x => new { x.AccountGoodAccount_ID, x.AccountGoodGoods_ID },
+                        name: "FK_Comments_AccountGoods_AccountGoodAccount_ID_AccountGoodGoods_ID_AccountGoodOrder_ID",
+                        columns: x => new { x.AccountGoodAccount_ID, x.AccountGoodGoods_ID, x.AccountGoodOrder_ID },
                         principalTable: "AccountGoods",
-                        principalColumns: new[] { "Account_ID", "Goods_ID" },
+                        principalColumns: new[] { "Account_ID", "Goods_ID", "Order_ID" },
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -379,9 +405,9 @@ namespace new_Karlshop.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_AccountGoodAccount_ID_AccountGoodGoods_ID",
+                name: "IX_Comments_AccountGoodAccount_ID_AccountGoodGoods_ID_AccountGoodOrder_ID",
                 table: "Comments",
-                columns: new[] { "AccountGoodAccount_ID", "AccountGoodGoods_ID" });
+                columns: new[] { "AccountGoodAccount_ID", "AccountGoodGoods_ID", "AccountGoodOrder_ID" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Goodses_cat_id",
@@ -392,6 +418,11 @@ namespace new_Karlshop.Migrations
                 name: "IX_Orders_Account_ID",
                 table: "Orders",
                 column: "Account_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ViewedGoods_Goods_ID",
+                table: "ViewedGoods",
+                column: "Goods_ID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -419,6 +450,9 @@ namespace new_Karlshop.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderGoods");
+
+            migrationBuilder.DropTable(
+                name: "ViewedGoods");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

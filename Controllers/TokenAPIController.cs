@@ -36,6 +36,7 @@ namespace new_Karlshop.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
         public ApplicationDbContext _context;
+        GoodsRepo gr;
 
         // Constructor.
         public TokenAPI(
@@ -46,6 +47,7 @@ namespace new_Karlshop.Controllers
             )
         {
             this._context = context;
+            this.gr = new GoodsRepo(context);
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
@@ -78,7 +80,7 @@ namespace new_Karlshop.Controllers
         }
 
         [HttpGet]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         //[Authorize]
         public IEnumerable<WishlistVM> Wishlist()
         {
@@ -91,6 +93,17 @@ namespace new_Karlshop.Controllers
         public IEnumerable<LoginViewModel> Public()
         {
             return GetFakeData();
+        }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public void AddGood([FromBody] Goods good)
+        {
+            good.goods_id = gr.GetGoodsMaxID() + 1;
+
+            good.last_update = DateTime.Now;
+
+            gr.AddOneGoods(good);
         }
 
         // This Action method requires authentication.

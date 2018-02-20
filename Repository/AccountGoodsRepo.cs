@@ -45,6 +45,18 @@ namespace new_Karlshop.Repository
 
         }
 
+        public int GenerateViewSequence()
+        {
+            if (_context.ViewedGoods.Count()== 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return _context.ViewedGoods.Select(s => s.ViewedSequence).Max() + 1;
+            }
+        }
+
         public void DeleteOneGoodinWishByBothID(string accountID, int goodsID)
         {
             AccountGood ag = _context.AccountGoods.Where(a => a.Goods_ID == goodsID && a.Account_ID == accountID && a.Type == "wishlist").FirstOrDefault();
@@ -87,22 +99,22 @@ namespace new_Karlshop.Repository
 
         public void AddtoViewedItem(string accountID, int id)
         {
-            AccountGood ag = _context.AccountGoods.Where(a => a.Account_ID == accountID && a.Goods_ID == id && a.Viewed == true).FirstOrDefault();
+            ViewedGoods ag = _context.ViewedGoods.Where(a => a.Account_ID == accountID && a.Goods_ID == id ).FirstOrDefault();
             if (ag == null)
             {
-                AccountGood temp = new AccountGood()
+                ViewedGoods temp = new ViewedGoods()
                 {
-                    Order_ID = GenerateOrderId(),
+
                     Account_ID = accountID,
                     Goods_ID = id,
-                    Viewed = true
+                    ViewedSequence = GenerateViewSequence()
                 };
-                _context.AccountGoods.Add(temp);
+                _context.ViewedGoods.Add(temp);
                 _context.SaveChanges();
             }
             else
             {
-                ag.Order_ID = GenerateOrderId();
+                ag.ViewedSequence = GenerateViewSequence();
                 _context.SaveChanges();
             }
         }

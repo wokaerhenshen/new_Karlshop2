@@ -11,7 +11,7 @@ using System;
 namespace new_Karlshop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180219020337_mydb")]
+    [Migration("20180220053707_mydb")]
     partial class mydb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,7 +158,7 @@ namespace new_Karlshop.Migrations
 
                     b.Property<bool>("Viewed");
 
-                    b.HasKey("Account_ID", "Goods_ID");
+                    b.HasKey("Account_ID", "Goods_ID", "Order_ID");
 
                     b.HasIndex("Goods_ID");
 
@@ -188,6 +188,8 @@ namespace new_Karlshop.Migrations
 
                     b.Property<int?>("AccountGoodGoods_ID");
 
+                    b.Property<int?>("AccountGoodOrder_ID");
+
                     b.Property<string>("content");
 
                     b.Property<DateTime>("create_time");
@@ -196,7 +198,7 @@ namespace new_Karlshop.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AccountGoodAccount_ID", "AccountGoodGoods_ID");
+                    b.HasIndex("AccountGoodAccount_ID", "AccountGoodGoods_ID", "AccountGoodOrder_ID");
 
                     b.ToTable("Comments");
                 });
@@ -300,6 +302,21 @@ namespace new_Karlshop.Migrations
                     b.HasAlternateKey("goods_id", "Order_id");
 
                     b.ToTable("OrderGoods");
+                });
+
+            modelBuilder.Entity("new_Karlshop.Data.ViewedGoods", b =>
+                {
+                    b.Property<string>("Account_ID");
+
+                    b.Property<int>("Goods_ID");
+
+                    b.Property<int>("ViewedSequence");
+
+                    b.HasKey("Account_ID", "Goods_ID");
+
+                    b.HasIndex("Goods_ID");
+
+                    b.ToTable("ViewedGoods");
                 });
 
             modelBuilder.Entity("new_Karlshop.Models.ApplicationUser", b =>
@@ -422,7 +439,7 @@ namespace new_Karlshop.Migrations
                 {
                     b.HasOne("new_Karlshop.Data.AccountGood", "AccountGood")
                         .WithMany("Comments")
-                        .HasForeignKey("AccountGoodAccount_ID", "AccountGoodGoods_ID");
+                        .HasForeignKey("AccountGoodAccount_ID", "AccountGoodGoods_ID", "AccountGoodOrder_ID");
                 });
 
             modelBuilder.Entity("new_Karlshop.Data.Goods", b =>
@@ -451,6 +468,19 @@ namespace new_Karlshop.Migrations
                     b.HasOne("new_Karlshop.Data.Goods", "Goods")
                         .WithMany("OrderGoods")
                         .HasForeignKey("goods_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("new_Karlshop.Data.ViewedGoods", b =>
+                {
+                    b.HasOne("new_Karlshop.Data.Account", "Account")
+                        .WithMany("ViewedGoods")
+                        .HasForeignKey("Account_ID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("new_Karlshop.Data.Goods", "Goods")
+                        .WithMany("ViewedGoods")
+                        .HasForeignKey("Goods_ID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
