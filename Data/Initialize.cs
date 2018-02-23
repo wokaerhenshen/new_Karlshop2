@@ -150,7 +150,8 @@ namespace new_Karlshop.Data
                      is_delete = true,
                      is_free_post = true,
                      last_update = new DateTime(2013, 11, 28, 13, 09, 45)
-                 });
+                 })
+                 ;
 
             _context.Goodses.Add(new Goods()
             {

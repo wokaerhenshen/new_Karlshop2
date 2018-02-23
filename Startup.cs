@@ -143,6 +143,8 @@ namespace new_Karlshop
             app.UseSignalR(routes => {
                 routes.MapHub<Chat>("chat");
             });
+
+            //sequence?
             app.UseAuthentication();
             app.UseCors("AllowAll");
             app.UseMvc(routes =>

@@ -203,33 +203,27 @@ namespace new_Karlshop.Controllers
         [HttpPost]
         public async Task<IActionResult> FileSave()
         {
-            var date = Request;
             var files = Request.Form.Files;
-            long size = files.Sum(f => f.Length);
             string webRootPath = _hostingEnvironment.WebRootPath;
-            string contentRootPath = _hostingEnvironment.ContentRootPath;
-            foreach (var formFile in files)
+
+            foreach (var file in files)
             {
-                if (formFile.Length > 0)
+                // to do save
+                //I will ask abou this :
+                //感谢分享，请问在第二种方法 ajax上传中，为何要随机生成一个新的文件名呢，用原来的不好吗？
+                string fileExt = Path.GetExtension(file.FileName); //文件扩展名，不含“.”
+                long fileSize = file.Length; //获得文件大小，以字节为单位
+                string fileName = file.FileName;
+                string newFileName = System.Guid.NewGuid().ToString() + "." + fileExt; //随机生成新的文件名
+                var filePath = webRootPath + "\\images\\" + fileName;
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-
-                    //I will ask abou this :
-                    //感谢分享，请问在第二种方法 ajax上传中，为何要随机生成一个新的文件名呢，用原来的不好吗？
-                    string fileExt = Path.GetExtension(formFile.FileName); //文件扩展名，不含“.”
-                    long fileSize = formFile.Length; //获得文件大小，以字节为单位
-                    string fileName = formFile.FileName;
-                    string newFileName = System.Guid.NewGuid().ToString() + "." + fileExt; //随机生成新的文件名
-                    var filePath = webRootPath + "\\images\\" + fileName;
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-
-                        await formFile.CopyToAsync(stream);
-                    }
+                    await file.CopyToAsync(stream);
                 }
+
             }
 
-            //why not it return this msg?
-            return Ok(new { message = "upload success!!!" });
+            return Ok("I'm done");
         }
 
         [HttpGet]

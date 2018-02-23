@@ -265,5 +265,11 @@ namespace new_Karlshop.Repository
 
             return goods;
         }
+
+        public IEnumerable<Goods> GetSellingList(string email)
+        {
+            IEnumerable<Goods> goods = _context.Goodses.Where(se => se.seller == email).Select(All=>All);
+            return goods;
+        }
     }
 }

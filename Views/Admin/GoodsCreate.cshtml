@@ -31,7 +31,7 @@
                 }
 
             </div>
-        </div>
+     </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.goods_name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -66,13 +66,30 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group ">
             @Html.LabelFor(model => model.ori_img, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ori_img, new { htmlAttributes = new { @class = "form-control", placeholder = "You need to upload the image first and image path will auto generate" , id = "my_img_path" } } )
                 @Html.ValidationMessageFor(model => model.ori_img, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group ">
+            @Html.LabelFor(model => model.ori_img1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ori_img1, new { htmlAttributes = new { @class = "form-control", placeholder = "You need to upload the image first and image path will auto generate", id = "my_img_path_2" } })
+                @Html.ValidationMessageFor(model => model.ori_img1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group ">
+            @Html.LabelFor(model => model.ori_img2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ori_img2, new { htmlAttributes = new { @class = "form-control", placeholder = "You need to upload the image first and image path will auto generate", id = "my_img_path_3" } })
+                @Html.ValidationMessageFor(model => model.ori_img2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.is_free_post, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -127,8 +144,11 @@
         //my_img_path
         // how can I get the multiple value of input which type is file?
         var a = document.getElementById("my_upload_img").value.substring(12);
-        //alert(a);
-        document.getElementById("my_img_path").value = a;
+
+        //需要首先declare 它作为一个变量，然后再用他的property，不然直接用property的话就是undefined
+        //下面那行代码我不能放在下面，而要在上传成功后再使用，似乎是
+        //如果我直接用的话图片就会被肢解，不能再上传到服务器的节奏。
+        //var myFile = document.getElementById("my_upload_img").files
         var formData = new FormData($("#uploadForm")[0]);
         $.ajax({
             url: '@Url.Action("FileSave")',
@@ -139,8 +159,16 @@
             contentType: false,
             processData: false,
             success: function (returndata) {
-                
+                //var myFile = document.getElementById("my_upload_img").files
+                //alert(myFile[1].name)
+                //alert(document.getElementById("my_upload_img").files);
+                //alert(document.getElementsByName("file").values)
                 alert("upload success");
+                var myFile = document.getElementById("my_upload_img").files
+                document.getElementById("my_img_path").value = myFile[0].name
+                document.getElementById("my_img_path_2").value = myFile[1].name
+                document.getElementById("my_img_path_3").value = myFile[2].name
+
             },
             error: function (returndata) {
                 alert("upload failed");
