@@ -1,6 +1,8 @@
-﻿using System;
+﻿using new_Karlshop.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace new_Karlshop.Data
@@ -12,10 +14,14 @@ namespace new_Karlshop.Data
         {
             _context = context;
             InitializeData();
+            
         }
 
         public void InitializeData()
         {
+
+            AmazonPriceScrapy amazon = new AmazonPriceScrapy(_context);
+
             if (_context.Goodses.Count() != 0)
             {
                 return;
@@ -136,9 +142,10 @@ namespace new_Karlshop.Data
                      cat_id = 11,
                      goods_id = 1,
                      goods_sn = "ECS000001",
+                     asin = "B06XRJ9L96",
                      goods_name = "iPhone 6s",
                      shop_price = 769.99m,
-                     market_price = 869.60m,
+                     market_price = "",
                      goods_quantity = 127,
                      sold_quantity = 6,
                      goods_weight = 1.2m,
@@ -150,17 +157,17 @@ namespace new_Karlshop.Data
                      is_delete = true,
                      is_free_post = true,
                      last_update = new DateTime(2013, 11, 28, 13, 09, 45)
-                 })
-                 ;
+                 });
 
             _context.Goodses.Add(new Goods()
             {
                 cat_id = 11,
                 goods_id = 2,
                 goods_sn = "ECS000002",
-                goods_name = "iPhone 6s Plus",
+                goods_name = "iPhone 6s Plus", 
+                asin = "B01JAWZQR0",
                 shop_price = 899.00m,
-                market_price = 969.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 6,
                 goods_weight = 1.2m,
@@ -181,10 +188,10 @@ namespace new_Karlshop.Data
                 cat_id = 11,
                 goods_id = 3,
                 goods_sn = "ECS000003",
-
                 goods_name = "iPhone 7",
+                asin = "B01N6YAP98",
                 shop_price = 899.08m,
-                market_price = 1069.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 10,
                 goods_weight = 1.2m,
@@ -205,8 +212,9 @@ namespace new_Karlshop.Data
                 goods_id = 4,
                 goods_sn = "ECS000004",
                 goods_name = "iPhone 7 Plus",
+                asin = "B01N6ZAR0D",
                 shop_price = 1049.00m,
-                market_price = 1169.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 3,
                 goods_weight = 1.2m,
@@ -227,8 +235,9 @@ namespace new_Karlshop.Data
                 goods_id = 5,
                 goods_sn = "ECS000005",
                 goods_name = "iPhone SE",
+                asin = "B0751RGH6W",
                 shop_price = 579.00m,
-                market_price = 669.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -249,8 +258,9 @@ namespace new_Karlshop.Data
                 goods_id = 6,
                 goods_sn = "ECS000006",
                 goods_name = "Galaxy S7 edge",
+                asin = "B01CJU9BBM",
                 shop_price = 900.00m,
-                market_price = 1069.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 6,
                 goods_weight = 1.2m,
@@ -271,8 +281,9 @@ namespace new_Karlshop.Data
                 goods_id = 7,
                 goods_sn = "ECS000007",
                 goods_name = "Galaxy S7",
+                asin = "B01CRCC4BQ",
                 shop_price = 770.00m,
-                market_price = 869.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -293,8 +304,9 @@ namespace new_Karlshop.Data
                 goods_id = 8,
                 goods_sn = "ECS000008",
                 goods_name = "HUAWEI Mate 9",
+                asin = "B01MYRABC3",
                 shop_price = 869.00m,
-                market_price = 969.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 9,
                 goods_weight = 1.2m,
@@ -315,8 +327,9 @@ namespace new_Karlshop.Data
                 goods_id = 9,
                 goods_sn = "ECS000009",
                 goods_name = "ThinkPad X260",
+                asin = "B07256JS27",
                 shop_price = 1070.10m,
-                market_price = 1269.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -337,8 +350,9 @@ namespace new_Karlshop.Data
                 goods_id = 10,
                 goods_sn = "ECS000010",
                 goods_name = "ThinkPad X1 Yoga",
+                asin = "B018L4E3WW",
                 shop_price = 1808.10m,
-                market_price = 2069.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 1,
                 goods_weight = 1.2m,
@@ -358,8 +372,9 @@ namespace new_Karlshop.Data
                 goods_id = 11,
                 goods_sn = "ECS000011",
                 goods_name = "ThinkPad X1 Carbon",
+                asin = "B07256JS27",
                 shop_price = 1727.10m,
-                market_price = 1869.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 2,
                 goods_weight = 1.2m,
@@ -379,8 +394,9 @@ namespace new_Karlshop.Data
                 goods_id = 12,
                 goods_sn = "ECS000012",
                 goods_name = "ThinkPad X260",
+                asin = "B07256JS27", //
                 shop_price = 1070.10m,
-                market_price = 1169.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 3,
                 goods_weight = 1.2m,
@@ -401,9 +417,10 @@ namespace new_Karlshop.Data
                 cat_id = 22,
                 goods_id = 13,
                 goods_sn = "ECS000013",
-                goods_name = "ALIENWARE 13",
+                goods_name = "ALIENWARE 13",//a-color-price
+                asin = "B015PYZX0C",
                 shop_price = 1549.99m,
-                market_price = 1669.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -425,8 +442,9 @@ namespace new_Karlshop.Data
                 goods_id = 14,
                 goods_sn = "ECS000014",
                 goods_name = "AHP EliteBook",
+                asin = "B01MSCY7C1",
                 shop_price = 1549.99m,
-                market_price = 1769.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -446,8 +464,9 @@ namespace new_Karlshop.Data
                 goods_id = 15,
                 goods_sn = "ECS000015",
                 goods_name = "HP EliteBook 2570p",
+                asin = "B01MSCY7C1",
                 shop_price = 1549.99m,
-                market_price = 1769.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -467,8 +486,9 @@ namespace new_Karlshop.Data
                 goods_id = 16,
                 goods_sn = "ECS000016",
                 goods_name = "Hisense H7GB 50",
+                asin = "B01M01QPDL",
                 shop_price = 699.99m,
-                market_price = 869.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -488,8 +508,9 @@ namespace new_Karlshop.Data
                 goods_id = 17,
                 goods_sn = "ECS000017",
                 goods_name = "Samsung 40",
+                asin = "B074NFWYFQ",
                 shop_price = 799.99m,
-                market_price = 969.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -509,8 +530,9 @@ namespace new_Karlshop.Data
                 goods_id = 18,
                 goods_sn = "ECS000018",
                 goods_name = "LG 55 UH6150 4K",
+                asin = "B01N97NW28",
                 shop_price = 1549.99m,
-                market_price = 1669.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -530,8 +552,9 @@ namespace new_Karlshop.Data
                 goods_id = 19,
                 goods_sn = "ECS000019",
                 goods_name = "Samsung 58 Smart",
+                asin = "B0735X7LZN",
                 shop_price = 1549.99m,
-                market_price = 1869.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -551,8 +574,9 @@ namespace new_Karlshop.Data
                 goods_id = 20,
                 goods_sn = "ECS000020",
                 goods_name = "Sylvania 39 HD LED ",
+                asin = "B009PHUR66",
                 shop_price = 299.99m,
-                market_price = 369.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -572,8 +596,9 @@ namespace new_Karlshop.Data
                 goods_id = 21,
                 goods_sn = "ECS000021",
                 goods_name = "LG 49 UH6100 4K UHD Smart",
+                asin = "B01CF07ML2",
                 shop_price = 1099.99m,
-                market_price = 1169.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -593,8 +618,9 @@ namespace new_Karlshop.Data
                 goods_id = 22,
                 goods_sn = "ECS000022",
                 goods_name = "LG 55 UH7650 4K Super ",
+                asin = "B06W9KHF4X",
                 shop_price = 1549.99m,
-                market_price = 1669.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -614,8 +640,9 @@ namespace new_Karlshop.Data
                 goods_id = 23,
                 goods_sn = "ECS000023",
                 goods_name = "Samsung 40 1080p LED",
+                asin = "B00JRGATE0",
                 shop_price = 1549.99m,
-                market_price = 1769.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -635,8 +662,9 @@ namespace new_Karlshop.Data
                 goods_id = 24,
                 goods_sn = "ECS000024",
                 goods_name = "HP 15.6 ",
+                asin = "B077Y616Y9",
                 shop_price = 699.99m,
-                market_price = 869.60m,
+                market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
                 goods_weight = 1.2m,
@@ -650,9 +678,32 @@ namespace new_Karlshop.Data
                 last_update = new DateTime(2012, 11, 30, 13, 09, 45)
             });
             _context.SaveChanges();
+
+            ChangePriceAsync();
+
         }
 
     
+        public void ChangePriceAsync()
+        {
+            AmazonPriceScrapy amazon = new AmazonPriceScrapy(_context);
+
+            List<Goods> AllGoods = _context.Goodses.Select(All => All).ToList();
+            List<Goods> TopGoods = AllGoods.Take(8).ToList();
+            List<Goods> LastGoods = AllGoods.TakeLast(8).ToList();
+            foreach (var smallgood in AllGoods)
+            {
+                 amazon.AmazonPriceAsync(smallgood.goods_id, smallgood.asin).Wait();
+                 //Thread.Sleep(1000);
+            }
+            //Thread.Sleep(1000);
+            //foreach (var smallgood in LastGoods)
+            //{
+            //    amazon.AmazonPriceAsync(smallgood.goods_id ,smallgood.asin).Wait();
+            //    //Thread.Sleep(1000);
+            //}
+
+        }
 
     }
 }

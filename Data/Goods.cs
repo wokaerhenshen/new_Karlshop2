@@ -24,6 +24,8 @@ namespace new_Karlshop.Data
         [Display(Name = "Goods_SN")]
         public string goods_sn { get; set; }
 
+        public string asin { get; set; }
+
         [Display(Name = "Goods Name")]
         public string goods_name { get; set; }
 
@@ -31,7 +33,7 @@ namespace new_Karlshop.Data
         public decimal shop_price { get; set; }
 
         [Display(Name = "Market Price")]
-        public decimal market_price { get; set; }
+        public string market_price { get; set; }
 
         [Display(Name = "Quantity")]
         public int goods_quantity { get; set; }

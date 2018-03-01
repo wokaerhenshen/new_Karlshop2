@@ -27,7 +27,9 @@ namespace new_Karlshop.Controllers
         AccountRepo ar;
         AccountGoodsRepo ag;
         CartRepo cartRepo;
-        
+        AmazonPriceScrapy amazon;
+
+
 
         public HomeController(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context )
         {
@@ -40,7 +42,7 @@ namespace new_Karlshop.Controllers
             this.ar = new AccountRepo(context);
             this.ag = new AccountGoodsRepo(context);
             this.cartRepo = new CartRepo(context);
-            
+            this.amazon = new AmazonPriceScrapy(_context);
 
         }
 
@@ -271,9 +273,17 @@ namespace new_Karlshop.Controllers
             ViewBag.commentExist = gr.GetCommentsByGoodID(id).ToList().FirstOrDefault();
             ViewBag.maxGoodID = gr.GetMaxID();
             ViewBag.id = id;
+            ViewBag.asin = gr.GetAsinFromId(id);
             ag.AddtoViewedItem(User.getUserId(), id);
             ViewBag.ViewedItems = cartRepo.GetViewedAll(User.getUserId()).ToList();
             return View(gr.GetOneGoods(gr.getAll(), id));
+        }
+
+        [HttpPost]
+        public  bool SyncPrice(int id, string asin)
+        {
+             amazon.AmazonPriceAsync(id, asin).Wait();
+             return true;
         }
 
         public ActionResult ShowViewed()

@@ -11,7 +11,7 @@ using System;
 namespace new_Karlshop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180220053707_mydb")]
+    [Migration("20180227032459_mydb")]
     partial class mydb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -207,6 +207,8 @@ namespace new_Karlshop.Migrations
                 {
                     b.Property<int>("goods_id");
 
+                    b.Property<string>("asin");
+
                     b.Property<int>("cat_id");
 
                     b.Property<string>("goods_brief");
@@ -227,7 +229,7 @@ namespace new_Karlshop.Migrations
 
                     b.Property<DateTime>("last_update");
 
-                    b.Property<decimal>("market_price");
+                    b.Property<string>("market_price");
 
                     b.Property<string>("ori_img");
 

@@ -210,6 +210,7 @@ namespace new_Karlshop.Migrations
                 columns: table => new
                 {
                     goods_id = table.Column<int>(nullable: false),
+                    asin = table.Column<string>(nullable: true),
                     cat_id = table.Column<int>(nullable: false),
                     goods_brief = table.Column<string>(nullable: true),
                     goods_desc = table.Column<string>(nullable: true),
@@ -220,7 +221,7 @@ namespace new_Karlshop.Migrations
                     is_delete = table.Column<bool>(nullable: false),
                     is_free_post = table.Column<bool>(nullable: false),
                     last_update = table.Column<DateTime>(nullable: false),
-                    market_price = table.Column<decimal>(nullable: false),
+                    market_price = table.Column<string>(nullable: true),
                     ori_img = table.Column<string>(nullable: true),
                     ori_img1 = table.Column<string>(nullable: true),
                     ori_img2 = table.Column<string>(nullable: true),

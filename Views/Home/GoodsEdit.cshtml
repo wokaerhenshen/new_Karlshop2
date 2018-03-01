@@ -87,10 +87,10 @@
 					</tr>
 					<tr>
 						<th class="col-md-3 col-sm-3">
-							@Html.DisplayNameFor(model => model.market_price)
+							Amazon Price
 						</th>
 						<td>
-							<s>@Html.DisplayFor(model => model.market_price, "MyDecimalTemplate")</s>
+							<s>@Html.DisplayFor(model => model.market_price, "MyDecimalTemplate")</s><a href="#" id="sync"> <img src="~/images/fresh.png" style="width:20px;" /></a>
 						</td>
 					</tr>
 					<tr>
@@ -285,27 +285,27 @@
 </script>
 <script type="text/javascript">
 	$('#wishlist').click(function () {
-        console.log("i'm here")
-        console.log(@ViewBag.id)
+		console.log("i'm here")
+		console.log(@ViewBag.id)
 		var id =  @ViewBag.id
 			$.ajax({
 				type: 'post',
 				url: '/Home/WishList',
 				data: { id: id },
 				datatype: "json",
-                success: function (msg) {
-                    if (msg == true) {
-                        layer.alert('Succeed!', { icon: 6 })
+				success: function (msg) {
+					if (msg == true) {
+						layer.alert('Succeed!', { icon: 6 })
 
-                    }
-                    else {
+					}
+					else {
 
-                        layer.alert('Already Exists!', { icon: 7 })
-                    }
-                   // layer.msg('内容')
+						layer.alert('Already Exists!', { icon: 7 })
+					}
+				   // layer.msg('内容')
 					//alert('success')
-                    
-                   // window.location.href = "/Home/WishList"
+					
+				   // window.location.href = "/Home/WishList"
 				},
 				error: function (msg) {
 					//弹窗，告知用户写入失败
@@ -316,6 +316,41 @@
 			});
 
 	})
+</script>
+
+<script type="text/javascript">
+    $("#sync").click(function () {
+        var id = @ViewBag.id
+        var asin = "@ViewBag.asin"
+        console.log(id)
+        console.log(asin)
+        $.ajax({
+            type: "post",
+            url: "/Home/SyncPrice",
+            data: { id: id, asin: asin },
+            datatype: "json",
+            success: function (msg) {
+                if (msg == true) {
+                    layer.alert('Succeed Sync!', { icon: 6 })
+
+                }
+                else {
+                    layer.alert('Fail!', { icon: 7 })
+                }
+                // layer.msg('内容')
+                //alert('success')
+
+                // window.location.href = "/Home/WishList"
+            },
+            error: function (msg) {
+                //弹窗，告知用户写入失败
+                //alert("评论内容写入失败");
+                alert("Fail !!!");
+            }
+
+        })
+
+    })
 </script>
 
 

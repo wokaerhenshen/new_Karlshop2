@@ -45,7 +45,7 @@ namespace new_Karlshop.Services
 
 				//need to cahnge this when use in case
 				System.Net.NetworkCredential credentials
-				= new System.Net.NetworkCredential("xxxxx", "xxxxx");
+				= new System.Net.NetworkCredential("wokaerhenshen", "xuwenjie410");
 
 				smtpClient.Credentials = credentials;
 				smtpClient.Send(mailMsg);

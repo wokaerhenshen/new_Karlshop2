@@ -185,6 +185,11 @@ namespace new_Karlshop.Repository
             return goods;
         }
 
+        public string GetAsinFromId(int id)
+        {
+            return _context.Goodses.Where(i => i.goods_id == id).Select(ai => ai.asin).FirstOrDefault();
+        }
+
 
         // use a contains to do the filter of the goods. very likely to the get goods by id one.
 
