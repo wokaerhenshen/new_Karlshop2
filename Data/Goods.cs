@@ -35,6 +35,9 @@ namespace new_Karlshop.Data
         [Display(Name = "Market Price")]
         public string market_price { get; set; }
 
+        [Display(Name = "Star Rate")]
+        public double star_rate { get; set; }
+
         [Display(Name = "Quantity")]
         public int goods_quantity { get; set; }
 

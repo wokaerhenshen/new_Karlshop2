@@ -242,6 +242,8 @@ namespace new_Karlshop.Migrations
 
                     b.Property<int>("sold_quantity");
 
+                    b.Property<double>("star_rate");
+
                     b.HasKey("goods_id");
 
                     b.HasIndex("cat_id");

@@ -105,9 +105,9 @@ namespace new_Karlshop.Controllers
 
         // This Action method does not require authentication.
         [HttpGet]
-        public IEnumerable<LoginViewModel> Public()
+        public IEnumerable<Goods> Public()
         {
-            return GetFakeData();
+            return gr.getAll();
         }
 
         [HttpGet]

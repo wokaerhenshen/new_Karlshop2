@@ -227,7 +227,8 @@ namespace new_Karlshop.Migrations
                     ori_img2 = table.Column<string>(nullable: true),
                     seller = table.Column<string>(nullable: true),
                     shop_price = table.Column<decimal>(nullable: false),
-                    sold_quantity = table.Column<int>(nullable: false)
+                    sold_quantity = table.Column<int>(nullable: false),
+                    star_rate = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

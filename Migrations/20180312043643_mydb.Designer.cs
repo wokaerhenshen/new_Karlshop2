@@ -11,7 +11,7 @@ using System;
 namespace new_Karlshop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180227032459_mydb")]
+    [Migration("20180312043643_mydb")]
     partial class mydb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -242,6 +242,8 @@ namespace new_Karlshop.Migrations
                     b.Property<decimal>("shop_price");
 
                     b.Property<int>("sold_quantity");
+
+                    b.Property<double>("star_rate");
 
                     b.HasKey("goods_id");
 

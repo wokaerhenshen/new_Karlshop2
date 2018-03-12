@@ -38,6 +38,22 @@ namespace new_Karlshop.Repository
             return _context.Goodses.Select(id => id.goods_id).Max();
         }
 
+        public void GetGoodRating(int id)
+        {
+            IEnumerable<double> comments = from cm in _context.Comments
+                                             where (cm.AccountGood.Goods_ID == id)
+                                             select (cm.rate_star);
+            if (comments.Count() == 0)
+            {
+                _context.Goodses.Where(g => g.goods_id == id).FirstOrDefault().star_rate = 0;
+            }
+            else
+            {
+                _context.Goodses.Where(g => g.goods_id == id).FirstOrDefault().star_rate = comments.Average();
+            }
+
+        }
+
 
         //This occurs in the very first test of passing all images to the font end by using viewbag
         //public List<string> GetAllImagePath_Phone()

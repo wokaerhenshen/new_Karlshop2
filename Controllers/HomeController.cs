@@ -276,7 +276,8 @@ namespace new_Karlshop.Controllers
             ViewBag.asin = gr.GetAsinFromId(id);
             ag.AddtoViewedItem(User.getUserId(), id);
             ViewBag.ViewedItems = cartRepo.GetViewedAll(User.getUserId()).ToList();
-            return View(gr.GetOneGoods(gr.getAll(), id));
+            gr.GetGoodRating(id);
+            return View(gr.GetOneGoods(id));
         }
 
         [HttpPost]

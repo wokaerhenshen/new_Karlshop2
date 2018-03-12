@@ -60,89 +60,102 @@
 				<div class="panel-heading"><h5>Goods Details <input type="button" value="Add to Wishlist" class="btn btn-warning pull-right" id="wishlist"  style="width:110px;position:relative; bottom:10px;" /></h5> </div>
 				@*<input type="button" value="Add to WishList" class="btn btn-primary"  />*@
 			   
-				<table class="table table-striped">
-					<tr>
-						<th class="col-md-3 col-sm-3">
-							@Html.DisplayNameFor(model => model.goods_id)
-						</th>
-						<td>
-							@Html.DisplayFor(model => model.goods_id)
-						</td>
-					</tr>
-					<tr>
-						<th class="col-md-3 col-sm-3">
-							@Html.DisplayNameFor(model => model.goods_name)
-						</th>
-						<td>
-							@Html.DisplayFor(model => model.goods_name)
-						</td>
-					</tr>
-					<tr>
-						<th class="col-md-3 col-sm-3">
-							@Html.DisplayNameFor(model => model.shop_price)
-						</th>
-						<td>
-							@Html.DisplayFor(model => model.shop_price, "MyDecimalTemplate")
-						</td>
-					</tr>
-					<tr>
-						<th class="col-md-3 col-sm-3">
-							Amazon Price
-						</th>
-						<td>
-							<s>@Html.DisplayFor(model => model.market_price, "MyDecimalTemplate")</s><a href="#" id="sync"> <img src="~/images/fresh.png" style="width:20px;" /></a>
-						</td>
-					</tr>
-					<tr>
-						<th class="col-md-3 col-sm-3">
-							@Html.DisplayNameFor(model => model.goods_quantity)
-						</th>
-						<td>
-							@Html.DisplayFor(model => model.goods_quantity)
-						</td>
-					</tr>
-					<tr>
-						<th class="col-md-3 col-sm-3">
-							@Html.DisplayNameFor(model => model.sold_quantity)
-						</th>
-						<td>
-							@Html.DisplayFor(model => model.sold_quantity)
-						</td>
-					</tr>
-					<tr>
-						<th class="col-md-3 col-sm-3">
-							@Html.DisplayNameFor(model => model.goods_weight)
-						</th>
-						<td>
-							@Html.DisplayFor(model => model.goods_weight) KG
-						</td>
-					</tr>
-					<tr>
-						<th class="col-md-3 col-sm-3">
-							@Html.DisplayNameFor(model => model.goods_desc)
-						</th>
-						<td>
-							@*<h3  style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@Html.DisplayFor(model => model.goods_desc)</h3>*@
-							@Html.DisplayFor(model => model.goods_desc)
-						</td>
-					</tr>
-					<tr>
-						<th class="col-md-3 col-sm-3">
-							@Html.DisplayNameFor(model => model.is_free_post)
-						</th>
-						<td>
-							@Html.DisplayFor(model => model.is_free_post)
-						</td>
-					</tr>
-					<tr>
-						<th class="col-md-3 col-sm-3">
-							@Html.DisplayNameFor(model => model.last_update)
-						</th>
-						<td>
-							@Html.DisplayFor(model => model.last_update)
-						</td>
-					</tr>
-				</table>
+                <table class="table table-striped">
+                    <tr>
+                        <th class="col-md-3 col-sm-3">
+                            @Html.DisplayNameFor(model => model.goods_id)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.goods_id)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-3 col-sm-3">
+                            @Html.DisplayNameFor(model => model.goods_name)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.goods_name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-3 col-sm-3">
+                            @Html.DisplayNameFor(model => model.shop_price)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.shop_price, "MyDecimalTemplate")
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-3 col-sm-3">
+                            Amazon Price
+                        </th>
+                        <td>
+                            <s>@Html.DisplayFor(model => model.market_price, "MyDecimalTemplate")</s><a href="#" id="sync"> <img src="~/images/fresh.png" style="width:20px;" /></a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="col-md-3 col-sm-3">
+                            @Html.DisplayNameFor(model => model.star_rate)
+                        </th>
+                        <td>
+                            <input id="input-2b" type="number" class="rating" value=@Html.DisplayFor(model => model.star_rate) readOnly="readonly" data-size="l"
+                                   data-symbol="" data-default-caption="{rating} hearts">
+
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th class="col-md-3 col-sm-3">
+                            @Html.DisplayNameFor(model => model.goods_quantity)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.goods_quantity)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-3 col-sm-3">
+                            @Html.DisplayNameFor(model => model.sold_quantity)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.sold_quantity)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-3 col-sm-3">
+                            @Html.DisplayNameFor(model => model.goods_weight)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.goods_weight) KG
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-3 col-sm-3">
+                            @Html.DisplayNameFor(model => model.goods_desc)
+                        </th>
+                        <td>
+                            @*<h3  style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@Html.DisplayFor(model => model.goods_desc)</h3>*@
+                            @Html.DisplayFor(model => model.goods_desc)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-3 col-sm-3">
+                            @Html.DisplayNameFor(model => model.is_free_post)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.is_free_post)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-3 col-sm-3">
+                            @Html.DisplayNameFor(model => model.last_update)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.last_update)
+                        </td>
+                    </tr>
+                </table>
 				<div class="panel-footer">
 					<a href="~/Home/Index">
 						<input type="button" value="Goods List" class="btn btn-primary" style="width:110px;" />
@@ -235,7 +248,7 @@
 									</th>
 									<td>
 										<input id="input-2b" type="number" class="rating" value=@Html.Raw(star) readOnly="readonly" data-size="l"
-											   data-symbol="" data-default-caption="{rating} hearts" data-star-captions="{}">
+											   data-symbol="" data-default-caption="{rating} hearts">
 									</td>
 								</tr>
 								<tr>

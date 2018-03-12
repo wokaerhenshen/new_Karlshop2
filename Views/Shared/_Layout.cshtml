@@ -23,6 +23,12 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <meta property="og:url" content="https://karlshopv1.azurewebsites.net/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Karl Shop" />
+    <meta property="og:description" content="Welcome to KarlShop! We provide the best Products" />
+    <meta property="og:image" content="http://i0.kym-cdn.com/entries/icons/mobile/000/002/830/sad_frog.jpg" />
+
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -39,71 +45,71 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
-@{
-    var a1 = "";
-    if (ViewBag.menuActive != "Home")
-    {
-        a1 = "";
-    }
-    else
-    {
-        a1 = "active";
-    }
-                    <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="Welcome">Home</a></li>
-    }
-@{
-   
-    if (ViewBag.menuActive != "Gallery")
-    {
-        a1 = "";
-    }
-    else
-    {
-        a1 = "active";
-    }
+                    @{
+                        var a1 = "";
+                        if (ViewBag.menuActive != "Home")
+                        {
+                            a1 = "";
+                        }
+                        else
+                        {
+                            a1 = "active";
+                        }
+                        <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="Welcome">Home</a></li>
+                    }
+                    @{
 
-                    <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="ShowGoods">Gallery</a></li>
-}
-@{
+                        if (ViewBag.menuActive != "Gallery")
+                        {
+                            a1 = "";
+                        }
+                        else
+                        {
+                            a1 = "active";
+                        }
 
-    if (ViewBag.menuActive != "Cart")
-    {
-        a1 = "";
-    }
-    else
-    {
-        a1 = "active";
-    }
-                    <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="ShowCart" asp-route-id="0"><img src="~/images/cart.png" style="width:20px;"/></a></li>
-    }
-@*@{
+                        <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="ShowGoods">Gallery</a></li>
+                    }
+                    @{
 
-    if (ViewBag.menuActive != "Bought")
-    {
-        a1 = "";
-    }
-    else
-    {
-        a1 = "active";
-    }
-                    <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="Bought" >Already Bought</a></li>
-    }*@
+                        if (ViewBag.menuActive != "Cart")
+                        {
+                            a1 = "";
+                        }
+                        else
+                        {
+                            a1 = "active";
+                        }
+                        <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="ShowCart" asp-route-id="0"><img src="~/images/cart.png" style="width:20px;" /></a></li>
+                    }
+                    @*@{
 
-@{
+                        if (ViewBag.menuActive != "Bought")
+                        {
+                            a1 = "";
+                        }
+                        else
+                        {
+                            a1 = "active";
+                        }
+                                        <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="Bought" >Already Bought</a></li>
+                        }*@
 
-    if (ViewBag.menuActive != "About")
-    {
-        a1 = "";
-    }
-    else
-    {
-        a1 = "active";
-    }
-                    <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-    }
-                   
+                    @{
 
-                
+                        if (ViewBag.menuActive != "About")
+                        {
+                            a1 = "";
+                        }
+                        else
+                        {
+                            a1 = "active";
+                        }
+                        <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    }
+
+
+
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
 
@@ -114,16 +120,63 @@
     </nav>
     <div class="container body-content">
         @RenderBody()
-       
+
         <div class="col-xs-10">
             <footer>
-               
-                 <hr />
+                <!-- Load Facebook SDK for JavaScript -->
+                <div id="fb-root"></div>
+                <script>
+                    (function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));</script>
+
+                <hr />
                 <p>&copy; 2018 - new_Karlshop</p>
+                <!-- Your share button code -->
+                <span class="fb-share-button"
+                      data-href="https://karlshopv1.azurewebsites.net/"
+                      data-layout="button_count">
+                </span>
+
+                <script>
+                        window.twttr = (function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0],
+                            t = window.twttr || {};
+                        if (d.getElementById(id)) return t;
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = "https://platform.twitter.com/widgets.js";
+                        fjs.parentNode.insertBefore(js, fjs);
+
+                        t._e = [];
+                        t.ready = function (f) {
+                            t._e.push(f);
+                        };
+
+                        return t;
+                    }(document, "script", "twitter-wjs"));</script>
+
+                <br />
+                <br />
+                <a class="twitter-share-button"
+                   href="https://twitter.com/intent/tweet"
+                   data-size="small">
+                    Tweet
+                </a>
+
+
+
+
 
             </footer>
         </div>
     </div>
+
+
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
