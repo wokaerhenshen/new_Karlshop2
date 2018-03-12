@@ -2,7 +2,9 @@
 
 
 3.12 update: Add goods API for the IOS project 
+------------------------
 3.12 update: Add Average Star(score) for each product based on user comments.
+-----------
 
 
 
