@@ -62,3 +62,13 @@ Admins have a drop down menu
 Admins can create/edit/view category/goods/UserRoles
 
 Admins can view customers/payments
+
+Sellers:
+
+The pages for sellers can built with Angular.
+
+Sellers can CRUD their own products.
+
+sellers can view the sold quantity of their products.
+
+Sellers can 
