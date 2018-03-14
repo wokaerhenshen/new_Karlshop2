@@ -1,5 +1,11 @@
 # new_Karlshop2
 
+3.13 update: Add scrapt feature to myshop
+-----------
+Sellers or Admins can input ASIN (which is the amazon product price identity number) when they add new products.
+Karlshop can get the price of this product in Amazon and scrapt the price to my local site, and show both price 
+to the customers, customers can press "Sync" which is a refreash icon to get the real-time price in Amazon as well.
+
 
 3.12 update: Add goods API for the IOS project 
 ------------------------
