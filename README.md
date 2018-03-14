@@ -5,6 +5,8 @@
 Sellers or Admins can input ASIN (which is the amazon product price identity number) when they add new products.
 Karlshop can get the price of this product in Amazon and scrapt the price to my local site, and show both price 
 to the customers, customers can press "Sync" which is a refreash icon to get the real-time price in Amazon as well.
+（This is only for demo use, and I'm not sure whether it's illeagal to get the data, but I think it's public data and 
+for test use so it may be ok）
 
 
 3.12 update: Add goods API for the IOS project 
