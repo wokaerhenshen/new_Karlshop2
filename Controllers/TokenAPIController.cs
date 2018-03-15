@@ -42,6 +42,7 @@ namespace new_Karlshop.Controllers
         public ApplicationDbContext _context;
         GoodsRepo gr;
         CategoryRepo cr;
+        AccountGoodsRepo ag;
 
         // Constructor.
         public TokenAPI(
@@ -55,6 +56,7 @@ namespace new_Karlshop.Controllers
             this._context = context;
             _hostingEnvironment = hostingEnvironment;
             this.gr = new GoodsRepo(context);
+            this.ag = new AccountGoodsRepo(context);
             cr = new CategoryRepo(context);
             _userManager = userManager;
             _signInManager = signInManager;
@@ -154,6 +156,86 @@ namespace new_Karlshop.Controllers
             _context.SaveChanges();
             return true;
         }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public List<IOSCartVM> IOSShowCart([FromBody] EmailVM email)
+        {
+            //return "karlsb";
+           // return email;
+          List<AccountGood> accountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.Email == email.Email).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart").ToList();
+            List<IOSCartVM> myCart = new List<IOSCartVM>();
+          //  //return accountGoods.Count;
+            foreach (AccountGood accountGood in accountGoods)
+            {
+                IOSCartVM oneGood = new IOSCartVM
+                {
+                    goodName = _context.Goodses.Where(gn => gn.goods_id == accountGood.Goods_ID).Select(gn => gn.goods_name).FirstOrDefault(),
+                    quantity = accountGood.Quantity
+                };
+                myCart.Add(oneGood);
+
+
+            }
+            return myCart;
+        }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public void UpdateGoodinCart([FromBody] IOSUpdateVM updateInfo)
+        {
+            AccountGood good = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.Email == updateInfo.Email).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart" && ag.Goods_ID == updateInfo.GoodId).FirstOrDefault();
+
+            switch (updateInfo.UpdateType)
+            {
+                case "add":
+                    good.Quantity++;
+                    _context.SaveChanges();
+                    break;
+                case "minus":
+                    good.Quantity--;
+                    _context.SaveChanges();
+                    break;
+                case "delete":
+                    _context.AccountGoods.Remove(good);
+                    _context.SaveChanges();
+                    break;
+                default:
+                    break;
+            }
+                
+        }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public bool IOSAddToCart([FromBody] IOSUpdateVM addInfo)
+        {
+            //List<AccountGood> accountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.Email == addInfo.Email).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart").ToList();
+            _context.AccountGoods.Add(new AccountGood()
+            {
+                Account_ID = _context.Users.Where(name => name.Email == addInfo.Email).Select(i => i.Id).FirstOrDefault(),
+                Goods_ID = addInfo.GoodId,
+                Order_ID = ag.GenerateOrderId(),
+                Quantity = 1,
+                Type = "cart",
+                Viewed = true
+
+
+            });
+            _context.SaveChanges();
+            return true;
+        }
+
+
+
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public void AddGoodinCart([FromBody] Goods good, string email)
+        {
+
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Upload()
@@ -256,6 +338,21 @@ namespace new_Karlshop.Controllers
         }
 
         // It would be better to put this class in a ViewModels folder.
+
+        public class EmailVM
+        {
+            public string Email { get; set; }
+        }
+
+        public class IOSUpdateVM
+        {
+            public string Email { get; set; }
+            public int GoodId { get; set; }
+            public string UpdateType { get; set; }
+
+        }
+
+
         public class LoginVM
         {
             [Required]
