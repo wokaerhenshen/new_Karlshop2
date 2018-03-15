@@ -1,5 +1,11 @@
 # new_Karlshop2
 
+3.15 update : Add IOS project API feature
+----------------
+
+Add IOS API ,which can show cart , add/delete/minus products in Cart, and Add products to Cart, so all the opeartions are done in 
+the real .NET project sqlite database, which can be done in the IOS application later.
+
 3.14 update: Add VS team service feature
 ---------------
 Now sellers can go to an alternative Angular site that have the same functional feature with the Angular built in this .NET project,
