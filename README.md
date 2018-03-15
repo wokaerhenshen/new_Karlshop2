@@ -1,5 +1,13 @@
 # new_Karlshop2
 
+3.14 update: Add VS team service feature
+---------------
+Now sellers can go to an alternative Angular site that have the same functional feature with the Angular built in this .NET project,
+the site for this Angular site is https://shopangular.azurewebsites.net  
+this site use VSTS to build, the advantage of this feature is that it's an DevOps feature, and people can build their projects 
+on cloud and release it easily, people can see the actual changes of their apps as long as they sync their changes to the VSTS,
+very awesome feature for teammembers to work together
+
 3.13 update: Add scrapt feature to myshop
 -----------
 Sellers or Admins can input ASIN (which is the amazon product price identity number) when they add new products.
