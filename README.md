@@ -2,7 +2,7 @@
 
 4.13 update : Add profile Img feature, Redo the showCart Page
 ------------------------------------------------------
-
+add change quantity inncart feature, which making chaning products very convernient, add profile img feature, change some db info, fix initialize, add two users when seeding, other small bug fixes
 
 3.15 update : Add IOS project API feature
 ----------------
