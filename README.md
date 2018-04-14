@@ -2,11 +2,11 @@
 
 4.13 update:
 
-Here is four figures which are from this site:
+Here are four figures which are from this site:
 ![showcart](https://github.com/wokaerhenshen/new_Karlshop2/blob/master/wwwroot/images/showcart.png)
-![welcome](https://github.com/wokaerhenshen/new_Karlshop2/tree/master/wwwroot/images/welcome.png)
-![gallery](https://github.com/wokaerhenshen/new_Karlshop2/tree/master/wwwroot/images/gallery.png)
-![gooddetail](https://github.com/wokaerhenshen/new_Karlshop2/tree/master/wwwroot/images/gooddetail.png)
+![welcome](https://github.com/wokaerhenshen/new_Karlshop2/blob/master/wwwroot/images/welcome.png)
+![gallery](https://github.com/wokaerhenshen/new_Karlshop2/blob/master/wwwroot/images/gallery.png)
+![gooddetail](https://github.com/wokaerhenshen/new_Karlshop2/blob/master/wwwroot/images/gooddetail.png)
 
 4.13 update : Add profile Img feature, Redo the showCart Page
 ------------------------------------------------------
