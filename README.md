@@ -3,10 +3,10 @@
 4.13 update:
 
 Here is four figures which are from this site:
-![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
-![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
-![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
-![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![alt text](https://github.com/wokaerhenshen/new_Karlshop2/tree/master/wwwroot/images/showcart.png)
+![alt text](https://github.com/wokaerhenshen/new_Karlshop2/tree/master/wwwroot/images/welcome.png)
+![alt text](https://github.com/wokaerhenshen/new_Karlshop2/tree/master/wwwroot/images/gallery.png)
+![alt text](https://github.com/wokaerhenshen/new_Karlshop2/tree/master/wwwroot/images/gooddetail.png)
 
 4.13 update : Add profile Img feature, Redo the showCart Page
 ------------------------------------------------------
