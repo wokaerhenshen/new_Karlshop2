@@ -1,5 +1,9 @@
 # new_Karlshop2
 
+4.13 update : Add profile Img feature, Redo the showCart Page
+------------------------------------------------------
+
+
 3.15 update : Add IOS project API feature
 ----------------
 
