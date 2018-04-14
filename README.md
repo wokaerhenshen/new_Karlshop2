@@ -1,5 +1,13 @@
 # new_Karlshop2
 
+4.13 update:
+
+Here is four figures which are from this site:
+![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+
 4.13 update : Add profile Img feature, Redo the showCart Page
 ------------------------------------------------------
 add change quantity inncart feature, which making chaning products very convernient, add profile img feature, change some db info, fix initialize, add two users when seeding, other small bug fixes
