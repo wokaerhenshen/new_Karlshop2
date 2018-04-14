@@ -3,7 +3,7 @@
 4.13 update:
 
 Here are four figures which are from this site:
-![showcart](https://github.com/wokaerhenshen/new_Karlshop2/blob/master/wwwroot/images/showcart.png | width=50)
+![showcart](https://github.com/wokaerhenshen/new_Karlshop2/blob/master/wwwroot/images/showcart.png )
 ----------------
 ![welcome](https://github.com/wokaerhenshen/new_Karlshop2/blob/master/wwwroot/images/welcome.png)
 ----------------
