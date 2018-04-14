@@ -78,6 +78,8 @@ namespace new_Karlshop.Data
         public string content { get; set; }
         public DateTime create_time { get; set; }
         public double rate_star { get; set; }
+        public string ProfileImg { get; set; }
+        public string AuthorName { get; set; }
     }
 
 

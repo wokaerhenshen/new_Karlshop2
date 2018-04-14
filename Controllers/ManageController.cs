@@ -15,6 +15,8 @@ using new_Karlshop.Models.ManageViewModels;
 using new_Karlshop.Services;
 using new_Karlshop.Data;
 using new_Karlshop.Repository;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace new_Karlshop.Controllers
 {
@@ -29,7 +31,7 @@ namespace new_Karlshop.Controllers
         private readonly UrlEncoder _urlEncoder;
         ApplicationDbContext _context;
         AccountRepo ar;
-
+        private readonly IHostingEnvironment _hostingEnvironment;
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
@@ -39,7 +41,8 @@ namespace new_Karlshop.Controllers
           IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder,
-          ApplicationDbContext context)
+          ApplicationDbContext context,
+          IHostingEnvironment hostingEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -48,6 +51,7 @@ namespace new_Karlshop.Controllers
             _urlEncoder = urlEncoder;
             _context = context;
             this.ar = new AccountRepo(context);
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [TempData]
@@ -70,6 +74,8 @@ namespace new_Karlshop.Controllers
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
             };
+
+            ViewBag.ProfileImg = _context.Accounts.Where(i => i.Id == _userManager.GetUserId(User)).FirstOrDefault().profileImg;
 
             return View(model);
         }
@@ -511,6 +517,34 @@ namespace new_Karlshop.Controllers
             _logger.LogInformation("User with ID {UserId} has generated new 2FA recovery codes.", user.Id);
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FileSave()
+        {
+            var files = Request.Form.Files;
+            string webRootPath = _hostingEnvironment.WebRootPath;
+
+            foreach (var file in files)
+            {
+                // to do save
+                //I will ask abou this :
+                //感谢分享，请问在第二种方法 ajax上传中，为何要随机生成一个新的文件名呢，用原来的不好吗？
+                string fileExt = Path.GetExtension(file.FileName); //文件扩展名，不含“.”
+                long fileSize = file.Length; //获得文件大小，以字节为单位
+                string fileName = file.FileName;
+                string newFileName = System.Guid.NewGuid().ToString() + "." + fileExt; //随机生成新的文件名
+                var filePath = webRootPath + "\\images\\" + fileName;
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                _context.Accounts.Where(i => i.Id == _userManager.GetUserId(User)).FirstOrDefault().profileImg = fileName;
+                _context.SaveChanges();
+
+            }
+
+            return Ok();
         }
 
         #region Helpers

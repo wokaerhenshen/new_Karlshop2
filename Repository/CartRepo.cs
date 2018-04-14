@@ -30,7 +30,8 @@ namespace new_Karlshop.Repository
                                             Goods_Name = ag.Goods.goods_name,
                                             Account_ID = ag.Account_ID,
                                             Shop_Price = ag.Goods.shop_price,
-                                            Quantity = ag.Quantity
+                                            Quantity = ag.Quantity,
+                                            GoodImg = ag.Goods.ori_img
                                         };
             return query;
         }

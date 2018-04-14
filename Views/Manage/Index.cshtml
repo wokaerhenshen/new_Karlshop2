@@ -38,8 +38,48 @@
             <button type="submit" class="btn btn-default">Save</button>
         </form>
     </div>
+    <div class="col-md-4 col-lg-4 " align="center"> <img alt="User Pic" src="~/images/@Html.Raw(ViewBag.ProfileImg)" class=" img-responsive" style="width:180px;height:260px"> </div>
+    <div class="col-md-4 col-lg-4" style="margin-left:40px;">
+        <form id="uploadForm">
+            Change Profile Img： <input type="file" name="file" id="my_upload_img" />
+            <br />
+            <input type="button" value="Upload" onclick="doUpload()" />
+        </form>
+    </div>
 </div>
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }
+
+
+<script>
+    function doUpload() {
+        // my_img_path
+        // how can I get the multiple value of input which type is file?
+        var a = document.getElementById("my_upload_img").value.substring(12);
+
+        //需要首先declare 它作为一个变量，然后再用他的property，不然直接用property的话就是undefined
+        //下面那行代码我不能放在下面，而要在上传成功后再使用，似乎是
+        //如果我直接用的话图片就会被肢解，不能再上传到服务器的节奏。
+        //var myFile = document.getElementById("my_upload_img").files
+        var formData = new FormData($("#uploadForm")[0]);
+        $.ajax({
+            url: '@Url.Action("FileSave")',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (returndata) {
+                alert("upload success");
+                window.location.href="Index"
+
+            },
+            error: function (returndata) {
+                alert("upload failed");
+            }
+        });
+        }
+</script>

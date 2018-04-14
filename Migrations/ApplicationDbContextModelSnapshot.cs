@@ -138,6 +138,8 @@ namespace new_Karlshop.Migrations
 
                     b.Property<string>("phone");
 
+                    b.Property<string>("profileImg");
+
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
@@ -188,6 +190,10 @@ namespace new_Karlshop.Migrations
                     b.Property<int?>("AccountGoodGoods_ID");
 
                     b.Property<int?>("AccountGoodOrder_ID");
+
+                    b.Property<string>("AuthorName");
+
+                    b.Property<string>("ProfileImg");
 
                     b.Property<string>("content");
 

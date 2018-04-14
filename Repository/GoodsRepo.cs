@@ -142,7 +142,10 @@ namespace new_Karlshop.Repository
                 AccountGood = _context.AccountGoods.Where(a => a.Account_ID == AccountID && a.Goods_ID == GoodID && a.Order_ID == OrderID).FirstOrDefault(),
                 content = comment,
                 create_time = date,
-                rate_star = star
+                rate_star = star,
+                ProfileImg = _context.Accounts.Where(i => i.Id == AccountID).Select(i => i.profileImg).FirstOrDefault(),
+                AuthorName = _context.Accounts.Where(i => i.Id == AccountID).Select(i=> i.firstName).FirstOrDefault()
+
             };
             _context.Comments.Add(comments);
             _context.SaveChanges();
@@ -151,6 +154,7 @@ namespace new_Karlshop.Repository
         public IEnumerable<Comments> GetCommentsByGoodID(int id)
         {
             
+
             return _context.Comments.Where(i => i.AccountGood.Goods_ID == id);
         }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace new_Karlshop.Migrations
 {
-    public partial class mydb : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -107,7 +107,8 @@ namespace new_Karlshop.Migrations
                     address = table.Column<string>(nullable: true),
                     firstName = table.Column<string>(nullable: true),
                     lastName = table.Column<string>(nullable: true),
-                    phone = table.Column<string>(nullable: true)
+                    phone = table.Column<string>(nullable: true),
+                    profileImg = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -349,6 +350,8 @@ namespace new_Karlshop.Migrations
                     AccountGoodAccount_ID = table.Column<string>(nullable: true),
                     AccountGoodGoods_ID = table.Column<int>(nullable: true),
                     AccountGoodOrder_ID = table.Column<int>(nullable: true),
+                    AuthorName = table.Column<string>(nullable: true),
+                    ProfileImg = table.Column<string>(nullable: true),
                     content = table.Column<string>(nullable: true),
                     create_time = table.Column<DateTime>(nullable: false),
                     rate_star = table.Column<double>(nullable: false)

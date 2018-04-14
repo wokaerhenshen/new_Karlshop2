@@ -210,64 +210,121 @@
 				</div>
 
 		</div>
-		<div class="row">
-			<div class="col-md-4 col-sm-6">
-			</div>
-			<div class="panel panel-primary col-md-6 col-sm-6" style="box-shadow:2px 2px 3px #ccc;">
-				<div class="panel-heading"><h5>Comments</h5></div>
-				<table class="table table-striped">
-					@{
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+            </div>
+            @*<div class="panel panel-primary col-md-6 col-sm-6" style="box-shadow:2px 2px 3px #ccc;">
+                <div class="panel-heading"><h5>Feedbacks</h5></div>
+                <table class="table table-striped">
+                    @{
 
-						if (ViewBag.commentExist == null)
-						{
-							<tr>
-								<th class="panel-body">There is no comment for this product!</th>
-							</tr>
+                if (ViewBag.commentExist == null)
+                {
+                    <tr>
+                        <th class="panel-body">There is no feedback for this product!</th>
+                    </tr>
 
-						}
-						else
-						{
-							// <div class="panel-body">success</div>
-							// I can use viewmodel to show the username who made the comments if necessary
-							foreach (var comment in ViewBag.myComments)
-							{
-								var content = comment.content;
-								var date = comment.create_time;
-								var star = comment.rate_star;
-								<tr>
-									<th class="col-md-3 col-sm-3">
-										Comment Time:
-									</th>
-									<td>
-										 <p>@Html.Raw(date)</p>
-									</td>
-								</tr>
-								<tr>
-									<th class="col-md-3 col-sm-3">
-										Rating Star:
-									</th>
-									<td>
-										<input id="input-2b" type="number" class="rating" value=@Html.Raw(star) readOnly="readonly" data-size="l"
-											   data-symbol="" data-default-caption="{rating} hearts">
-									</td>
-								</tr>
-								<tr>
-									<th class="col-md-3 col-sm-3">
-										Content:
-									</th>
-									<td>
-										<p>@Html.Raw(content)</p>
-									</td>
-								</tr>
-							}
+        }
+        else
+        {
+            // <div class="panel-body">success</div>
+            // I can use viewmodel to show the username who made the comments if necessary
+            foreach (var comment in ViewBag.myComments)
+            {
+                var content = comment.content;
+                var date = comment.create_time;
+                var star = comment.rate_star;
+                <tr>
+                    <th class="col-md-3 col-sm-3">
+                        Comment Time:
+                    </th>
+                    <td>
+                        <p>@Html.Raw(date)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-md-3 col-sm-3">
+                        Rating Star:
+                    </th>
+                    <td>
+                        <input id="input-2b" type="number" class="rating" value=@Html.Raw(star) readOnly="readonly" data-size="l"
+                               data-symbol="" data-default-caption="{rating} hearts">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-md-3 col-sm-3">
+                        Content:
+                    </th>
+                    <td>
+                        <p>@Html.Raw(content)</p>
+                    </td>
+                </tr>
+    }
 
-						}
-					}
-					</table>
+}
+                    }
+                </table>
+            </div>*@
+
+            <div class="col-md-10">
+                <div class="comment-wrapper">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Feedback panel
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="clearfix"></div>
+                            <hr>
+                            <ul class="media-list">
+                                @if (ViewBag.myComments != null)
+                        {
+
+                            @foreach (var comment in ViewBag.myComments)
+                    {
+                        <li class="media">
+                            <a href="#" class="pull-left">
+                                <img src="~/images/@Html.Raw(comment.ProfileImg)" alt="" class="img-circle" style="width:30px; height:40px;">
+
+                            </a>
+                            <div class="media-body">
+                                <span class="text-muted pull-right">
+                                    <small class="text-muted">@Html.Raw(comment.create_time)</small>
+                                </span>
+                                <strong class="text-success">@Html.Raw(comment.AuthorName)</strong>
+                                <input id="input-2b" type="number" class="rating" value=@Html.Raw(comment.rate_star) readOnly="readonly" data-size="l"
+                                       showCaption="false">
+                                <p>
+                                    @Html.Raw(comment.content)
+                                </p>
+                            </div>
+                            <hr>
+                        </li>
+                         
+
+            }
+
+                }
+                else
+                {
+                    <li class="media">
+                        <p>No Feedbacks so far!</p>
+                    </li>
+        }
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
 </div>
 </div>
-		</div>
-	</div>
 
 @await Html.PartialAsync("ViewedPartial")
 <script src="http://code.jquery.com/jquery-3.2.1.js"></script>

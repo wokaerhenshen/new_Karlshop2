@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using new_Karlshop.Services;
 using new_Karlshop.Models.ManageViewModels;
 using Braintree;
+using Serilog;
+using Microsoft.AspNetCore.Identity;
 
 namespace new_Karlshop.Controllers
 {
@@ -28,10 +30,10 @@ namespace new_Karlshop.Controllers
         AccountGoodsRepo ag;
         CartRepo cartRepo;
         AmazonPriceScrapy amazon;
+        private UserManager<ApplicationUser> _userManager;
 
 
-
-        public HomeController(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context )
+        public HomeController(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             
             this._httpContextAccessor = httpContextAccessor;
@@ -43,7 +45,7 @@ namespace new_Karlshop.Controllers
             this.ag = new AccountGoodsRepo(context);
             this.cartRepo = new CartRepo(context);
             this.amazon = new AmazonPriceScrapy(_context);
-
+            _userManager = userManager;
         }
 
         
@@ -479,10 +481,6 @@ namespace new_Karlshop.Controllers
 
             }
 
-
-
-
-
             foreach (var item in CartaccountGoods)
             {
                 item.Type = "bought";
@@ -495,7 +493,6 @@ namespace new_Karlshop.Controllers
 
             cookieHelper.Remove("totalPrice");
             cookieHelper.Remove("totalPieces");
-
         }
 
         public IActionResult CancelPayment()
@@ -572,6 +569,16 @@ namespace new_Karlshop.Controllers
         }
 
         [HttpPost]
+        public bool changeQuantityInCart(int id , int quantity)
+        {
+
+            AccountGood accountGood = _context.AccountGoods.Where(i => i.Account_ID == _userManager.GetUserId(User) && i.Goods_ID == id && i.Type== "cart").FirstOrDefault();
+            accountGood.Quantity = quantity;
+            _context.SaveChanges();
+            return true;
+        }
+
+        [HttpPost]
         public ActionResult EditCart(AccountGood accountGood)
         {
             ag.UpdateOneGoodByBothID(accountGood);
@@ -616,6 +623,7 @@ namespace new_Karlshop.Controllers
 
         public IActionResult Contact()
         {
+            Log.Debug("************ I am in the contact action method.");
             ViewData["Message"] = "Welcome to Contact Me!";
             ViewBag.menuActive = "About";
             
@@ -624,6 +632,7 @@ namespace new_Karlshop.Controllers
 
         public IActionResult About()
         {
+            Log.Debug("************ I am in the about action method.");
             return View();
         }
 

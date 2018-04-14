@@ -12,5 +12,6 @@ namespace new_Karlshop.Models
         public string Goods_Name { get; set; }
         public decimal Shop_Price { get; set; }
         public int Quantity { get; set; }
+        public string GoodImg { get; set; }
     }
 }

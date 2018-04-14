@@ -158,7 +158,7 @@ namespace new_Karlshop.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ClaimRequirement("Custom Mobile Validator", "Logged In")]
         public List<IOSCartVM> IOSShowCart([FromBody] EmailVM email)
         {
             //return "karlsb";
@@ -170,6 +170,7 @@ namespace new_Karlshop.Controllers
             {
                 IOSCartVM oneGood = new IOSCartVM
                 {
+                    goodId = accountGood.Goods_ID,
                     goodName = _context.Goodses.Where(gn => gn.goods_id == accountGood.Goods_ID).Select(gn => gn.goods_name).FirstOrDefault(),
                     quantity = accountGood.Quantity
                 };
@@ -181,8 +182,8 @@ namespace new_Karlshop.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public void UpdateGoodinCart([FromBody] IOSUpdateVM updateInfo)
+        [ClaimRequirement("Custom Mobile Validator", "Logged In")]
+        public bool UpdateGoodinCart([FromBody] IOSUpdateVM updateInfo)
         {
             AccountGood good = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.Email == updateInfo.Email).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart" && ag.Goods_ID == updateInfo.GoodId).FirstOrDefault();
 
@@ -191,23 +192,23 @@ namespace new_Karlshop.Controllers
                 case "add":
                     good.Quantity++;
                     _context.SaveChanges();
-                    break;
+                    return true ;
                 case "minus":
                     good.Quantity--;
                     _context.SaveChanges();
-                    break;
+                    return true;
                 case "delete":
                     _context.AccountGoods.Remove(good);
                     _context.SaveChanges();
-                    break;
+                    return true;
                 default:
-                    break;
+                    return false;
             }
                 
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ClaimRequirement("Custom Mobile Validator", "Logged In")]
         public bool IOSAddToCart([FromBody] IOSUpdateVM addInfo)
         {
             //List<AccountGood> accountGoods = _context.AccountGoods.Where(ag => ag.Account_ID == _context.Users.Where(name => name.Email == addInfo.Email).Select(i => i.Id).FirstOrDefault() && ag.Type == "cart").ToList();
@@ -269,7 +270,7 @@ namespace new_Karlshop.Controllers
         [HttpGet]
         // Since we have cookie authentication and Jwt authentication we must
         // specify that we want Jwt authentication here.
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ClaimRequirement("Custom Mobile Validator", "Logged In")]
         public IEnumerable<LoginViewModel> Protected()
         {
             return GetFakeData();
@@ -327,6 +328,7 @@ namespace new_Karlshop.Controllers
 
             var expires = DateTime.Now.AddDays(Convert.ToDouble(1));
             var token = new JwtSecurityToken(
+
                 _configuration["TokenInformation:Issuer"],
                 _configuration["TokenInformation:Audience"],
                 claims,
@@ -334,7 +336,7 @@ namespace new_Karlshop.Controllers
                 signingCredentials: creds
             );
             var formattedToken = new JwtSecurityTokenHandler().WriteToken(token);
-            return Ok(new { token = formattedToken });
+            return Ok(new { token = formattedToken ,secret = user.SecurityStamp});
         }
 
         // It would be better to put this class in a ViewModels folder.

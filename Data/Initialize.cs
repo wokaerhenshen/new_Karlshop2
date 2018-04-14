@@ -1,4 +1,6 @@
-﻿using new_Karlshop.Services;
+﻿using Microsoft.AspNetCore.Identity;
+using new_Karlshop.Models;
+using new_Karlshop.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +12,11 @@ namespace new_Karlshop.Data
     public class Initialize
     {
         private ApplicationDbContext _context;
-        public Initialize(ApplicationDbContext context)
+        UserManager<ApplicationUser> _userManager;
+        public Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
             InitializeData();
             
         }
@@ -27,23 +31,67 @@ namespace new_Karlshop.Data
                 return;
             }
 
-            //_context.Accounts.Add(
-            //    new Account
-            //    {
-            //        Id = 1,
-            //        username = "Karl",
-            //        password = "123",
-            //        firstName = "Karl",
-            //        lastName = "Xu",
-            //        email = "karlxu0410@gmail.com",
-            //        phone = "7788619422",
-            //        address = "6520 Clematis Drive",
-            //        type = "admin"
-                    
-            //    }
-            //    );
+            //init user
 
-            _context.SaveChanges();
+            var user = new ApplicationUser { UserName = "Karlxu0410@gmail.com", Email = "Karlxu0410@gmail.com" };
+
+            var result = _userManager.CreateAsync(user, "Aa19940422~");
+
+
+
+            if (result.IsCompletedSuccessfully)
+            {
+
+                _userManager.AddToRoleAsync(user, "Admin");
+
+                _context.Accounts.Add(new Account
+                {
+                    Id = user.Id,
+                    firstName = "karl",
+                    lastName = "Xu",
+
+                    phone = "7788619422",
+                    address = "6520 Clematis Drive",
+                    profileImg = "karl.jpg"
+
+
+
+                });
+                _context.SaveChanges();
+            }
+
+            var userTwo = new ApplicationUser { UserName = "1@1.com", Email = "1@1.com" };
+
+            var resultTwo = _userManager.CreateAsync(userTwo, "Aa19940422~");
+
+
+
+            if (resultTwo.IsCompletedSuccessfully)
+            {
+
+                _userManager.AddToRoleAsync(userTwo, "Customer");
+
+                _context.Accounts.Add(new Account
+                {
+                    Id = userTwo.Id,
+                    firstName = "Carolyn",
+                    lastName = "Ho",
+
+                    phone = "7788929422",
+                    address = "6520 Clematis Drive",
+                    profileImg = "carolyn.jpg"
+
+
+
+                });
+                _context.SaveChanges();
+            }
+
+
+
+
+
+
 
             _context.Categories.Add(new Category()
             {
@@ -144,7 +192,7 @@ namespace new_Karlshop.Data
                      goods_sn = "ECS000001",
                      asin = "B06XRJ9L96",
                      goods_name = "iPhone 6s",
-                     shop_price = 769.99m,
+                     shop_price = 369.99m,
                      market_price = "",
                      goods_quantity = 127,
                      sold_quantity = 6,
@@ -166,7 +214,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000002",
                 goods_name = "iPhone 6s Plus", 
                 asin = "B01JAWZQR0",
-                shop_price = 899.00m,
+                shop_price = 599.00m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 6,
@@ -190,7 +238,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000003",
                 goods_name = "iPhone 7",
                 asin = "B01N6YAP98",
-                shop_price = 899.08m,
+                shop_price = 599.08m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 10,
@@ -213,7 +261,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000004",
                 goods_name = "iPhone 7 Plus",
                 asin = "B01N6ZAR0D",
-                shop_price = 1049.00m,
+                shop_price = 649.00m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 3,
@@ -236,7 +284,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000005",
                 goods_name = "iPhone SE",
                 asin = "B0751RGH6W",
-                shop_price = 579.00m,
+                shop_price = 279.00m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
@@ -259,7 +307,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000006",
                 goods_name = "Galaxy S7 edge",
                 asin = "B01CJU9BBM",
-                shop_price = 900.00m,
+                shop_price = 349.00m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 6,
@@ -282,7 +330,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000007",
                 goods_name = "Galaxy S7",
                 asin = "B01CRCC4BQ",
-                shop_price = 770.00m,
+                shop_price = 312.00m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
@@ -305,7 +353,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000008",
                 goods_name = "HUAWEI Mate 9",
                 asin = "B01MYRABC3",
-                shop_price = 869.00m,
+                shop_price = 455.00m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 9,
@@ -328,7 +376,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000009",
                 goods_name = "ThinkPad X260",
                 asin = "B07256JS27",
-                shop_price = 1070.10m,
+                shop_price = 870.10m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
@@ -395,7 +443,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000012",
                 goods_name = "ThinkPad X260",
                 asin = "B07256JS27", //
-                shop_price = 1070.10m,
+                shop_price = 870.10m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 3,
@@ -443,7 +491,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000014",
                 goods_name = "AHP EliteBook",
                 asin = "B01MSCY7C1",
-                shop_price = 1549.99m,
+                shop_price = 1349.99m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
@@ -465,7 +513,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000015",
                 goods_name = "HP EliteBook 2570p",
                 asin = "B01MSCY7C1",
-                shop_price = 1549.99m,
+                shop_price = 1349.99m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
@@ -487,7 +535,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000016",
                 goods_name = "Hisense H7GB 50",
                 asin = "B01M01QPDL",
-                shop_price = 699.99m,
+                shop_price = 599.99m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
@@ -531,7 +579,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000018",
                 goods_name = "LG 55 UH6150 4K",
                 asin = "B01N97NW28",
-                shop_price = 1549.99m,
+                shop_price = 1249.99m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
@@ -575,7 +623,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000020",
                 goods_name = "Sylvania 39 HD LED ",
                 asin = "B009PHUR66",
-                shop_price = 299.99m,
+                shop_price = 1299.99m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,
@@ -597,7 +645,7 @@ namespace new_Karlshop.Data
                 goods_sn = "ECS000021",
                 goods_name = "LG 49 UH6100 4K UHD Smart",
                 asin = "B01CF07ML2",
-                shop_price = 1099.99m,
+                shop_price = 899.99m,
                 market_price = "",
                 goods_quantity = 17,
                 sold_quantity = 0,

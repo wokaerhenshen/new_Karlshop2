@@ -5,11 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h1>My Cart</h1>
 
 
 <table class="table table-striped">
     <thead>
         <tr>
+            <th></th>
 
                 <th>
                     @Html.DisplayNameFor(model => model.Goods_Name)
@@ -26,18 +28,19 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-
-            <td>
+            <td><img src="~/images/@Html.DisplayFor(modelItem => item.GoodImg)" alt="goodImg" style="width:60px;height:100px"/> </td>
+            <td style="line-height:100px">
                 @Html.DisplayFor(modelItem => item.Goods_Name)
             </td>
-            <td>
+            <td style="line-height:100px">
                 @Html.DisplayFor(modelItem => item.Shop_Price)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
+            <td style="line-height:100px">
+                <input id="@Html.DisplayFor(modelItem => item.Goods_ID)" style="width:40px;line-height:20px;" type="number" min="1" value="@Html.DisplayFor(modelItem => item.Quantity)" onchange="changeQuantity(@Html.DisplayFor(modelItem => item.Goods_ID),this)"/>
+                
             </td>
-            <td>
-                @Html.ActionLink("Edit", "EditCart", new { controller = "Home", accountID = item.Account_ID, goodID = item.Goods_ID }) |
+            <td style="line-height:100px">
+                @Html.ActionLink("Detail", "GoodsEdit", new { controller = "Home", id=item.Goods_ID }) |
                 @Html.ActionLink("Delete", "DeleteCart", new { controller = "Home", accountID = item.Account_ID, goodID = item.Goods_ID })
             </td>
         </tr>
@@ -48,6 +51,7 @@
         @{
             var totalPieces = ViewBag.totalPieces;
             var totalPrice = ViewBag.totalPrice;
+            <td></td>
             <td>
                 Total Quantity
             </td>
@@ -63,6 +67,7 @@
 
     <tr class="lead">
         @{
+            <td></td>
             <td>
                 Total Price
             </td>
@@ -96,3 +101,29 @@
 }
 
 
+<script>
+    function changeQuantity(id,quantity) {
+        //  var goodId = $(good).
+        console.log(id);
+        console.log($(quantity).val());
+        $.ajax({
+            type: "post",
+            url: "/Home/changeQuantityInCart",
+            data: { id: id, quantity: $(quantity).val() },
+            datatype: "json",
+            success: function () {
+                console.log("update success")
+                window.location.href="showCart"
+
+            },
+            error: function () {
+                console.log("error occur")
+
+            }
+
+
+
+        })
+
+    }
+</script>

@@ -26,6 +26,8 @@ namespace new_Karlshop.Data
         [Display(Name = "Address")]
         public string address { get; set; }
 
+        public string profileImg { get; set; }
+
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual ICollection<ViewedGoods> ViewedGoods { get; set; }
         public virtual ICollection<AccountGood> AccountGood { get; set; }
