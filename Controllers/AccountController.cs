@@ -268,6 +268,7 @@ namespace new_Karlshop.Controllers
                     _context.Accounts.Add(new Account
                     {
                         Id = user.Id,
+                        profileImg = "default.png"
                         
                         
                     });

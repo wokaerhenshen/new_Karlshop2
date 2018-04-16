@@ -28,9 +28,11 @@
     <meta property="og:title" content="Karl Shop" />
     <meta property="og:description" content="Welcome to KarlShop! We provide the best Products" />
     <meta property="og:image" content="http://i0.kym-cdn.com/entries/icons/mobile/000/002/830/sad_frog.jpg" />
-
+    @*<script src="~/js/canvas.js"></script>*@
 </head>
+
 <body>
+    
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -55,7 +57,7 @@
                         {
                             a1 = "active";
                         }
-                        <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="Welcome"><img src="~/images/home.png" style="width:20px;" /></a></li>
+                        <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="Welcome"><img src="~/images/home.png" style="width:20px;" />   Home</a></li>
                     }
                     @{
 
@@ -80,7 +82,7 @@
                         {
                             a1 = "active";
                         }
-                        <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="ShowCart" asp-route-id="0"><img src="~/images/cart.png" style="width:20px;" /></a></li>
+                        <li class=@Html.Raw(a1)><a asp-area="" asp-controller="Home" asp-action="ShowCart" asp-route-id="0"><img src="~/images/cart.png" style="width:20px;" /> Cart</a></li>
                     }
                     @*@{
 
@@ -143,7 +145,7 @@
                 </span>
 
                 <script>
-                        window.twttr = (function (d, s, id) {
+                    window.twttr = (function (d, s, id) {
                         var js, fjs = d.getElementsByTagName(s)[0],
                             t = window.twttr || {};
                         if (d.getElementById(id)) return t;
@@ -171,7 +173,8 @@
 
 
 
-
+                <script src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+                <script type="text/javascript" color="0,0,255" opacity='0.7' zIndex="-2" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
             </footer>
         </div>
     </div>
